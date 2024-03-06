@@ -26,7 +26,7 @@ public class ColorChangeBackground : MonoBehaviour
         // процент выполнения цели
         float progress = (float)score / targetScore;
 
-        // остановка процесс изменения цвета, если цель достигнута
+        // остановка процесса изменения цвета, если цель достигнута
         if (progress >= 1f)
         {
             progress = 1f;

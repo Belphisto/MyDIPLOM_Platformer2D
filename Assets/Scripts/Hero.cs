@@ -6,13 +6,18 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     [SerializeField] private float speed = 3f; // speed move
-    [SerializeField] private int score = 0; // score counter
     [SerializeField] private float jumpForce = 2f; // Force jump
-    private bool isGrounded = false;
+    [SerializeField] private int score = 0; // score counter
+    public delegate void ScoreUpdateEvent(int score);
+    public static event ScoreUpdateEvent OnScoreUpdate;
+
 
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Animator animator;
+
+    private bool isGrounded = false;
+
 
     public static Hero Instance {get;set;} //singltone
 
@@ -80,5 +85,6 @@ public class Hero : MonoBehaviour
     {
         score += point;
         Debug.Log(score);
+        OnScoreUpdate?.Invoke(score);
     }
 }

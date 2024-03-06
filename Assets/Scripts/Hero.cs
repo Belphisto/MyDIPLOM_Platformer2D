@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
@@ -11,31 +12,36 @@ public class Hero : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
-    private BoxCollider2D boxCollider;
+    private Animator animator;
+
+    private States State
+    {
+        get { return (States)animator.GetInteger("state"); }
+        set { animator.SetInteger("state", (int)value); }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log(State);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isGrounded) State = States.idle;
+
         if (Input.GetButton("Horizontal"))
             Run();
         if (isGrounded && Input.GetButtonDown("Jump"))
-            Jump();
-  
-        
-            
+            Jump();      
     }
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void FixedUpdate()
@@ -46,6 +52,8 @@ public class Hero : MonoBehaviour
 
     private void Run()
     {
+        if (isGrounded) State = States.go;
+
         Vector3 dir = transform.right * Input.GetAxis("Horizontal");
         transform.position =Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
         sprite.flipX = dir.x < 0.0f; //rotate hero
@@ -60,6 +68,8 @@ public class Hero : MonoBehaviour
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.9f);
         isGrounded = colliders.Length > 1;
-        //Debug.Log(colliders.Length);
+
+        if (!isGrounded) State = States.jump;
+        
     }
 }

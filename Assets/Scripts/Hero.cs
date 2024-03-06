@@ -14,6 +14,8 @@ public class Hero : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator animator;
 
+    public static Hero Instance {get;set;} //singltone
+
     private States State
     {
         get { return (States)animator.GetInteger("state"); }
@@ -42,6 +44,7 @@ public class Hero : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
+        Instance = this;
     }
 
     private void FixedUpdate()
@@ -71,5 +74,11 @@ public class Hero : MonoBehaviour
 
         if (!isGrounded) State = States.jump;
         
+    }
+
+    public void GetScore(int point)
+    {
+        score += point;
+        Debug.Log(score);
     }
 }

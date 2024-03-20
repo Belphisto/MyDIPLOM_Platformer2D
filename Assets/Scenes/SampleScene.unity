@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 199905378}
   - component: {fileID: 199905377}
   - component: {fileID: 199905376}
+  - component: {fileID: 199905380}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -244,7 +245,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199905375}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c13a41aefec584419d0bdcbaf330322, type: 3}
   m_Name: 
@@ -340,6 +341,18 @@ Transform:
   - {fileID: 1455737667}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &199905380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199905375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc58debe435526d40bed54a45073d01d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &216552888 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1115281419099159234, guid: 21f9478b5a3c63244b51bd9694c3bc16, type: 3}
@@ -1370,6 +1383,7 @@ GameObject:
   - component: {fileID: 1455737667}
   - component: {fileID: 1455737666}
   - component: {fileID: 1455737668}
+  - component: {fileID: 1455737669}
   m_Layer: 0
   m_Name: Hero_sprite
   m_TagString: Untagged
@@ -1465,6 +1479,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1455737669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455737664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa536030d09cd2543b0451e51c2ee369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1544352652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1115281419099159234, guid: 21f9478b5a3c63244b51bd9694c3bc16, type: 3}

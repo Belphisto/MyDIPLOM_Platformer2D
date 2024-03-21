@@ -6,16 +6,18 @@ using UnityEngine;
 
 namespace Platformer2D.Player
 {
-    public class PlayerController : MonoBehaviour, IScoreUpdate
+    // Класс контроллера игрока
+    public class PlayerController
     {
+        // Ссылки на модель и представление игрока
         private PlayerModel model;
         private PlayerView view;
+        public PlayerView View {get => view;}
 
-        // Определение события делегата увеличения счетчика очков
-        //public delegate void ScoreUpdateEvent(int score);
-        //public static event ScoreUpdateEvent OnScoreUpdate;
-        public event Action<int> OnScoreUpdate;
+        // Определение события увеличения счетчика очков
+        public static event Action<int> OnScoreUpdate;
 
+        // Синглтон контроллера игрока
         private static PlayerController _instance;
         public static PlayerController Instance
         {
@@ -23,17 +25,23 @@ namespace Platformer2D.Player
             private set { _instance = value; }
         }
 
+        // Конструктор контроллера игрока
         public PlayerController(PlayerModel model, PlayerView view)
         {
             this.model = model;
             this.view = view;
+            Instance = this;
         }
+
+        // Метод, вызываемый каждый кадр
         public void Update()
         {
+            // Управление анимацией и движением персонажа
+            // Обработка пользовательского ввода
             if (model.IsGrounded) view.Animator.SetInteger("state", (int)States.idle);
         
             if (Input.GetButton("Horizontal"))
-                view.Run(transform.right * Input.GetAxis("Horizontal"), model.Speed);
+                view.Run(view.transform.right * Input.GetAxis("Horizontal"), model.Speed);
             if (model.IsGrounded && Input.GetButtonDown("Jump"))
                 view.Jump(view.GetComponent<Rigidbody2D>(), model.JumpForce);
         }
@@ -46,10 +54,13 @@ namespace Platformer2D.Player
             if (!model.IsGrounded) view.Animator.SetInteger("state", (int)States.jump);
         }
 
+        //Метод обработки получения очков
         public void GetScore(int point)
         {
             model.IncrementScore(point);
-            Debug.Log(model.Score);
+            Debug.Log($"Current PlayerScore = {model.Score}");
+            
+            // Вызов события обновления счета, если оно не пустое
             OnScoreUpdate?.Invoke(point);
         }                
     }

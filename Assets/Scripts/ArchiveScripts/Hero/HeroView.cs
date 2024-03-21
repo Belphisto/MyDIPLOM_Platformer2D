@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Platformer2D.Player;
 
 namespace Platformer2D.View
 {

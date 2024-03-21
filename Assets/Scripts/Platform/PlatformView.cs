@@ -4,22 +4,40 @@ using Platformer2D.IInterface;
 using UnityEngine;
 using Platformer2D.Player;
 
+/*
+ Это представление, которое отвечает за визуализацию платформы в игре.
+  Оно содержит ссылки на компоненты SpriteRenderer для различных состояний платформы и
+методы для установки модели платформы и изменения состояния платформы.
+*/
+
 namespace Platformer2D.Platform
 {
+    // Класс PlatformView представляет визуальное отображение платформы в игре.
     public class PlatformView : MonoBehaviour
     {
+        // Ссылки на компоненты SpriteRenderer для различных состояний платформы
         [SerializeField] private SpriteRenderer stateColorless;
         [SerializeField] private SpriteRenderer stateColor;
+
+        // Контроллер платформы
         private PlatformController controller;
 
         // Start is called before the first frame update
         void Start()
         {
-            PlatformModel model = new PlatformModel(20);
-            IScoreUpdate scoreUpdate = PlayerController.Instance;
-            controller = new PlatformController(model, this, scoreUpdate);
+            //PlatformModel model = new PlatformModel(20);
+            //IScoreUpdate scoreUpdate = PlayerController.Instance;
+            //controller = new PlatformController(model, this);
         }
 
+        // Метод для установки модели платформы
+        public void SetModel(PlatformModel model)
+        {
+            controller = new PlatformController(model, this);
+            Debug.Log($"SetModel PlatformController model.TargetScore = {model.TargetScore}");
+        }
+
+        // Метод Awake вызывается при инициализации объекта
         private void Awake()
         {
             // ссылка на первый дочерний объект с компонентом SpriteRenderer
@@ -28,20 +46,25 @@ namespace Platformer2D.Platform
             //ссылка на второй дочерний объект с компонентом SpriteRenderer
             stateColor = transform.GetChild(1).GetComponent<SpriteRenderer>();
 
+            // Изначально активируется состояние без цвета
             stateColor.gameObject.SetActive(false);
         }
 
+        // Метод для изменения состояния платформы
         public void ChangeState()
-        {
+        {   
+            // Активация цветного состояния и деактивация состояния без цвета
+            Debug.Log("PlatformChangeState");
             stateColor.gameObject.SetActive(true);
             stateColorless.gameObject.SetActive(false);
         }
-    
-        // Update is called once per frame
-        void Update()
+
+        // Метод Update вызывается каждый кадр
+        public void Update()
         {
-            
+            controller.Update();
         }
+
     }
     
 }

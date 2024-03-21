@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Platformer2D.Model;
 using Platformer2D.View;
-
+using Platformer2D.Player;
 namespace Platformer2D.Controller
 {
     public class HeroController : MonoBehaviour

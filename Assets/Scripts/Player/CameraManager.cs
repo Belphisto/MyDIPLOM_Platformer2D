@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Platformer2D
 {
-    public class Camera : MonoBehaviour
+    public class CameraManager : MonoBehaviour
     {
         [SerializeField] private Transform player;
         private Vector3 pos;

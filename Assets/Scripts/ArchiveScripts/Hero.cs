@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using Platformer2D.Player;
 public class Hero : MonoBehaviour
 {
     [SerializeField] private float speed = 3f; // speed move

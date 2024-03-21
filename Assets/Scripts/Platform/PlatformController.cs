@@ -1,25 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using Platformer2D.IInterface;
+using Platformer2D.Level;
 using UnityEngine;
+
+/*
+Это контроллер, который управляет поведением платформы в игре.
+ Он принимает модель и представление платформы в качестве параметров конструктора,
+  подписывается на событие обновления счета и обрабатывает это событие,
+   изменяя состояние платформы, 
+   если счет достиг целевого значения.
+*/
 
 namespace Platformer2D.Platform
 {
+    // Класс контроллера платформы
     public class PlatformController 
     {
+        // Ссылки на модель и представление платформы
         private PlatformModel model;
         private PlatformView view;
         
-        public PlatformController(PlatformModel model, PlatformView view, IScoreUpdate scoreUpdate)
+        // Конструктор контроллера платформы
+        // Принимает модель и представление
+        public PlatformController(PlatformModel model, PlatformView view)
         {
             this.model = model;
             this.view = view;
-            scoreUpdate.OnScoreUpdate += HandleScoreUpdate; // Подписка на событие обновления счета
+            // Подписка на событие обновления счета
+            LevelController.OnScoreUpdatePlatfroms += HandleScoreUpdate;
+            Debug.Log($"evelController.OnScoreUpdate += HandleScoreUpdate;");
         }
         
+        // Обработка события текущего счета
         private void HandleScoreUpdate(int score)
         {
             if (score >= model.TargetScore) view.ChangeState();
+            Debug.Log($"HandleScoreUpdate(int score) PlatformController: score {score}, model.TargetScore = {model.TargetScore}");
+        }
+
+        // Метод Update вызывается каждый кадр для обновления состояния платформы
+        // Переопределен в производном классе для других механик
+        public virtual void Update()
+        {
+            
         }
     }
 

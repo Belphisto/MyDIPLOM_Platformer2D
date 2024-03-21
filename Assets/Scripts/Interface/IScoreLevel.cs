@@ -5,8 +5,7 @@ namespace Platformer2D.IInterface
 {
     public interface IScoreLevel 
     {
-        int CurrentScore {get;}
-        int TotalScore {get;}
+        int GetScore();
     }
 
 }

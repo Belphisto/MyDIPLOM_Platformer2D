@@ -37,6 +37,8 @@ namespace Platformer2D.Background
             // Создание модели и контроллера фона
             BackgroundModel backgroundModel = new BackgroundModel();
             _backgroundController = new BackgroundControlller(backgroundModel, this);
+            var canvas = GetComponent<Canvas>();
+            canvas.worldCamera = Camera.main;
         }
 
         // Метод для изменения цвета фона

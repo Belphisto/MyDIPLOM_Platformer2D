@@ -42,6 +42,7 @@ namespace Platformer2D.Player
         
             if (Input.GetButton("Horizontal"))
                 view.Run(view.transform.right * Input.GetAxis("Horizontal"), model.Speed);
+                Debug.Log("move!! Horizontal");
             if (model.IsGrounded && Input.GetButtonDown("Jump"))
                 view.Jump(view.GetComponent<Rigidbody2D>(), model.JumpForce);
         }
@@ -62,6 +63,7 @@ namespace Platformer2D.Player
             
             // Вызов события обновления счета, если оно не пустое
             OnScoreUpdate?.Invoke(point);
+            Bus.Instance.Send(point);
         }                
     }
     

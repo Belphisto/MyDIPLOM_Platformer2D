@@ -43,6 +43,7 @@ namespace Platformer2D.Level
             SpawnPlatforms();
             // Подписка на событие обновления счета от игрока
             PlayerController.OnScoreUpdate += HandleScoreUpdate;
+            //Bus.Instance.Mess += HandleScoreUpdate;
         }
 
         // Метод для создания кристаллов на сцене

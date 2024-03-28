@@ -48,9 +48,9 @@ namespace Platformer2D.Background
             }
             // Вычисление прогресса в достижении целевого количества очков
             float progress = (float)score /model.TargetScore;
-            Debug.Log($"BackgroundControlller (float)score: {(float)score}");
+
             //Debug.Log($"BackgroundControlller model.TargetScore: {model.TargetScore}");
-            Debug.Log($"BackgroundControlller progress: {progress}");
+
             // Ограничение прогресса значением 1
             if (progress >= 1f)
             {

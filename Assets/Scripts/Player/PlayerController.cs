@@ -70,6 +70,7 @@ namespace Platformer2D.Player
         public void ChangeGravity()
         {
             Physics2D.gravity = Physics2D.gravity *-1;
+            view.FlipY();
         }                
     }
     

@@ -72,19 +72,19 @@ namespace Platformer2D.Level
                 crystalPrefab,
                 platformPrefab,
                 platformPrefabSpecial1,
-                //platformPrefabSpecial2,
+                platformPrefabSpecial2,
                 platformPrefabBounds,
                 backgroundPrefab,
                 coordinatesCrystal,
                 coordinatesPlatforms,
                 coordinatesPlatformsSpecial1,
-                //coordinatesPlatformsSpecial2,
+                coordinatesPlatformsSpecial2,
                 // параметр целевого значения счета будет задаваться генератором
                 100,
                 // параметр количества кристаллов на уровне будет задаваться генератором
                 4,
-                200,
-                300
+                20,
+                30
             );
             controller = new LevelController(model, this);
         }

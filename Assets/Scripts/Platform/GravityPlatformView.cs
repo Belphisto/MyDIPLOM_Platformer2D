@@ -8,9 +8,9 @@ namespace Platformer2D.Platform
         // Переопределение метода для установки модели платформы
         public override void SetModel(PlatformModel model)
         {
-            // Создание нового контроллера MovingPlatform
+            // Создание нового контроллера GravityPlatform
             controller = new GravityPlatformController(model, this);
-            Debug.Log($"SetModel MovingPlatformController model.TargetScore = {model.TargetScore}");
+            Debug.Log($"SetModel GravityPlatformController model.TargetScore = {model.TargetScore}");
         }
 
         // Метод, вызываемый при входе в триггер

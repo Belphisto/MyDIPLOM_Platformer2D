@@ -38,7 +38,7 @@ namespace Platformer2D.Level
         {
             this.model = model;
             this.view = view;
-            SpawnLevelBounds(model.Width, model.Height);
+            //SpawnLevelBounds(model.Width, model.Height);
             SpawnCrystals();
             SpawnColorChangeBackground();
             SpawnPlatforms();
@@ -91,19 +91,20 @@ namespace Platformer2D.Level
                 platformModel.StartPosition = position;
                 platform.SetModel(platformModel);
             }
+            
             //Размещение платформ препятствия 2
-            /*foreach (var position in model.PositionsPlatfromsSpecial2)
+            foreach (var position in model.PositionsPlatfromsSpecial2)
             {
                 var platform = UnityEngine.Object.Instantiate(model.PlatformPrefabSpecial2, position, Quaternion.identity);
                 // Создание модели платформы с количеством очков, необходимым для изменения цвета платформы
-                var platformModel = new PlatformModel(60, 0);
+                var platformModel = new PlatformModel(60, 0f);
                 platformModel.StartPosition = position;
                 platform.SetModel(platformModel);
-            }*/
+            }
         }
 
         // Метод для создания границ уровня
-        public void SpawnLevelBounds(float width, float height)
+        /*public void SpawnLevelBounds(float width, float height)
         {
             // Размеры платформы
             float platformWidth = model.PlatformPrefabBounds.GetComponent<Collider2D>().bounds.size.x;
@@ -158,7 +159,7 @@ namespace Platformer2D.Level
                 var size = collider.size;
                 collider.size = new Vector2(size.y, size.x);
             }
-        }
+        }*/
 
         // Метод для обработки обновления счета от игрока
         public void HandleScoreUpdate(int score)

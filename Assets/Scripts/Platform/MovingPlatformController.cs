@@ -53,7 +53,7 @@ namespace Platformer2D.Platform
         {
             // Генерируем случайное время задержки от 0 до 2 секунд
             float delay = Random.Range(0f, 10f);
-            Debug.Log($"delay {delay}");
+            //Debug.Log($"delay {delay}");
 
             // Ждем заданное количество времени
             yield return new WaitForSeconds(delay);

@@ -8,10 +8,17 @@ public class Bus
 {
     public static Bus Instance {get;} = new Bus();
 
-    public event Action <int> Mess;
+    public event Action <int> SendScore;
+
     public void Send(int inpt)
     {
-        Mess?.Invoke(inpt);
+        SendScore?.Invoke(inpt);
+    }
+
+    public event Action <int> SendBackgroundScore;
+    public void SendBackground(int inpt)
+    {
+        SendBackgroundScore?.Invoke(inpt);
     }
     
 }

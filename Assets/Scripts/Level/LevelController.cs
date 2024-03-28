@@ -42,8 +42,8 @@ namespace Platformer2D.Level
             SpawnColorChangeBackground();
             SpawnPlatforms();
             // Подписка на событие обновления счета от игрока
-            PlayerController.OnScoreUpdate += HandleScoreUpdate;
-            //Bus.Instance.Mess += HandleScoreUpdate;
+            //PlayerController.OnScoreUpdate += HandleScoreUpdate;
+            Bus.Instance.SendScore += HandleScoreUpdate;
         }
 
         // Метод для создания кристаллов на сцене
@@ -72,13 +72,34 @@ namespace Platformer2D.Level
         // Метод для создания платформ на уровне
         public void SpawnPlatforms()
         {
+            //Размещение статичных платформ
             foreach (var position in model.PositionsPlatfroms)
             {
                 var platform = UnityEngine.Object.Instantiate(model.PlatformPrefab, position, Quaternion.identity);
                 // Создание модели платформы с количеством очков, необходимым для изменения цвета платформы
-                var platformModel = new PlatformModel(20);
+                var platformModel = new PlatformModel(20,0);
+                platformModel.StartPosition = position;
                 platform.SetModel(platformModel);
             }
+
+            //Размещение платформ препятствия 1
+            foreach (var position in model.PositionsPlatfromsSpecial1)
+            {
+                var platform = UnityEngine.Object.Instantiate(model.PlatformPrefabSpecial1, position, Quaternion.identity);
+                // Создание модели платформы с количеством очков, необходимым для изменения цвета платформы
+                var platformModel = new PlatformModel(40, 0.8f);
+                platformModel.StartPosition = position;
+                platform.SetModel(platformModel);
+            }
+            //Размещение платформ препятствия 2
+            /*foreach (var position in model.PositionsPlatfromsSpecial2)
+            {
+                var platform = UnityEngine.Object.Instantiate(model.PlatformPrefabSpecial2, position, Quaternion.identity);
+                // Создание модели платформы с количеством очков, необходимым для изменения цвета платформы
+                var platformModel = new PlatformModel(60, 0);
+                platformModel.StartPosition = position;
+                platform.SetModel(platformModel);
+            }*/
         }
 
         // Метод для обработки обновления счета от игрока

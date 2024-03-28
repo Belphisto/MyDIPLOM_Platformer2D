@@ -14,7 +14,7 @@ namespace Platformer2D.Platform
         public Vector3 EndPosition { get => _endPosition; set => _endPosition = value; }
         public float Speed { get => _speed; set => _speed = value; }
 
-        public MovingPlatformModel(int score, Vector3 start, Vector3 end, float speed) : base(score)
+        public MovingPlatformModel(int score, Vector3 start, Vector3 end, float speed) : base(score, 0)
         {
             _startPosition = start;
             _endPosition = end;

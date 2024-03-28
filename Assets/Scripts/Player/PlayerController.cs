@@ -15,7 +15,7 @@ namespace Platformer2D.Player
         public PlayerView View {get => view;}
 
         // Определение события увеличения счетчика очков
-        public static event Action<int> OnScoreUpdate;
+        //public static event Action<int> OnScoreUpdate;
 
         // Синглтон контроллера игрока
         private static PlayerController _instance;
@@ -42,7 +42,7 @@ namespace Platformer2D.Player
         
             if (Input.GetButton("Horizontal"))
                 view.Run(view.transform.right * Input.GetAxis("Horizontal"), model.Speed);
-                Debug.Log("move!! Horizontal");
+                //Debug.Log("move!! Horizontal");
             if (model.IsGrounded && Input.GetButtonDown("Jump"))
                 view.Jump(view.GetComponent<Rigidbody2D>(), model.JumpForce);
         }
@@ -51,7 +51,6 @@ namespace Platformer2D.Player
         {
             Collider2D[] colliders = Physics2D.OverlapCircleAll(view.transform.position, 0.9f);
             model.IsGrounded = colliders.Length > 1;
-        
             if (!model.IsGrounded) view.Animator.SetInteger("state", (int)States.jump);
         }
 
@@ -62,8 +61,9 @@ namespace Platformer2D.Player
             Debug.Log($"Current PlayerScore = {model.Score}");
             
             // Вызов события обновления счета, если оно не пустое
-            OnScoreUpdate?.Invoke(point);
+            //OnScoreUpdate?.Invoke(point);
             Bus.Instance.Send(point);
+            Bus.Instance.SendBackground(model.Score);
         }                
     }
     

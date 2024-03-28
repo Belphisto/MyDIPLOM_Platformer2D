@@ -20,18 +20,16 @@ namespace Platformer2D.Platform
         [SerializeField] private SpriteRenderer stateColor;
 
         // Контроллер платформы
-        private PlatformController controller;
+        protected PlatformController controller;
 
         // Start is called before the first frame update
         void Start()
         {
-            //PlatformModel model = new PlatformModel(20);
-            //IScoreUpdate scoreUpdate = PlayerController.Instance;
-            //controller = new PlatformController(model, this);
+            
         }
 
         // Метод для установки модели платформы
-        public void SetModel(PlatformModel model)
+        public virtual void SetModel(PlatformModel model)
         {
             controller = new PlatformController(model, this);
             Debug.Log($"SetModel PlatformController model.TargetScore = {model.TargetScore}");

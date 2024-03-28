@@ -38,11 +38,11 @@ namespace Platformer2D.Level
         {
             this.model = model;
             this.view = view;
+            SpawnLevelBounds(model.Width, model.Height);
             SpawnCrystals();
             SpawnColorChangeBackground();
             SpawnPlatforms();
-            // Подписка на событие обновления счета от игрока
-            //PlayerController.OnScoreUpdate += HandleScoreUpdate;
+            //Подписка на событие отправки обновления счетчика очков на уровне в платформу
             Bus.Instance.SendScore += HandleScoreUpdate;
         }
 
@@ -100,6 +100,64 @@ namespace Platformer2D.Level
                 platformModel.StartPosition = position;
                 platform.SetModel(platformModel);
             }*/
+        }
+
+        // Метод для создания границ уровня
+        public void SpawnLevelBounds(float width, float height)
+        {
+            // Размеры платформы
+            float platformWidth = model.PlatformPrefabBounds.GetComponent<Collider2D>().bounds.size.x;
+            float platformHeight = model.PlatformPrefabBounds.GetComponent<Collider2D>().bounds.size.y;
+
+            // Количество платформ по горизонтали и вертикали
+            int horizontalPlatformCount = Mathf.RoundToInt(width / platformWidth);
+            int verticalPlatformCount = Mathf.RoundToInt(height / platformWidth);
+
+            // Создание горизонтальных границ
+            for (int i = 0; i < horizontalPlatformCount; i++)
+            {
+                // Верхняя граница
+                Vector3 topPosition = new Vector3(i * platformWidth, height, 0);
+                SpawnPlatform(topPosition);
+
+                // Нижняя граница
+                Vector3 bottomPosition = new Vector3(i * platformWidth, 0, 0);
+                SpawnPlatform(bottomPosition);
+            }
+
+            // Создание вертикальных границ
+            for (int i = 1; i < verticalPlatformCount - 1; i++)
+            {
+                // Левая граница
+                Vector3 leftPosition = new Vector3(0, i * platformHeight, 0);
+                SpawnPlatform(leftPosition, true);
+
+                // Правая граница
+                Vector3 rightPosition = new Vector3((horizontalPlatformCount - 1) * platformWidth, i * platformWidth, 0);
+                SpawnPlatform(rightPosition, true);
+            }
+
+        }
+
+        // Метод для создания платформы на заданной позиции
+        private void SpawnPlatform(Vector3 position, bool rotate = false)
+        {
+            var platform = UnityEngine.Object.Instantiate(model.PlatformPrefab, position, Quaternion.identity);
+            var platformModel = new PlatformModel(20,0);
+            platformModel.StartPosition = position;
+            platform.SetModel(platformModel);
+
+           // Если нужно повернуть платформу
+            if (rotate)
+            {
+                // Поворачиваем платформу на 90 градусов
+                platform.transform.Rotate(0, 0, 90);
+
+                // Изменяем размеры платформы
+                var collider = platform.GetComponent<BoxCollider2D>(); // Изменено на BoxCollider2D
+                var size = collider.size;
+                collider.size = new Vector2(size.y, size.x);
+            }
         }
 
         // Метод для обработки обновления счета от игрока

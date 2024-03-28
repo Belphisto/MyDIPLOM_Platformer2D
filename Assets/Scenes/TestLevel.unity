@@ -154,8 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystalPrefab: {fileID: 3605744643659204915, guid: 526dc0e27312f144f83bb0416caed09f, type: 3}
   platformPrefab: {fileID: 3407657865528272107, guid: 7df121b0d61a6e1499fac02735d7f792, type: 3}
+  platformPrefabBounds: {fileID: 3963858702236282452, guid: d46c0ae6244614a4db8567272e56fed2, type: 3}
   platformPrefabSpecial1: {fileID: 1100221928169510135, guid: 4725512c4b0edea4b941248dc55b090a, type: 3}
-  platformPrefabSpecial2: {fileID: 0}
+  platformPrefabSpecial2: {fileID: 2371862275370533173, guid: b2c6bcd9462c29741bb41370f1dd2153, type: 3}
   backgroundPrefab: {fileID: 798091650331820057, guid: 0299c429b031fd34ebd930329934c748, type: 3}
 --- !u!4 &617902087
 Transform:
@@ -294,6 +295,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7874989137438293534, guid: 2f3be186abc3f88499200b6f9d9ace3a, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874989137438293534, guid: 2f3be186abc3f88499200b6f9d9ace3a, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []

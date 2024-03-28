@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Platformer2D.Player;
 
-public class GravityPlatformController : MonoBehaviour
+namespace Platformer2D.Platform
 {
-    // Start is called before the first frame update
-    void Start()
+    public class GravityPlatformController : PlatformController
     {
-        
-    }
+        private PlatformModel _model;
+        private PlatformView _view;
+        private bool isMoving = false;
 
-    // Update is called once per frame
-    void Update()
-    {
+        private float _direction = 1f;
         
+        public GravityPlatformController(PlatformModel model, PlatformView view) : base(model, view)
+        {
+            _model = model;
+            _view = view;
+        }
+
+        // Метод для обработки взаимодействия с платформой
+        public void HandleInteraction(bool isOnPlatform)
+        {
+            PlayerController.Instance.ChangeGravity();
+        }
     }
 }
+

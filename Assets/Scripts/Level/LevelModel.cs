@@ -22,6 +22,7 @@ namespace Platformer2D.Level
         // Конкретные префабы для кристаллов, платформ и фона
         private CrystalView _crystalPrefab;
         private PlatformView _platformPrefab;
+        private PlatformView _platformBounds;
 
         private PlatformView _platformPrefabSpecial1;
         private PlatformView _platformPrefabSpecial2;
@@ -36,12 +37,15 @@ namespace Platformer2D.Level
         private int _crystalCount;
         private int _currentScore;
 
+        public float Width { get; set; }
+        public float Height { get; set; }
+
         // Свойства для доступа к приватным полям
         public CrystalView СrystalPrefab {get => _crystalPrefab; set => _crystalPrefab = value;}
         public PlatformView PlatformPrefab {get => _platformPrefab; set => _platformPrefab = value;}
         public PlatformView PlatformPrefabSpecial1 {get => _platformPrefabSpecial1; set => _platformPrefabSpecial1 = value;}
        // public PlatformView PlatformPrefabSpecial2 {get => _platformPrefabSpecial2; set => _platformPrefabSpecial2 = value;}
-
+        public PlatformView PlatformPrefabBounds {get => _platformBounds; set => _platformBounds = value;}
         public BackgroundView BackgroundPrefab {get => _backgroundPrefab; set => _backgroundPrefab = value;}
         public List<Vector3> PositionsCrystal {get => _positionsCrystal; set => _positionsCrystal = value;}
         public List<Vector3> PositionsPlatfroms {get => _positionsPlatforms; set => _positionsPlatforms = value;}
@@ -60,18 +64,21 @@ namespace Platformer2D.Level
         public LevelModel(CrystalView crystalPrefab, 
             PlatformView platform , 
             PlatformView special1, 
-            //PlatformView special2, 
+            //PlatformView special2,
+            PlatformView bounds, 
             BackgroundView backgroundPrefab, 
             List<Vector3> positions, 
             List<Vector3> positionsPLatforms,
             List<Vector3> positionsPLatformsSpecial1,
             //List<Vector3> positionsPLatformsSpecial2,
-            int score, int count)
+
+            int score, int count, float x, float y)
         {
             _crystalPrefab = crystalPrefab;
             _platformPrefab = platform;
             _platformPrefabSpecial1 = special1;
             //_platformPrefabSpecial2 = special2;
+            _platformBounds = bounds;
             _backgroundPrefab = backgroundPrefab;
             _positionsCrystal = positions;
             _positionsPlatforms = positionsPLatforms;
@@ -80,6 +87,8 @@ namespace Platformer2D.Level
             _totalScore = score;
             _crystalCount = count;
             _currentScore = 0;
+            Width = x;
+            Height = y;
         }
 
         // Метод для увеличения текущего счета

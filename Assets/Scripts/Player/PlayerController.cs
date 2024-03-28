@@ -64,6 +64,12 @@ namespace Platformer2D.Player
             //OnScoreUpdate?.Invoke(point);
             Bus.Instance.Send(point);
             Bus.Instance.SendBackground(model.Score);
+        }
+
+        //Метод для управления гравитацией
+        public void ChangeGravity()
+        {
+            Physics2D.gravity = Physics2D.gravity *-1;
         }                
     }
     

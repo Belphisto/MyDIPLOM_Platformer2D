@@ -48,7 +48,12 @@ namespace Platformer2D.Player
         {
             // применение силы прыжка
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
-        }        
+        }    
+
+        public void FlipY()
+        {
+            _sprite.flipY = !_sprite.flipY;
+        }    
     
         // Метод на каждом кадре
         void Update()

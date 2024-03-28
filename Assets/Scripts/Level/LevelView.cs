@@ -21,6 +21,7 @@ namespace Platformer2D.Level
         // Префабы для кристаллов, платформ и фона - задаются на игровой сцене
         [SerializeField] public CrystalView crystalPrefab;
         [SerializeField] public PlatformView platformPrefab;
+        [SerializeField] public PlatformView platformPrefabBounds;
         [SerializeField] public PlatformView platformPrefabSpecial1;
         [SerializeField] public PlatformView platformPrefabSpecial2;
         [SerializeField] public BackgroundView backgroundPrefab;
@@ -72,6 +73,7 @@ namespace Platformer2D.Level
                 platformPrefab,
                 platformPrefabSpecial1,
                 //platformPrefabSpecial2,
+                platformPrefabBounds,
                 backgroundPrefab,
                 coordinatesCrystal,
                 coordinatesPlatforms,
@@ -80,7 +82,9 @@ namespace Platformer2D.Level
                 // параметр целевого значения счета будет задаваться генератором
                 100,
                 // параметр количества кристаллов на уровне будет задаваться генератором
-                4
+                4,
+                200,
+                300
             );
             controller = new LevelController(model, this);
         }

@@ -63,6 +63,18 @@ namespace Platformer2D.Platform
             controller.Update();
         }
 
+        public void Disappear()
+        {
+            stateColor.gameObject.SetActive(false);
+            stateColorless.gameObject.SetActive(false);
+        }
+
+        public void Appear()
+        {
+            stateColor.gameObject.SetActive(controller.IsColor());
+            stateColorless.gameObject.SetActive(!controller.IsColor());
+        }
+
     }
     
 }

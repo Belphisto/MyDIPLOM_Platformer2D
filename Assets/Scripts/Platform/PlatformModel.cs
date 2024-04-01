@@ -19,12 +19,15 @@ namespace Platformer2D.Platform
         public int TargetScore {get => _targetScore; set => _targetScore = value;}
         public float Speed {get => _speed; set => _speed = value;}
 
+        public bool IsColor {get; set;}
+
         // Конструктор класса PlatformModel
         // Принимает целевой счет
         public PlatformModel(int score, float speed)
         {
             _targetScore = score;
             _speed = speed;
+            IsColor = false;
         }
     }
 

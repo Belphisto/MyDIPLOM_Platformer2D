@@ -45,6 +45,16 @@ namespace Platformer2D.Platform
         {
             
         }
+
+        public virtual void OnCollisionEnter2D(Collision2D collision)
+        {
+            
+        }
+
+        public bool IsColor()
+        {
+            return model.IsColor;
+        }
     }
 
 }

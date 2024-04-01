@@ -26,14 +26,6 @@ namespace Platformer2D.Platform
             }
             else
             {
-                // Перемещение платформы между начальной и конечной точками
-                /*float distance = Vector3.Distance(_model.StartPosition, _model.EndPosition);
-                if (distance <= 0.1f)
-                {
-                    _direction *= -1f; // Изменение направления движения
-                }
-                _view.transform.position = Vector3.MoveTowards(_view.transform.position, _direction > 0 ? _model.EndPosition : _model.StartPosition, _model.Speed * Time.deltaTime);*/
-                // Перемещение платформы вверх-вниз на 4 единицы
                 float verticalDistance = 4f;
                 Vector3 targetPosition = _model.StartPosition + Vector3.up * verticalDistance * _direction;
 

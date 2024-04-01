@@ -9,9 +9,9 @@ namespace Platformer2D.Platform
     {
         private PlatformModel _model;
         private PlatformView _view;
-        private bool isMoving = false;
+        //private bool isMoving = false;
 
-        private float _direction = 1f;
+        //private float _direction = 1f;
         
         public GravityPlatformController(PlatformModel model, PlatformView view) : base(model, view)
         {

@@ -18,8 +18,8 @@ namespace Platformer2D.Platform
     public class PlatformController 
     {
         // Ссылки на модель и представление платформы
-        private PlatformModel model;
-        private PlatformView view;
+        protected PlatformModel model;
+        protected PlatformView view;
         
         // Конструктор контроллера платформы
         // Принимает модель и представление

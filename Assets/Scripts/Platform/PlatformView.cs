@@ -27,6 +27,12 @@ namespace Platformer2D.Platform
         {
             
         }
+        
+        public Vector2 GetColliderSize()
+        {
+            BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
+            return boxCollider.size;
+        }
 
         // Метод для установки модели платформы
         public virtual void SetModel(PlatformModel model)

@@ -22,8 +22,7 @@ namespace Platformer2D.Level
         [SerializeField] public CrystalView crystalPrefab;
         [SerializeField] public PlatformView platformPrefab;
         [SerializeField] public PlatformView platformPrefabBounds;
-        [SerializeField] public PlatformView platformPrefabSpecial1;
-        [SerializeField] public PlatformView platformPrefabSpecial2;
+        [SerializeField] public PlatformView platformPrefabSpecial;
         [SerializeField] public BackgroundView backgroundPrefab;
 
         // Ссылка на контроллер уровня
@@ -32,9 +31,11 @@ namespace Platformer2D.Level
         // Вызывается перед первым обновлением кадра
         void Start()
         {
-            // Координаты для размещения кристаллов и платформ
-            // Будут задаваться из процедурной генерации
-            // На данном этапе задаются вручную для тестовой сборки уровння
+            CreateModel();
+        }
+
+        private void CreateModel()
+        {
             List<Vector3> coordinatesCrystal = new List<Vector3>
             {
                 new Vector3(-1,-1, 0),
@@ -50,7 +51,7 @@ namespace Platformer2D.Level
                 new Vector3(-2, -1, 0)
             };
 
-            List<Vector3> coordinatesPlatformsSpecial1 = new List<Vector3>
+            List<Vector3> coordinatesPlatformsSpecial = new List<Vector3>
             {
                 new Vector3(-2,-2, 0),
                 new Vector3(-1, -1, 0),
@@ -58,35 +59,35 @@ namespace Platformer2D.Level
                 new Vector3(5, -1, 0)
             };
 
-            List<Vector3> coordinatesPlatformsSpecial2 = new List<Vector3>
-            {
-                new Vector3(-10,-4, 0),
-                new Vector3(-9, -3, 0),
-                new Vector3(-4, -2, 0),
-                new Vector3(-4, -3, 0)
-            };
-
-            // Создание модели и контроллера уровня
+            // Создание модели уровня
             LevelModel model = new LevelModel
             (
-                crystalPrefab,
-                platformPrefab,
-                platformPrefabSpecial1,
-                platformPrefabSpecial2,
-                platformPrefabBounds,
-                backgroundPrefab,
                 coordinatesCrystal,
-                coordinatesPlatforms,
-                coordinatesPlatformsSpecial1,
-                coordinatesPlatformsSpecial2,
-                // параметр целевого значения счета будет задаваться генератором
+                coordinatesPlatforms, 
+                coordinatesPlatformsSpecial,
+                // Здесь вы можете добавить остальные параметры модели
                 100,
-                // параметр количества кристаллов на уровне будет задаваться генератором
                 4,
                 20,
                 30
             );
-            controller = new LevelController(model, this);
+
+            // Установка модели
+            SetModel(model);
+        }
+
+        public void SetModel(LevelModel model)
+        {
+            // Создание GameObjectModel для каждого префаба
+            model.Crystal.ForEach(c => c.Prefab = crystalPrefab);
+            model.Platform.ForEach(p => p.Prefab = platformPrefab);
+            model.SpecialPlatform.ForEach(sp => sp.Prefab = platformPrefabSpecial);
+            model.Background.Prefab = backgroundPrefab;
+
+            
+            model.Boundarycalculation(platformPrefabBounds.GetColliderSize());
+            model.Bounds.ForEach(b => b.Prefab = platformPrefabBounds);
+            controller = new LevelController(model, this); 
         }
 
 

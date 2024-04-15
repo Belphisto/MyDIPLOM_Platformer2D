@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using Platformer2D.Crystal;
@@ -19,88 +20,69 @@ namespace Platformer2D.Level
     // Класс LevelModel представляет модель данных для игрового уровня
     public class LevelModel 
     {
-        // Конкретные префабы для кристаллов, платформ и фона
-        private CrystalView _crystalPrefab;
-        private PlatformView _platformPrefab;
-        private PlatformView _platformBounds;
+        public List<GameObjectModel> Crystal { get; set; }
+        public List<GameObjectModel> Platform { get; set; }
+        public List<GameObjectModel> SpecialPlatform { get; set; }
+        public List<GameObjectModel> Bounds { get; set; }
+        public GameObjectModel Background { get; set; }
 
-        private PlatformView _platformPrefabSpecial1;
-        private PlatformView _platformPrefabSpecial2;
-        private BackgroundView _backgroundPrefab;
-        // Позиции размещения кристаллов, платформ
-        private List<Vector3> _positionsCrystal;
-        private List<Vector3> _positionsPlatforms;
-        private List<Vector3> _positionsPlatformsSpecial1;
-        private List<Vector3> _positionsPlatformsSpecial2;
-        // Общий счет, количество кристаллов и текущий счет игрока на конкретном уровне
-        private int _totalScore;
-        private int _crystalCount;
-        private int _currentScore;
-
+        // Общий счет, количество кристаллов и текущий счет игрока
         public float Width { get; set; }
         public float Height { get; set; }
 
-        // Свойства для доступа к приватным полям
-        public CrystalView СrystalPrefab {get => _crystalPrefab; set => _crystalPrefab = value;}
-        public PlatformView PlatformPrefab {get => _platformPrefab; set => _platformPrefab = value;}
-        public PlatformView PlatformPrefabSpecial1 {get => _platformPrefabSpecial1; set => _platformPrefabSpecial1 = value;}
-        public PlatformView PlatformPrefabSpecial2 {get => _platformPrefabSpecial2; set => _platformPrefabSpecial2 = value;}
-        public PlatformView PlatformPrefabBounds {get => _platformBounds; set => _platformBounds = value;}
-        public BackgroundView BackgroundPrefab {get => _backgroundPrefab; set => _backgroundPrefab = value;}
-        public List<Vector3> PositionsCrystal {get => _positionsCrystal; set => _positionsCrystal = value;}
-        public List<Vector3> PositionsPlatfroms {get => _positionsPlatforms; set => _positionsPlatforms = value;}
-        public List<Vector3> PositionsPlatfromsSpecial1 {get => _positionsPlatformsSpecial1; set => _positionsPlatformsSpecial1 = value;}
-        public List<Vector3> PositionsPlatfromsSpecial2 {get => _positionsPlatformsSpecial1; set => _positionsPlatformsSpecial1 = value;}
+        public int TotalScore { get; set; }
+        public int CrystalCount { get; set; }
+        public int CurrentScore { get; set; }
 
-        public int TotalScore {get => _totalScore; set => _totalScore= value;}
-        public int CrystalCount {get => _crystalCount; set => _crystalCount = value;}
-        public int CurrentScore {get => _currentScore; set => _currentScore = value;}
-
-        // Конструктор класса LevelModel
-        // Принимает префабы: кристалл, платформа, фон
-        //  Позиции для размещения: кристаллов, платформ
-        //  Целевой счет на уровне и количество кристаллов
-        //  Устанавилвает текущий счет уровня в 0
-        public LevelModel(CrystalView crystalPrefab, 
-            PlatformView platform , 
-            PlatformView special1, 
-            PlatformView special2,
-            PlatformView bounds, 
-            BackgroundView backgroundPrefab, 
-            List<Vector3> positions, 
-            List<Vector3> positionsPLatforms,
-            List<Vector3> positionsPLatformsSpecial1,
-            List<Vector3> positionsPLatformsSpecial2,
-
+        public LevelModel(List<Vector3> crystalPositions,
+            List<Vector3> platformPositions,
+            List<Vector3> specialPlatformPositions, 
             int score, int count, float x, float y)
         {
-            _crystalPrefab = crystalPrefab;
-            _platformPrefab = platform;
-            _platformPrefabSpecial1 = special1;
-            _platformPrefabSpecial2 = special2;
-            _platformBounds = bounds;
-            _backgroundPrefab = backgroundPrefab;
-            _positionsCrystal = positions;
-            _positionsPlatforms = positionsPLatforms;
-            _positionsPlatformsSpecial1 = positionsPLatformsSpecial1;
-            _positionsPlatformsSpecial2 = positionsPLatformsSpecial2;
-            _totalScore = score;
-            _crystalCount = count;
-            _currentScore = 0;
+            Crystal = crystalPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
+            Platform = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
+            SpecialPlatform = specialPlatformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
+            Background = new GameObjectModel { Position = new Vector3 (0,0,0) };
+
+            TotalScore = score;
+            CrystalCount = count;
+            CurrentScore = 0;
             Width = x;
             Height = y;
+
+            Bounds = new List<GameObjectModel>();
+        }
+
+        public void Boundarycalculation(Vector2 size)
+        {
+            // Расчет количества платформ для каждой стены
+            int numPlatformsWidth = Mathf.CeilToInt(Width / size.x);
+            int numPlatformsHeight = Mathf.CeilToInt(Height / size.y);
+
+            // Создание GameObjectModel для каждой платформы в каждой стене
+            
+            for (int i = 0; i < numPlatformsWidth; i++)
+            {
+                Bounds.Add(new GameObjectModel { Position = new Vector3(i * size.x, 0, 0) }); // Нижняя стена
+                Bounds.Add(new GameObjectModel { Position = new Vector3(i * size.x, Height, 0) }); // Верхняя стена
+            }
+            for (int i = 0; i < numPlatformsHeight; i++)
+            {
+                Bounds.Add(new GameObjectModel { Position = new Vector3(0, i * size.y, 0) }); // Левая стена
+                Bounds.Add(new GameObjectModel { Position = new Vector3(Width, i * size.y, 0) }); // Правая стена
+            }
         }
 
         // Метод для увеличения текущего счета
         public void IncrementScore(int amount)
         {
-            _currentScore += amount;
+            CurrentScore += amount;
         }
 
         // Метод для уменьшения текущего счета
         public void DecrementScore(int amount)
         {
-            _currentScore -= amount;
+            CurrentScore -= amount;
         }
 
     }

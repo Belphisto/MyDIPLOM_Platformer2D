@@ -219,9 +219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystalPrefab: {fileID: 7052429631354046661, guid: 38943eac1c31c8f439885454fcbc2270, type: 3}
   platformPrefab: {fileID: 5333332939864157486, guid: 8b5a7a5f5cb280143a7efce41783be33, type: 3}
-  platformPrefabBounds: {fileID: 0}
-  platformPrefabSpecial1: {fileID: 7290375528687644817, guid: 21a2ec09c9bfb3845bb0e3275ee0a9f3, type: 3}
-  platformPrefabSpecial2: {fileID: 608407443582576372, guid: 704004ce6c9f81e45b1f461374c4ff8e, type: 3}
+  platformPrefabBounds: {fileID: 3963858702236282452, guid: d46c0ae6244614a4db8567272e56fed2, type: 3}
+  platformPrefabSpecial: {fileID: 9204337901442141460, guid: fb7a7d4a149ae154498660fe6aea76b4, type: 3}
   backgroundPrefab: {fileID: 2631040793332215595, guid: 9018d924e6a207440bbc657fac3c56e2, type: 3}
 --- !u!4 &639420411
 Transform:

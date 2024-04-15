@@ -14,6 +14,9 @@ namespace Platformer2D.Player
         private PlayerView view;
         public PlayerView View {get => view;}
 
+        // Флаг для отслеживания инвертированного управления
+        private bool isControlsInverted = false;
+
         // Определение события увеличения счетчика очков
         //public static event Action<int> OnScoreUpdate;
 
@@ -31,6 +34,9 @@ namespace Platformer2D.Player
             this.model = model;
             this.view = view;
             Instance = this;
+
+            // Подписка на событие инвертирования управления
+            Bus.Instance.InvertControls += InvertControls;
         }
 
         // Метод, вызываемый каждый кадр
@@ -39,12 +45,22 @@ namespace Platformer2D.Player
             // Управление анимацией и движением персонажа
             // Обработка пользовательского ввода
             if (model.IsGrounded) view.Animator.SetInteger("state", (int)States.idle);
-        
-            if (Input.GetButton("Horizontal"))
-                view.Run(view.transform.right * Input.GetAxis("Horizontal"), model.Speed);
-                //Debug.Log("move!! Horizontal");
+            float input = Input.GetAxis("Horizontal");
+
+            // Инвертирование ввода, если управление инвертировано
+            if (isControlsInverted)
+            {
+                input *= -1;
+            }
+            if (input != 0)
+            {    
+                view.Run(view.transform.right * input, model.Speed);
+            }
+
             if (model.IsGrounded && Input.GetButtonDown("Jump"))
+            {
                 view.Jump(view.GetComponent<Rigidbody2D>(), model.JumpForce);
+            }
         }
 
         public void CheckGround()
@@ -71,6 +87,11 @@ namespace Platformer2D.Player
         {
             Physics2D.gravity = Physics2D.gravity *-1;
             view.FlipY();
+        }
+
+        public void InvertControls()
+        {
+            isControlsInverted = !isControlsInverted;
         }                
     }
     

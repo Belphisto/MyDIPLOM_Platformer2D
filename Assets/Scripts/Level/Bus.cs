@@ -21,4 +21,10 @@ public class Bus
         SendBackgroundScore?.Invoke(inpt);
     }
     
+    //Событие для инертирования управления
+    public event Action InvertControls;
+    public void SendInvertControls()
+    {
+        InvertControls?.Invoke();
+    }
 }

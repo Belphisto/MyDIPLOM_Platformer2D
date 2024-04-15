@@ -38,10 +38,11 @@ namespace Platformer2D.Level
         {
             this.model = model;
             this.view = view;
-            //SpawnLevelBounds(model.Width, model.Height);
+
             SpawnCrystals();
             SpawnColorChangeBackground();
             SpawnPlatforms();
+            SpawnPlayer();
             //Подписка на событие отправки обновления счетчика очков на уровне в платформу
             Bus.Instance.SendScore += HandleScoreUpdate;
         }
@@ -51,9 +52,9 @@ namespace Platformer2D.Level
         {
             int scorePerCrystal = model.TotalScore / model.CrystalCount;
             Debug.Log($"LevelController :SpawnCrystals() scorePerCrystal= {scorePerCrystal}");
-            foreach (var position in model.PositionsCrystal)
+            foreach (var gameObjectModel in model.Crystal)
             {
-                var crystal = UnityEngine.Object.Instantiate(model.СrystalPrefab, position, Quaternion.identity);
+                var crystal = (CrystalView) UnityEngine.Object.Instantiate(gameObjectModel.Prefab, gameObjectModel.Position, Quaternion.identity);
                 var crystalModel = new CrystalModel(scorePerCrystal);
                 // Созданная с заданными параметрами модель кристалла передается CrystalModel в представление CrystalView
                 crystal.SetModel(crystalModel); 
@@ -72,94 +73,24 @@ namespace Platformer2D.Level
         // Метод для создания платформ на уровне
         public void SpawnPlatforms()
         {
-            //Размещение статичных платформ
-            foreach (var position in model.PositionsPlatfroms)
-            {
-                var platform = UnityEngine.Object.Instantiate(model.PlatformPrefab, position, Quaternion.identity);
-                // Создание модели платформы с количеством очков, необходимым для изменения цвета платформы
-                var platformModel = new PlatformModel(20,0);
-                platformModel.StartPosition = position;
-                platform.SetModel(platformModel);
-            }
+            SpawnPlatform(model.Platform, 20, 0);
+            SpawnPlatform(model.SpecialPlatform, 40, 0.8f);
+            SpawnPlatform(model.Bounds, 40, 0f);
 
-            //Размещение платформ препятствия 1
-            foreach (var position in model.PositionsPlatfromsSpecial1)
+        }
+
+        // Метод для создания платформы
+        private void SpawnPlatform(List<GameObjectModel> platformModels, int score, float speed)
+        {
+            foreach (var gameObjectModel in platformModels)
             {
-                var platform = UnityEngine.Object.Instantiate(model.PlatformPrefabSpecial1, position, Quaternion.identity);
-                // Создание модели платформы с количеством очков, необходимым для изменения цвета платформы
-                var platformModel = new PlatformModel(40, 0.8f);
-                platformModel.StartPosition = position;
-                platform.SetModel(platformModel);
-            }
-            
-            //Размещение платформ препятствия 2
-            foreach (var position in model.PositionsPlatfromsSpecial2)
-            {
-                var platform = UnityEngine.Object.Instantiate(model.PlatformPrefabSpecial2, position, Quaternion.identity);
-                // Создание модели платформы с количеством очков, необходимым для изменения цвета платформы
-                var platformModel = new PlatformModel(60, 0f);
-                platformModel.StartPosition = position;
+                var platform = (PlatformView) UnityEngine.Object.Instantiate(gameObjectModel.Prefab, gameObjectModel.Position, Quaternion.identity);
+                var platformModel = new PlatformModel(score, speed);
+                platformModel.StartPosition = gameObjectModel.Position;
                 platform.SetModel(platformModel);
             }
         }
 
-        // Метод для создания границ уровня
-        /*public void SpawnLevelBounds(float width, float height)
-        {
-            // Размеры платформы
-            float platformWidth = model.PlatformPrefabBounds.GetComponent<Collider2D>().bounds.size.x;
-            float platformHeight = model.PlatformPrefabBounds.GetComponent<Collider2D>().bounds.size.y;
-
-            // Количество платформ по горизонтали и вертикали
-            int horizontalPlatformCount = Mathf.RoundToInt(width / platformWidth);
-            int verticalPlatformCount = Mathf.RoundToInt(height / platformWidth);
-
-            // Создание горизонтальных границ
-            for (int i = 0; i < horizontalPlatformCount; i++)
-            {
-                // Верхняя граница
-                Vector3 topPosition = new Vector3(i * platformWidth, height, 0);
-                SpawnPlatform(topPosition);
-
-                // Нижняя граница
-                Vector3 bottomPosition = new Vector3(i * platformWidth, 0, 0);
-                SpawnPlatform(bottomPosition);
-            }
-
-            // Создание вертикальных границ
-            for (int i = 1; i < verticalPlatformCount - 1; i++)
-            {
-                // Левая граница
-                Vector3 leftPosition = new Vector3(0, i * platformHeight, 0);
-                SpawnPlatform(leftPosition, true);
-
-                // Правая граница
-                Vector3 rightPosition = new Vector3((horizontalPlatformCount - 1) * platformWidth, i * platformWidth, 0);
-                SpawnPlatform(rightPosition, true);
-            }
-
-        }
-
-        // Метод для создания платформы на заданной позиции
-        private void SpawnPlatform(Vector3 position, bool rotate = false)
-        {
-            var platform = UnityEngine.Object.Instantiate(model.PlatformPrefab, position, Quaternion.identity);
-            var platformModel = new PlatformModel(20,0);
-            platformModel.StartPosition = position;
-            platform.SetModel(platformModel);
-
-           // Если нужно повернуть платформу
-            if (rotate)
-            {
-                // Поворачиваем платформу на 90 градусов
-                platform.transform.Rotate(0, 0, 90);
-
-                // Изменяем размеры платформы
-                var collider = platform.GetComponent<BoxCollider2D>(); // Изменено на BoxCollider2D
-                var size = collider.size;
-                collider.size = new Vector2(size.y, size.x);
-            }
-        }*/
 
         // Метод для обработки обновления счета от игрока
         public void HandleScoreUpdate(int score)
@@ -171,6 +102,22 @@ namespace Platformer2D.Level
             OnScoreUpdatePlatfroms?.Invoke(model.CurrentScore);
         }
 
+        private void SpawnPlayer()
+        {
+            // Найти персонажа по тегу
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            // Проверить, найден ли персонаж
+            if (player != null)
+            {
+                // Изменить координаты персонажа
+                player.transform.position = new Vector3(2, 2, 0);
+            }
+            else
+            {
+                Debug.Log("Персонаж с тегом 'Player' не найден");
+            }
+        }
     }
 }
 

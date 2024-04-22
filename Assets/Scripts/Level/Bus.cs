@@ -27,4 +27,10 @@ public class Bus
     {
         InvertControls?.Invoke();
     }
+
+    public event Action <int, CrystalType> UpdateCrystal;
+    public void SendCrystal(int count, CrystalType type)
+    {
+        UpdateCrystal?.Invoke(count, type);
+    }
 }

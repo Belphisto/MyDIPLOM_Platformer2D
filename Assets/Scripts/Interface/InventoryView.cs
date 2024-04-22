@@ -10,22 +10,28 @@ public class InventoryView : MonoBehaviour
     public Text CountBlue;
     public Text CountSky;
 
-    private Dictionary<CrystalType, Text> scoreTexts;
+    private Dictionary<LocationType, Text> scoreTexts;
     // Start is called before the first frame update
     void Start()
     {
-        scoreTexts = new Dictionary<CrystalType, Text>
+        scoreTexts = new Dictionary<LocationType, Text>
         {
-            { CrystalType.Red, CountRed },
-            { CrystalType.Green, CountGreen },
-            { CrystalType.Blue, CountBlue },
-            { CrystalType.Sky, CountSky }
+            { LocationType.Red, CountRed },
+            { LocationType.Green, CountGreen },
+            { LocationType.Blue, CountBlue },
+            { LocationType.Sky, CountSky }
         };
+
+        // Установить начальное значение текстовых полей в 0
+        foreach (var text in scoreTexts.Values)
+        {
+            text.text = "0";
+        }
 
         Bus.Instance.UpdateCrystal += UpdateText;
     }
 
-    private void UpdateText(int score, CrystalType type)
+    private void UpdateText(int score, LocationType type)
     {
         if (scoreTexts.ContainsKey(type))
             scoreTexts[type].text = score.ToString();

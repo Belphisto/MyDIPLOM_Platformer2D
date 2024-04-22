@@ -533,7 +533,7 @@ GameObject:
   - component: {fileID: 315259965}
   - component: {fileID: 315259967}
   m_Layer: 0
-  m_Name: CountRed
+  m_Name: CountGreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2143,7 +2143,7 @@ GameObject:
   - component: {fileID: 1783546438}
   - component: {fileID: 1783546437}
   m_Layer: 0
-  m_Name: CountRed
+  m_Name: CountBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2301,7 +2301,7 @@ GameObject:
   - component: {fileID: 1952748558}
   - component: {fileID: 1952748557}
   m_Layer: 0
-  m_Name: CountRed
+  m_Name: CountSky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2640,6 +2640,7 @@ GameObject:
   - component: {fileID: 2071731923}
   - component: {fileID: 2071731922}
   - component: {fileID: 2071731921}
+  - component: {fileID: 2071731924}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -2736,6 +2737,22 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2071731924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071731919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972aaace8b98ebe4db70afa1086d7477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CountRed: {fileID: 1657050532}
+  CountGreen: {fileID: 315259965}
+  CountBlue: {fileID: 1783546437}
+  CountSky: {fileID: 1952748557}
 --- !u!1001 &289973648228348997
 PrefabInstance:
   m_ObjectHideFlags: 0

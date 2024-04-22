@@ -11,13 +11,13 @@ namespace Platformer2D.Crystal
         private int _score;
         public int Score {get => _score; set => _score = value;}
 
-        private CrystalType _crystalType;
+        private LocationType _crystalType;
 
-        public CrystalType Type {get => _crystalType;}
+        public LocationType Type {get => _crystalType;}
 
         // Конструктор класса CrystalModel
         // Принимает счет кристалла
-        public CrystalModel(int score, CrystalType crystalType)
+        public CrystalModel(int score, LocationType crystalType)
         {
             _score = score;
             _crystalType = crystalType;

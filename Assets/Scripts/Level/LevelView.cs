@@ -25,6 +25,8 @@ namespace Platformer2D.Level
         [SerializeField] public PlatformView platformPrefabSpecial;
         [SerializeField] public BackgroundView backgroundPrefab;
 
+        public CrystalType crystalType;
+
         // Ссылка на контроллер уровня
         private LevelController controller;
 

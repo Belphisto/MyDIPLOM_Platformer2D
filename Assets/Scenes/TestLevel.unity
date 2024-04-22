@@ -1141,6 +1141,7 @@ MonoBehaviour:
   platformPrefabBounds: {fileID: 3963858702236282452, guid: d46c0ae6244614a4db8567272e56fed2, type: 3}
   platformPrefabSpecial: {fileID: 9204337901442141460, guid: fb7a7d4a149ae154498660fe6aea76b4, type: 3}
   backgroundPrefab: {fileID: 2631040793332215595, guid: 9018d924e6a207440bbc657fac3c56e2, type: 3}
+  crystalType: 0
 --- !u!4 &639420411
 Transform:
   m_ObjectHideFlags: 0
@@ -2965,6 +2966,10 @@ PrefabInstance:
     - target: {fileID: 2339309116332025115, guid: 9dd6afcaaf6efe746bdc767f8aed2221, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2494991899540777728, guid: 9dd6afcaaf6efe746bdc767f8aed2221, type: 3}
+      propertyPath: crystalType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2494991899540777728, guid: 9dd6afcaaf6efe746bdc767f8aed2221, type: 3}
       propertyPath: platformPrefabSpecial

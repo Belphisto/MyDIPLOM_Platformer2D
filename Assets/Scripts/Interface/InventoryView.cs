@@ -11,6 +11,8 @@ public class InventoryView : MonoBehaviour
     public Text CountSky;
 
     private Dictionary<LocationType, Text> scoreTexts;
+
+    private List<string> itemType;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class InventoryView : MonoBehaviour
         }
 
         Bus.Instance.UpdateCrystal += UpdateText;
+        itemType = new List<string>{"red", "green", "blue", "sky", "key", "doorelement"};
     }
 
     private void UpdateText(int score, LocationType type)

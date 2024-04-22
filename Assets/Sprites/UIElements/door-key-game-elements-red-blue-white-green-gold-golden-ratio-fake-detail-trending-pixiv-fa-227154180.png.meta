@@ -1,0 +1,360 @@
+fileFormatVersion: 2
+guid: a9db61c909fe5084db9a60c47d554123
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_0
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 154
+        width: 168
+        height: 306
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d887acfa7f2955d4ab7b839e3ce3be6d
+      internalID: -210308977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_1
+      rect:
+        serializedVersion: 2
+        x: 1452
+        y: 150
+        width: 143
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a2e98afe90149c4aaae9103cb88cf45
+      internalID: -976694349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_2
+      rect:
+        serializedVersion: 2
+        x: 1846
+        y: 152
+        width: 120
+        height: 304
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 727d9294ee79ae946b30beb4bf3da9c4
+      internalID: 1935774976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_3
+      rect:
+        serializedVersion: 2
+        x: 2095
+        y: 142
+        width: 143
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cad4f6065c7787d4aac53520b0bd6299
+      internalID: 1828549960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 504
+        width: 428
+        height: 1004
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edf0686c4fa9f834dbfd759b1ef0fca1
+      internalID: 1049333290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_5
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 491
+        width: 430
+        height: 1014
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d455ae7a44eafe94697ccf1ae360ef72
+      internalID: -649318035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_6
+      rect:
+        serializedVersion: 2
+        x: 1079
+        y: 493
+        width: 419
+        height: 1008
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6896599e2e947140b9e826983f9cee6
+      internalID: -567440828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_7
+      rect:
+        serializedVersion: 2
+        x: 1555
+        y: 493
+        width: 427
+        height: 1006
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 488a45bee1d2a1b4f86142b538f2a9ec
+      internalID: -275670966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_8
+      rect:
+        serializedVersion: 2
+        x: 2049
+        y: 493
+        width: 434
+        height: 1006
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a45eaaa1e8ab5ab4da3b049befc64fad
+      internalID: -1253312317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_9
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 62
+        width: 507
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db82ed03b105c2d499e5cfce991bea95
+      internalID: 692245694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_0: -210308977
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_1: -976694349
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_2: 1935774976
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_3: 1828549960
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_4: 1049333290
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_5: -649318035
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_6: -567440828
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_7: -275670966
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_8: -1253312317
+      door-key-game-elements-red-blue-white-green-gold-golden-ratio-fake-detail-trending-pixiv-fa-227154180_9: 692245694
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

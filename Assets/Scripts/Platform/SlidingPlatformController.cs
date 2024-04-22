@@ -7,13 +7,11 @@ namespace Platformer2D.Platform
 {
     public class SlidingPlatformController: PlatformController
     {
-        private PlatformModel _model;
-        private PlatformView _view;
         private float slideImpulse = 10f; // Сила скольжения
         public SlidingPlatformController(PlatformModel model, PlatformView view) : base(model, view)
         {
-            _model = model;
-            _view = view;
+            this.model = model;
+            this.view = view;
         }
 
         // Метод для обработки столкновения с персонажем

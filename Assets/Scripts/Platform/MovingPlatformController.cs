@@ -6,38 +6,36 @@ namespace Platformer2D.Platform
 {
     public class MovingPlatformController : PlatformController
     {
-        private PlatformModel _model;
-        private PlatformView _view;
         private bool isMoving = false;
 
         private float _direction = 1f;
         
         public MovingPlatformController(PlatformModel model, PlatformView view) : base(model, view)
         {
-            _model = model;
-            _view = view;
+            this.model = model;
+            this.view = view;
         }
 
         public override void Update()
         {
             if (!isMoving)
             {
-                _view.StartCoroutine(StartMoving());
+                view.StartCoroutine(StartMoving());
             }
             else
             {
                 float verticalDistance = 4f;
-                Vector3 targetPosition = _model.StartPosition + Vector3.up * verticalDistance * _direction;
+                Vector3 targetPosition = model.StartPosition + Vector3.up * verticalDistance * _direction;
 
                 // Если достигли верхней или нижней точки, меняем направление движения
-                if (_view.transform.position.y >= _model.StartPosition.y + verticalDistance && _direction > 0 ||
-                    _view.transform.position.y <= _model.StartPosition.y && _direction < 0)
+                if (view.transform.position.y >= model.StartPosition.y + verticalDistance && _direction > 0 ||
+                    view.transform.position.y <= model.StartPosition.y && _direction < 0)
                 {
                     _direction *= -1f; // Изменение направления движения
                 }
 
                 // Перемещение платформы
-                _view.transform.position = Vector3.MoveTowards(_view.transform.position, targetPosition, _model.Speed * Time.deltaTime);
+                view.transform.position = Vector3.MoveTowards(view.transform.position, targetPosition, model.Speed * Time.deltaTime);
             }
         }
 

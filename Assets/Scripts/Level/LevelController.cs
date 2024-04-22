@@ -55,7 +55,7 @@ namespace Platformer2D.Level
             foreach (var gameObjectModel in model.Crystal)
             {
                 var crystal = (CrystalView) UnityEngine.Object.Instantiate(gameObjectModel.Prefab, gameObjectModel.Position, Quaternion.identity);
-                var crystalModel = new CrystalModel(scorePerCrystal);
+                var crystalModel = new CrystalModel(scorePerCrystal, view.crystalType);
                 // Созданная с заданными параметрами модель кристалла передается CrystalModel в представление CrystalView
                 crystal.SetModel(crystalModel); 
             }

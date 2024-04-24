@@ -10,6 +10,8 @@ public class InventoryView : MonoBehaviour
     public Text CountBlue;
     public Text CountSky;
 
+    public InventorySlot[] slots;  // Список слотов
+
     private Dictionary<LocationType, Text> scoreTexts;
 
     private List<string> itemType;
@@ -31,9 +33,25 @@ public class InventoryView : MonoBehaviour
         }
 
         Bus.Instance.UpdateCrystal += UpdateText;
-        itemType = new List<string>{"red", "green", "blue", "sky", "key", "doorelement"};
+        // Подписаться на событие активации слота
+        foreach (var slot in slots)
+        {
+            slot.OnActivate += HandleSlotActivation;
+        }
     }
 
+    // Обработчик активации слота
+    private void HandleSlotActivation(InventorySlot activatedSlot)
+    {
+        // Деактивировать все слоты, кроме активированного
+        foreach (var slot in slots)
+        {
+            if (slot != activatedSlot)
+            {
+                slot.Deactivate();
+            }
+        }
+    }
     private void UpdateText(int score, LocationType type)
     {
         if (scoreTexts.ContainsKey(type))

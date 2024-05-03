@@ -100,6 +100,8 @@ namespace Platformer2D.Level
             // Вызывает событие для передачи текущего счета на уровне в платформу
             // Обновляет счет платформ, когда счет игрока меняется
             OnScoreUpdatePlatfroms?.Invoke(model.CurrentScore);
+            Bus.Instance.SendLevelPercent(model.GetPercentLevel());
+            
         }
 
         private void SpawnPlayer()
@@ -117,6 +119,16 @@ namespace Platformer2D.Level
             {
                 Debug.Log("Персонаж с тегом 'Player' не найден");
             }
+        }
+
+        private void SpawnDoor()
+        {
+            
+        }
+
+        private void HandleUpdateLevelPercent()
+        {
+
         }
     }
 }

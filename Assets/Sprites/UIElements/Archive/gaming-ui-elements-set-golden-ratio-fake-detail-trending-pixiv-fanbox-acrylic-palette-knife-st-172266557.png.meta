@@ -121,7 +121,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: gaming-ui-elements-set-golden-ratio-fake-detail-trending-pixiv-fanbox-acrylic-palette-knife-st-172266557_0
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 176
+        width: 68
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddc7abcc45aca8d4d991ade6d0ddd640
+      internalID: 2049648649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +153,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      gaming-ui-elements-set-golden-ratio-fake-detail-trending-pixiv-fanbox-acrylic-palette-knife-st-172266557_0: 2049648649
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

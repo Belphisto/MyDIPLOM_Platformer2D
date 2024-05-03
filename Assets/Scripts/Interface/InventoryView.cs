@@ -5,16 +5,36 @@ using UnityEngine.UI;
 
 public class InventoryView : MonoBehaviour
 {
+    public static InventoryView Instance { get; private set; }
     public Text CountRed;
     public Text CountGreen;
     public Text CountBlue;
     public Text CountSky;
+    public Text CountDoorItem;
+
+    public Text TotalScoreInGame;
+    public Text PersentLevel;
 
     public InventorySlot[] slots;  // Список слотов
 
     private Dictionary<LocationType, Text> scoreTexts;
 
     private List<string> itemType;
+    private void Awake()
+    {
+        // Проверка на наличие другого экземпляра InventoryView
+        if (Instance != null && Instance != this)
+        {
+            // Уничтожить объект, если уже существует другой экземпляр
+            Destroy(gameObject);
+        }
+        else
+        {
+            // Сохранить ссылку на экземпляр
+            Instance = this;
+        }
+
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -33,11 +53,24 @@ public class InventoryView : MonoBehaviour
         }
 
         Bus.Instance.UpdateCrystal += UpdateText;
+        Bus.Instance.UdateTotalScore += UpdateTotalScore;
+        Bus.Instance.UdateLevel +=UpdatePercent;
+
         // Подписаться на событие активации слота
         foreach (var slot in slots)
         {
             slot.OnActivate += HandleSlotActivation;
         }
+    }
+
+    private void UpdateTotalScore(int score)
+    {
+        TotalScoreInGame.text = score.ToString();
+    }
+
+    private void UpdatePercent(int score)
+    {
+        PersentLevel.text = $"{score.ToString()}%";
     }
 
     // Обработчик активации слота
@@ -62,5 +95,19 @@ public class InventoryView : MonoBehaviour
     void Update()
     {
         
+    }
+
+    // Метод для получения текущего активного слота
+    public InventorySlot GetActiveSlot()
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.IsActive)
+            {
+                return slot;
+            }
+        }
+
+        return null; // Если нет активного слота, вернуть null
     }
 }

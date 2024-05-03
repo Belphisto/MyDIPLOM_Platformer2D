@@ -22,6 +22,7 @@ namespace Platformer2D.Level
     {
         public List<GameObjectModel> Crystal { get; set; }
         public List<GameObjectModel> Platform { get; set; }
+        public Dictionary<GameObjectModel, DoorView> Doors {get;set;}
         public List<GameObjectModel> SpecialPlatform { get; set; }
         public List<GameObjectModel> Bounds { get; set; }
         public GameObjectModel Background { get; set; }
@@ -34,15 +35,20 @@ namespace Platformer2D.Level
         public int CrystalCount { get; set; }
         public int CurrentScore { get; set; }
 
+
+
         public LevelModel(List<Vector3> crystalPositions,
-            List<Vector3> platformPositions,
-            List<Vector3> specialPlatformPositions, 
-            int score, int count, float x, float y)
+                List<Vector3> platformPositions,
+                List<Vector3> specialPlatformPositions, 
+                List<Vector3> doorsPositions,
+                List<LocationType> locations, 
+                int score, int count, float x, float y)
         {
             Crystal = crystalPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
             Platform = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
             SpecialPlatform = specialPlatformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
             Background = new GameObjectModel { Position = new Vector3 (0,0,0) };
+            //Door = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
 
             TotalScore = score;
             CrystalCount = count;
@@ -83,6 +89,11 @@ namespace Platformer2D.Level
         public void DecrementScore(int amount)
         {
             CurrentScore -= amount;
+        }
+
+        public int GetPercentLevel()
+        {
+            return ((int)100*CurrentScore/TotalScore);
         }
 
     }

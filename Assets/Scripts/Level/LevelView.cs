@@ -25,6 +25,8 @@ namespace Platformer2D.Level
         [SerializeField] public PlatformView platformPrefabSpecial;
         [SerializeField] public BackgroundView backgroundPrefab;
 
+        public DoorView[] doors;  // Все двери
+
         public LocationType crystalType;
 
         // Ссылка на контроллер уровня
@@ -61,18 +63,28 @@ namespace Platformer2D.Level
                 new Vector3(5, -1, 0)
             };
 
+            List<Vector3> coordinatesDoors = new List<Vector3>
+            {
+                new Vector3(10,2, 0),
+                new Vector3(15,2, 0),
+            };
+
             // Создание модели уровня
             LevelModel model = new LevelModel
             (
                 coordinatesCrystal,
                 coordinatesPlatforms, 
                 coordinatesPlatformsSpecial,
+                coordinatesDoors,
+                new List<LocationType> { LocationType.Sky, LocationType.Red},
                 // Здесь вы можете добавить остальные параметры модели
                 100,
                 4,
                 20,
                 30
             );
+
+            
 
             // Установка модели
             SetModel(model);

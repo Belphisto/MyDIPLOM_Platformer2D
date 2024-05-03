@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Platformer2D.IInterface;
 using Platformer2D.Level;
 using UnityEngine;
 

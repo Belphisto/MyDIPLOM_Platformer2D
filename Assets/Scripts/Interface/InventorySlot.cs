@@ -7,7 +7,7 @@ public class InventorySlot : MonoBehaviour
 {
     public KeyCode activationKey;
     public bool _isActive = false;
-    public TypeSlot locationType;
+    public TypeSlot type;
     private Image icon;
     public bool IsActive {get => _isActive;}
     public delegate void ActivateAction(InventorySlot slot);
@@ -24,7 +24,8 @@ public class InventorySlot : MonoBehaviour
         { TypeSlot.Red, new Color(255f / 255f, 89f / 255f, 86f / 255f) },
         { TypeSlot.Green, new Color(86f / 255f, 255f / 255f, 105f / 255f)},
         { TypeSlot.Blue, new Color(122f / 255f, 117f / 255f, 255f / 255f)},// Темно-синий цвет
-        { TypeSlot.Sky,  new Color(141f / 255f, 255f / 255f, 238f / 255f)  }  
+        { TypeSlot.Sky,  new Color(141f / 255f, 255f / 255f, 238f / 255f)  } , 
+        { TypeSlot.DoorItem,  new Color(105f / 255f, 255f / 255f, 105f / 255f)  } 
     };
 
     // Update is called once per frame
@@ -38,24 +39,19 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    private void ChangeColor(float count)
-    {
-        float newG = Mathf.Min(icon.color.g + count / 255f, 1f);
-        float newB = Mathf.Min(icon.color.b + count / 255f, 1f);
-        icon.color = new Color(icon.color.r, newG, newB, icon.color.a);
-    }
+    
 
     public void Activate()
     {
         _isActive = true;
-        icon.color = locationColors[locationType]; // Установить цвет в зависимости от типа локации
+        icon.color = locationColors[type]; // Установить цвет в зависимости от типа локации
         OnActivate?.Invoke(this);
     }
 
     public void Deactivate()
     {
         _isActive = false;
-         icon.color = Color.white;  // Установить цвет обратно на белый
+        icon.color = Color.white;  // Установить цвет обратно на белый
     }
 
 }

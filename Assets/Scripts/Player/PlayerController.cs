@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Platformer2D.IInterface;
 using UnityEngine;
 
 namespace Platformer2D.Player
@@ -80,6 +79,7 @@ namespace Platformer2D.Player
             //OnScoreUpdate?.Invoke(point);
             Bus.Instance.Send(point);
             Bus.Instance.SendBackground(model.Score);
+            Bus.Instance.SendAllScore(model.Score);
         }
 
         //Метод для управления гравитацией

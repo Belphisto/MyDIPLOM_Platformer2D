@@ -33,4 +33,16 @@ public class Bus
     {
         UpdateCrystal?.Invoke(count, type);
     }
+
+    public event Action <int> UdateTotalScore;
+    public void SendAllScore(int count)
+    {
+        UdateTotalScore?.Invoke(count);
+    }
+
+    public event Action <int> UdateLevel;
+    public void SendLevelPercent(int count)
+    {
+        UdateLevel?.Invoke(count);
+    }
 }

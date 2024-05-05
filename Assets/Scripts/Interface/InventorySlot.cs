@@ -7,9 +7,11 @@ public class InventorySlot : MonoBehaviour
 {
     public KeyCode activationKey;
     public bool _isActive = false;
-    public TypeSlot type;
+    //public TypeSlot type;
+    public LocationType locationType;
     private Image icon;
     public bool IsActive {get => _isActive;}
+    public int Count {get;set;}
     public delegate void ActivateAction(InventorySlot slot);
     public event ActivateAction OnActivate;
 
@@ -17,15 +19,16 @@ public class InventorySlot : MonoBehaviour
     void Start()
     {
         icon = GetComponent<Image>();
+        Count = 0;
     }
 
-    private static Dictionary<TypeSlot, Color> locationColors = new Dictionary<TypeSlot, Color>
+    private static Dictionary<LocationType, Color> locationColors = new Dictionary<LocationType, Color>
     {
-        { TypeSlot.Red, new Color(255f / 255f, 89f / 255f, 86f / 255f) },
-        { TypeSlot.Green, new Color(86f / 255f, 255f / 255f, 105f / 255f)},
-        { TypeSlot.Blue, new Color(122f / 255f, 117f / 255f, 255f / 255f)},// Темно-синий цвет
-        { TypeSlot.Sky,  new Color(141f / 255f, 255f / 255f, 238f / 255f)  } , 
-        { TypeSlot.DoorItem,  new Color(105f / 255f, 255f / 255f, 105f / 255f)  } 
+        { LocationType.Red, new Color(255f / 255f, 89f / 255f, 86f / 255f) },
+        { LocationType.Green, new Color(86f / 255f, 255f / 255f, 105f / 255f)},
+        { LocationType.Blue, new Color(122f / 255f, 117f / 255f, 255f / 255f)},// Темно-синий цвет
+        { LocationType.Sky,  new Color(141f / 255f, 255f / 255f, 238f / 255f)  } , 
+        { LocationType.Default,  new Color(255f / 255f, 136f / 255f, 225f / 255f)  } 
     };
 
     // Update is called once per frame
@@ -39,12 +42,15 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    
+    public void UpdateSlot(int score)
+    {   
+        Count = score;
+    }
 
     public void Activate()
     {
         _isActive = true;
-        icon.color = locationColors[type]; // Установить цвет в зависимости от типа локации
+        icon.color = locationColors[locationType]; // Установить цвет в зависимости от типа локации
         OnActivate?.Invoke(this);
     }
 
@@ -52,6 +58,16 @@ public class InventorySlot : MonoBehaviour
     {
         _isActive = false;
         icon.color = Color.white;  // Установить цвет обратно на белый
+    }
+
+    public void IncrementSlot()
+    {
+        Count ++;
+    }
+
+    public void DecrementSlot(int count)
+    {
+        Count = Count-count;
     }
 
 }

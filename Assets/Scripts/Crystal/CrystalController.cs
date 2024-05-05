@@ -34,7 +34,7 @@ namespace Platformer2D.Crystal
                 PlayerController.Instance.GetScore(model.Score); 
 
                 // Отправить событие об уничтожении кристалла
-                Bus.Instance.SendCrystal(1, model.Type);
+                Bus.Instance.SendCrystal(model.Type);
 
                 // Уничтожить кристалл
                 view.DestroyPoint(); 

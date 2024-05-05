@@ -43,7 +43,8 @@ public class InventoryView : MonoBehaviour
             { LocationType.Red, CountRed },
             { LocationType.Green, CountGreen },
             { LocationType.Blue, CountBlue },
-            { LocationType.Sky, CountSky }
+            { LocationType.Sky, CountSky },
+            { LocationType.Default, CountDoorItem}
         };
 
         // Установить начальное значение текстовых полей в 0
@@ -52,7 +53,7 @@ public class InventoryView : MonoBehaviour
             text.text = "0";
         }
 
-        Bus.Instance.UpdateCrystal += UpdateText;
+        Bus.Instance.UpdateCrystal += IncrementSlot;
         Bus.Instance.UdateTotalScore += UpdateTotalScore;
         Bus.Instance.UdateLevel +=UpdatePercent;
 
@@ -85,10 +86,36 @@ public class InventoryView : MonoBehaviour
             }
         }
     }
-    private void UpdateText(int score, LocationType type)
+    private void UpdateText()
     {
-        if (scoreTexts.ContainsKey(type))
-            scoreTexts[type].text = score.ToString();
+        foreach (var slot in slots)
+        {
+            scoreTexts[slot.locationType].text = slot.Count.ToString();
+        }
+        
+    }
+    public void DecrementSlot(LocationType type, int count)
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.locationType == type)
+            {
+                slot.DecrementSlot(count);
+                UpdateText();
+            }
+        }
+    }
+
+    public void IncrementSlot(LocationType type)
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.locationType == type)
+            {
+                slot.IncrementSlot();
+                UpdateText();
+            }
+        }
     }
 
     // Update is called once per frame
@@ -110,4 +137,6 @@ public class InventoryView : MonoBehaviour
 
         return null; // Если нет активного слота, вернуть null
     }
+
+    
 }

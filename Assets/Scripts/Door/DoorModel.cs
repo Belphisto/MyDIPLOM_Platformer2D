@@ -10,16 +10,18 @@ namespace Platformer2D.Level
         private Vector3 _startPosition;
         public Vector3 StartPosition { get => _startPosition; set => _startPosition = value; }
         public int TargetScore {get => _targetScore; set => _targetScore = value;}
-        public int CountCrystalForOpen;
+        public int CountForOpen;
         public bool IsColor {get; set;}
+        public bool IsOpen {get; set;}
 
         // Конструктор класса PlatformModel
         // Принимает целевой счет
         public DoorModel(int score, int countCrystal)
         {
             _targetScore = score;
-            CountCrystalForOpen = countCrystal;
+            CountForOpen = countCrystal;
             IsColor = false;
+            IsOpen = false;
         }
     }
 }

@@ -8,7 +8,8 @@ namespace Platformer2D.Level
     {
         protected DoorModel model;
         protected DoorView view;
-        private bool isCorrectActiveSlot = false;
+        protected bool isCorrectActiveSlot = false;
+        protected InventorySlot activeslot;
         // Start is called before the first frame update
         public DoorController(DoorModel model, DoorView view)
         {
@@ -31,11 +32,29 @@ namespace Platformer2D.Level
             return model.IsColor;
         }
 
-        public void Update()
+        public virtual void Update()
         {
-            if (isCorrectActiveSlot && Input.GetKeyDown(KeyCode.F))
+            if (!model.IsOpen)
             {
-                Debug.Log("PressF");
+                if (isCorrectActiveSlot && Input.GetKeyDown(KeyCode.F))
+                {
+                    //Debug.Log("PressF");
+                    if (activeslot.Count >= model.CountForOpen)
+                    {
+                        Debug.Log("Door Opened");
+                        model.IsOpen = true;
+                        InventoryView.Instance.DecrementSlot(view.type, model.CountForOpen);
+                        InventoryView.Instance.IncrementSlot(LocationType.Default);
+                    }
+                    else
+                    {
+                        Debug.Log("Недостаточно средств");
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Door was open early");
             }
         }
 
@@ -43,8 +62,8 @@ namespace Platformer2D.Level
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                InventorySlot activeslot = InventoryView.Instance.GetActiveSlot();
-                if (activeslot != null && activeslot.type == view.slot)
+                activeslot = InventoryView.Instance.GetActiveSlot();
+                if (activeslot != null && activeslot.locationType == view.type)
                 {
                     Debug.Log("Active correctSlot");
                     isCorrectActiveSlot = true;
@@ -57,8 +76,8 @@ namespace Platformer2D.Level
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                InventorySlot activeslot = InventoryView.Instance.GetActiveSlot();
-                if (activeslot != null && activeslot.type == view.slot)
+                activeslot = InventoryView.Instance.GetActiveSlot();
+                if (activeslot != null && activeslot.locationType == view.type)
                 {
                     isCorrectActiveSlot = true;
                 }
@@ -80,7 +99,7 @@ namespace Platformer2D.Level
 
         public int GetCountCrystal()
         {
-            return model.CountCrystalForOpen;
+            return model.CountForOpen;
         }
     }
 

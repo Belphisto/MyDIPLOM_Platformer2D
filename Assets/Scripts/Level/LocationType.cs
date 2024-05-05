@@ -7,5 +7,6 @@ public enum LocationType
     Red,
     Blue,
     Green,
-    Sky
+    Sky,
+    Default
 }

@@ -28,10 +28,10 @@ public class Bus
         InvertControls?.Invoke();
     }
 
-    public event Action <int, LocationType> UpdateCrystal;
-    public void SendCrystal(int count, LocationType type)
+    public event Action <LocationType> UpdateCrystal;
+    public void SendCrystal(LocationType type)
     {
-        UpdateCrystal?.Invoke(count, type);
+        UpdateCrystal?.Invoke(type);
     }
 
     public event Action <int> UdateTotalScore;

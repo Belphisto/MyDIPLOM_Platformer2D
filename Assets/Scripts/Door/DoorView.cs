@@ -10,9 +10,9 @@ namespace Platformer2D.Level
     {
         [SerializeField] private SpriteRenderer stateColorless;
         [SerializeField] private SpriteRenderer stateColor;
-        private DoorController controller;
+        protected DoorController controller;
         public LocationType type;
-        public TypeSlot slot;
+        //public TypeSlot slot;
         
         public Vector2 GetColliderSize()
         {
@@ -26,7 +26,7 @@ namespace Platformer2D.Level
         }
 
         // Метод Awake вызывается при инициализации объекта
-        private void Awake()
+        protected virtual void Awake()
         {
             //
             DoorModel doorModel= new DoorModel(10, 3);
@@ -47,7 +47,7 @@ namespace Platformer2D.Level
             controller.Update();
         }
 
-        public void ChangeState()
+        public virtual void ChangeState()
         {   
             // Активация цветного состояния и деактивация состояния без цвета
             Debug.Log("PlatformChangeState");

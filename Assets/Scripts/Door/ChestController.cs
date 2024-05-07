@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Platformer2D.Level;
+using Platformer2D.Inventory;
+
 using UnityEngine;
-namespace Platformer2D.Level
+namespace Platformer2D.Platform
 {
     public class ChestController : DoorController
     {

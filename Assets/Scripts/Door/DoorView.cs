@@ -4,12 +4,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Platformer2D.Level
+namespace Platformer2D.Platform
 {
-    public class DoorView : MonoBehaviour
+    public class DoorView : ChangeableState
     {
-        [SerializeField] private SpriteRenderer stateColorless;
-        [SerializeField] private SpriteRenderer stateColor;
         protected DoorController controller;
         public LocationType type;
         //public TypeSlot slot;
@@ -26,33 +24,16 @@ namespace Platformer2D.Level
         }
 
         // Метод Awake вызывается при инициализации объекта
-        protected virtual void Awake()
+        protected override void Awake()
         {
-            //
             DoorModel doorModel= new DoorModel(10, 3);
             SetModel(doorModel);
-            //
-            // ссылка на первый дочерний объект с компонентом SpriteRenderer
-            stateColorless = transform.GetChild(0).GetComponent<SpriteRenderer>();
-
-            //ссылка на второй дочерний объект с компонентом SpriteRenderer
-            stateColor = transform.GetChild(1).GetComponent<SpriteRenderer>();
-
-            // Изначально активируется состояние без цвета
-            stateColor.gameObject.SetActive(false);
+            base.Awake();
         }
 
         private void Update()
         {
             controller.Update();
-        }
-
-        public virtual void ChangeState()
-        {   
-            // Активация цветного состояния и деактивация состояния без цвета
-            Debug.Log("PlatformChangeState");
-            stateColor.gameObject.SetActive(true);
-            stateColorless.gameObject.SetActive(false);
         }
 
 

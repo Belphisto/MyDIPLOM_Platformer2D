@@ -12,21 +12,11 @@ using Platformer2D.Player;
 namespace Platformer2D.Platform
 {
     // Класс PlatformView представляет визуальное отображение платформы в игре.
-    public class PlatformView : MonoBehaviour
+    public class PlatformView : ChangeableState
     {
-        // Ссылки на компоненты SpriteRenderer для различных состояний платформы
-        [SerializeField] private SpriteRenderer stateColorless;
-        [SerializeField] private SpriteRenderer stateColor;
-
         // Контроллер платформы
         protected PlatformController controller;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            
-        }
-        
         public Vector2 GetColliderSize()
         {
             BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
@@ -38,28 +28,6 @@ namespace Platformer2D.Platform
         {
             controller = new PlatformController(model, this);
             Debug.Log($"SetModel PlatformController model.TargetScore = {model.TargetScore}");
-        }
-
-        // Метод Awake вызывается при инициализации объекта
-        private void Awake()
-        {
-            // ссылка на первый дочерний объект с компонентом SpriteRenderer
-            stateColorless = transform.GetChild(0).GetComponent<SpriteRenderer>();
-
-            //ссылка на второй дочерний объект с компонентом SpriteRenderer
-            stateColor = transform.GetChild(1).GetComponent<SpriteRenderer>();
-
-            // Изначально активируется состояние без цвета
-            stateColor.gameObject.SetActive(false);
-        }
-
-        // Метод для изменения состояния платформы
-        public void ChangeState()
-        {   
-            // Активация цветного состояния и деактивация состояния без цвета
-            Debug.Log("PlatformChangeState");
-            stateColor.gameObject.SetActive(true);
-            stateColorless.gameObject.SetActive(false);
         }
 
         // Метод Update вызывается каждый кадр

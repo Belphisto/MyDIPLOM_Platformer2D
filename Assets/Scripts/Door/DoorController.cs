@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Platformer2D.Level;
+using Platformer2D.Inventory;
 
-namespace Platformer2D.Level
+namespace Platformer2D.Platform
 {
     public class DoorController
     {

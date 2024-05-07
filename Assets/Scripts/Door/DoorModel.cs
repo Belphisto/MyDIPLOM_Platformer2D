@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-namespace Platformer2D.Level
+namespace Platformer2D.Platform
 {
     public class DoorModel 
     {

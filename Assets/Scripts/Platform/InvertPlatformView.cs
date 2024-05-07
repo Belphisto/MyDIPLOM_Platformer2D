@@ -13,12 +13,12 @@ namespace Platformer2D.Platform
             Debug.Log($"SetModel InvertPlatformController model.TargetScore = {model.TargetScore}");
         }
 
-        void OnCollisionEnter2D(Collision2D collision)
+        protected void OnCollisionEnter2D(Collision2D collision)
         {
             controller.OnCollisionEnter2D(collision);
         }
 
-        void OnCollisionExit2D(Collision2D collision)
+        protected void OnCollisionExit2D(Collision2D collision)
         {
             controller.OnCollisionEnter2D(collision);
         }

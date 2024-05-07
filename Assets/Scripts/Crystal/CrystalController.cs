@@ -35,7 +35,6 @@ namespace Platformer2D.Crystal
 
                 // Отправить событие об уничтожении кристалла
                 Bus.Instance.SendCrystal(model.Type);
-
                 // Уничтожить кристалл
                 view.DestroyPoint(); 
             }

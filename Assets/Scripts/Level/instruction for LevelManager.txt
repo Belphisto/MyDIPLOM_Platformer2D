@@ -1,0 +1,212 @@
+Понимаю, вы хотите сохранить текущий уровень и создать новые уровни на основе типа двери. Вот как вы можете это сделать:
+
+Создайте класс DoorModel, который будет содержать информацию о типе двери и целевом уровне:
+public class DoorModel
+{
+    public LocationType DoorType { get; set; }
+    public int TargetLevel { get; set; }
+}
+
+Добавьте в класс LevelModel словарь для хранения информации о дверях:
+public Dictionary<GameObjectModel, DoorModel> Doors { get; set; }
+
+Добавьте в класс LevelController метод SpawnDoors(), который будет создавать двери на основе данных модели:
+private void SpawnDoors()
+{
+    foreach (var doorModel in model.Doors)
+    {
+        var door = (DoorView) UnityEngine.Object.Instantiate(doorModel.Key.Prefab, doorModel.Key.Position, Quaternion.identity);
+        door.SetModel(doorModel.Value);
+        door.OnPlayerEnterDoor += HandlePlayerEnterDoor;  // Подписываемся на событие входа игрока в дверь
+    }
+}
+
+
+Добавьте в класс LevelController метод HandlePlayerEnterDoor(), который будет обрабатывать событие входа игрока в дверь:
+private void HandlePlayerEnterDoor(DoorView door)
+{
+    var targetLevel = door.GetModel().TargetLevel;
+    var targetLevelPrefab = LevelManager.Instance.GetLevelPrefab(targetLevel);  // Получаем префаб целевого уровня
+    var newLevel = (LevelView) UnityEngine.Object.Instantiate(targetLevelPrefab, Vector3.zero, Quaternion.identity);  // Создаем новый уровень
+    var newModel = new LevelModel(/*...*/);  // Создаем новую модель уровня
+    var newController = new LevelController(newModel, newLevel);  // Создаем новый контроллер уровня
+    LevelManager.Instance.SetCurrentLevel(newController);  // Устанавливаем новый уровень как текущий
+}
+
+Добавьте в класс LevelManager методы для создания нового уровня:
+public class LevelManager
+{
+    private LevelController currentLevel;
+    private Dictionary<int, LevelView> levelPrefabs;  // Словарь для хранения префабов уровней
+
+    public LevelManager()
+    {
+        levelPrefabs = new Dictionary<int, LevelView>();
+        // Заполните словарь префабами ваших уровней
+    }
+
+    public void SetCurrentLevel(LevelController level)
+    {
+        currentLevel = level;
+    }
+
+    public LevelView GetLevelPrefab(int levelId)
+    {
+        // Верните префаб уровня на основе его идентификатора
+        return levelPrefabs[levelId];
+    }
+
+    public LevelController CreateLevel(int levelId)
+    {
+        var levelPrefab = GetLevelPrefab(levelId);
+        var levelView = UnityEngine.Object.Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);  // Создаем новый уровень
+        var levelModel = new LevelModel(/*...*/);  // Создаем новую модель уровня
+        var levelController = new LevelController(levelModel, levelView);  // Создаем новый контроллер уровня
+        return levelController;
+    }
+
+    public void SwitchLevel(int targetLevel)
+    {
+        var newLevelController = CreateLevel(targetLevel);
+        SetCurrentLevel(newLevelController);
+    }
+}
+
+Измените метод HandlePlayerEnterDoor() в классе LevelController, чтобы он вызывал метод SwitchLevel() в LevelManager:
+private void HandlePlayerEnterDoor(DoorView door)
+{
+    var targetLevel = door.GetModel().TargetLevel;
+    LevelManager.Instance.SwitchLevel(targetLevel);
+}
+
+
+Добавьте в класс LevelManager методы для создания нового уровня:
+public class LevelManager
+{
+    private LevelController currentLevel;
+    private Dictionary<int, LevelView> levelPrefabs;  // Словарь для хранения префабов уровней
+
+    public LevelManager()
+    {
+        levelPrefabs = new Dictionary<int, LevelView>();
+        // Заполните словарь префабами ваших уровней
+    }
+
+    public void SetCurrentLevel(LevelController level)
+    {
+        currentLevel = level;
+    }
+
+    public LevelView GetLevelPrefab(int levelId)
+    {
+        // Верните префаб уровня на основе его идентификатора
+        return levelPrefabs[levelId];
+    }
+
+    public LevelController CreateLevel(int levelId)
+    {
+        var levelPrefab = GetLevelPrefab(levelId);
+        var levelView = UnityEngine.Object.Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);  // Создаем новый уровень
+        var levelModel = new LevelModel(/*...*/);  // Создаем новую модель уровня
+        var levelController = new LevelController(levelModel, levelView);  // Создаем новый контроллер уровня
+        return levelController;
+    }
+
+    public void SwitchLevel(int targetLevel)
+    {
+        var newLevelController = CreateLevel(targetLevel);
+        SetCurrentLevel(newLevelController);
+    }
+}
+
+Измените метод HandlePlayerEnterDoor() в классе LevelController, чтобы он вызывал метод SwitchLevel() в LevelManager:
+
+public class LevelManager
+{
+    private LevelController currentLevel;
+    private Dictionary<int, LevelView> levelPrefabs;  // Словарь для хранения префабов уровней
+
+    public LevelManager()
+    {
+        levelPrefabs = new Dictionary<int, LevelView>();
+        // Заполните словарь префабами ваших уровней
+    }
+
+    public void SetCurrentLevel(LevelController level)
+    {
+        currentLevel = level;
+    }
+
+    public LevelView GetLevelPrefab(int levelId)
+    {
+        // Верните префаб уровня на основе его идентификатора
+        return levelPrefabs[levelId];
+    }
+
+    public LevelController CreateLevel(int levelId)
+    {
+        var levelPrefab = GetLevelPrefab(levelId);
+        var levelView = UnityEngine.Object.Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);  // Создаем новый уровень
+        var levelModel = new LevelModel(/*...*/);  // Создаем новую модель уровня
+        var levelController = new LevelController(levelModel, levelView);  // Создаем новый контроллер уровня
+        return levelController;
+    }
+
+    public void SwitchLevel(int targetLevel)
+    {
+        var newLevelController = CreateLevel(targetLevel);
+        SetCurrentLevel(newLevelController);
+    }
+}
+
+Измените метод HandlePlayerEnterDoor() в классе LevelController, чтобы он вызывал метод SwitchLevel() в LevelManager:
+private void HandlePlayerEnterDoor(DoorView door)
+{
+    var targetLevel = door.GetModel().TargetLevel;
+    LevelManager.Instance.SwitchLevel(targetLevel);
+}
+
+
+private void HandlePlayerEnterDoor(DoorView door)
+{
+    var targetLevel = door.GetModel().TargetLevel;
+    LevelManager.Instance.SwitchLevel(targetLevel);
+}
+
+public class LevelManager
+{
+    private LevelController currentLevel;
+    private Dictionary<int, LevelView> levelPrefabs;  // Словарь для хранения префабов уровней
+    private List<int> vertices;  // Список вершин графа
+    private Dictionary<int, List<int>> edges;  // Словарь ребер графа
+
+    public LevelManager()
+    {
+        levelPrefabs = new Dictionary<int, LevelView>();
+        vertices = new List<int>();
+        edges = new Dictionary<int, List<int>>();
+        // Заполните словарь префабами ваших уровней и граф уровней
+    }
+    // ...
+}
+Измените метод CreateLevel() в классе LevelManager, чтобы он использовал граф для определения дверей:
+public LevelController CreateLevel(int levelId)
+{
+    var levelPrefab = GetLevelPrefab(levelId);
+    var levelView = UnityEngine.Object.Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);  // Создаем новый уровень
+    var levelModel = new LevelModel(/*...*/);  // Создаем новую модель уровня
+
+    // Добавьте двери на основе графа
+    if (edges.ContainsKey(levelId))
+    {
+        foreach (var targetLevel in edges[levelId])
+        {
+            var doorModel = new DoorModel { DoorType = /*...*/, TargetLevel = targetLevel };
+            var doorView = new GameObjectModel { Prefab = /*...*/, Position = /*...*/ };
+            levelModel.Doors[doorView] = doorModel;
+        }
+    }
+
+    var levelController = new LevelController(levelModel, levelView);  // Создаем новый контроллер уровня
+    return levelController;
+}

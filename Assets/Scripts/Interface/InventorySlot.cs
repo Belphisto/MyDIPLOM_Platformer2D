@@ -7,6 +7,8 @@ namespace Platformer2D.Inventory
     public class InventorySlot : MonoBehaviour
     {
         public KeyCode activationKey;
+        public int SoundIndexIncrement;
+        public int SoundIndexDecriment;
         public bool _isActive = false;
         //public TypeSlot type;
         public LocationType locationType;
@@ -63,11 +65,13 @@ namespace Platformer2D.Inventory
 
         public void IncrementSlot()
         {
+            SoundManager.Instance.PlaySound(SoundIndexIncrement);
             Count ++;
         }
 
         public void DecrementSlot(int count)
         {
+            SoundManager.Instance.PlaySound(SoundIndexDecriment);
             Count = Count-count;
         }
 

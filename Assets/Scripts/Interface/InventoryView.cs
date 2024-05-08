@@ -97,7 +97,7 @@ namespace Platformer2D.Inventory
         }
         public void DecrementSlot(LocationType type, int count)
         {
-            SoundManager.Instance.PlaySound(2);
+            
             foreach (var slot in slots)
             {
                 if (slot.locationType == type)

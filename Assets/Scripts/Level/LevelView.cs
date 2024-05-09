@@ -25,7 +25,8 @@ namespace Platformer2D.Level
         [SerializeField] public PlatformView platformPrefabSpecial;
         [SerializeField] public BackgroundView backgroundPrefab;
 
-        public DoorView[] doors;  // Все двери
+        [SerializeField] public DoorView[] doors;  // Все двери
+        [SerializeField] public ChestView chestPrefab;
 
         public LocationType crystalType;
 

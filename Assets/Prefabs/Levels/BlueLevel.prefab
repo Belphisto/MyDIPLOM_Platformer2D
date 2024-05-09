@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4711938156921201774
+--- !u!1 &6660468359414648913
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2339309116332025115}
-  - component: {fileID: 2494991899540777728}
+  - component: {fileID: 6395118609439391508}
+  - component: {fileID: 4448908802475461634}
   m_Layer: 0
-  m_Name: ForestLevel
+  m_Name: BlueLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2339309116332025115
+--- !u!4 &6395118609439391508
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4711938156921201774}
+  m_GameObject: {fileID: 6660468359414648913}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.109519474, y: -0.015141608, z: 0.04934063}
@@ -32,27 +32,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2494991899540777728
+--- !u!114 &4448908802475461634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4711938156921201774}
+  m_GameObject: {fileID: 6660468359414648913}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48f7a818bd634554e99265c0dec6f5e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystalPrefab: {fileID: 3605744643659204915, guid: 526dc0e27312f144f83bb0416caed09f, type: 3}
-  platformPrefab: {fileID: 3407657865528272107, guid: 7df121b0d61a6e1499fac02735d7f792, type: 3}
-  platformPrefabBounds: {fileID: 3963858702236282452, guid: d46c0ae6244614a4db8567272e56fed2, type: 3}
-  platformPrefabSpecial: {fileID: 1100221928169510135, guid: 4725512c4b0edea4b941248dc55b090a, type: 3}
-  backgroundPrefab: {fileID: 798091650331820057, guid: 0299c429b031fd34ebd930329934c748, type: 3}
+  crystalPrefab: {fileID: 6952265200535518387, guid: 2c0bba640eae5d3409c2774799efa4e7, type: 3}
+  platformPrefab: {fileID: 1645491730644480515, guid: 18b1e1f323434d34cb78c67bab4ec548, type: 3}
+  platformPrefabBounds: {fileID: 1432807678138661744, guid: 30ab855084ed0ec499657533fd09bb59, type: 3}
+  platformPrefabSpecial: {fileID: 1671285801115999939, guid: 67ede6150af3f9f429353eeac04ad4d1, type: 3}
+  backgroundPrefab: {fileID: 1637945540605738313, guid: 24de541faaca26144aa4f593ebc0c29a, type: 3}
   doors:
   - {fileID: 2549054156256999371, guid: e2ca4348ba7cc0444a2daa94e620eecf, type: 3}
   - {fileID: 3994858575375782763, guid: e0057df01b724514ca054f7c12dd424f, type: 3}
   - {fileID: 4883539794849152232, guid: 0df64157f9107d94395580fb84bcd0a4, type: 3}
   - {fileID: 192845417314758173, guid: 57d153d0a89b249439bdf5ecb7d930b5, type: 3}
   chestPrefab: {fileID: 7377234184006411312, guid: 241ef284c72baf341ba4d3540c625586, type: 3}
-  crystalType: 2
+  crystalType: 1

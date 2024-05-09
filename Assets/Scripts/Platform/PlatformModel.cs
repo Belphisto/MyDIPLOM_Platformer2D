@@ -29,6 +29,12 @@ namespace Platformer2D.Platform
             _speed = speed;
             IsColor = false;
         }
+        public PlatformModel()
+        {
+            IsColor = false;
+            _targetScore = 0;
+            _speed = 0;
+        }
     }
 
 }

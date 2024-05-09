@@ -65,7 +65,7 @@ namespace Platformer2D.Platform
             if (collision.gameObject.CompareTag("Player"))
             {
                 activeslot = InventoryView.Instance.GetActiveSlot();
-                if (activeslot != null && activeslot.locationType == view.type)
+                if (activeslot != null && (activeslot.locationType == view.type || activeslot.locationType == model.TypeLocation))
                 {
                     Debug.Log("Active correctSlot");
                     isCorrectActiveSlot = true;

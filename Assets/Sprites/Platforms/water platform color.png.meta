@@ -131,7 +131,7 @@ TextureImporter:
         width: 139
         height: 73
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -152,7 +152,7 @@ TextureImporter:
         width: 62
         height: 78
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -160,6 +160,27 @@ TextureImporter:
       bones: []
       spriteID: 665668abfec9b7a4bb6e6bd9327b8abf
       internalID: -780716451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: water platform color_2
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 237
+        width: 63
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45a32f567369d4144ba5ab1e02e06ae6
+      internalID: 583553063
       vertices: []
       indices: 
       edges: []
@@ -177,6 +198,7 @@ TextureImporter:
     nameFileIdTable:
       water platform color_0: 766561647
       water platform color_1: -780716451
+      water platform color_2: 583553063
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

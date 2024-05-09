@@ -11,7 +11,7 @@ namespace Platformer2D.Platform
         }
         protected override void Awake()
         {
-            DoorModel doorModel= new DoorModel(1, 1);
+            DoorModel doorModel= new DoorModel(1, 1, 1);
             SetModel(doorModel);
         }
         public override void ChangeState()

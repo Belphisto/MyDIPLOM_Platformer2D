@@ -26,7 +26,7 @@ namespace Platformer2D.Platform
         // Метод Awake вызывается при инициализации объекта
         protected override void Awake()
         {
-            DoorModel doorModel= new DoorModel(10, 3);
+            DoorModel doorModel= new DoorModel(10, 3, 1);
             SetModel(doorModel);
             base.Awake();
         }

@@ -13,7 +13,7 @@ namespace Platformer2D.Crystal
 
         private LocationType _crystalType;
 
-        public LocationType Type {get => _crystalType;}
+        public LocationType Type {get;set; }
 
         // Конструктор класса CrystalModel
         // Принимает счет кристалла

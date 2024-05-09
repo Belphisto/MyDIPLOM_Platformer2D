@@ -13,6 +13,7 @@ namespace Platformer2D.Platform
         public MovingPlatformController(PlatformModel model, PlatformView view) : base(model, view)
         {
             this.model = model;
+            this.model.Speed = 1f;
             this.view = view;
         }
 

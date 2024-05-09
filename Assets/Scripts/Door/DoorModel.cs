@@ -13,13 +13,17 @@ namespace Platformer2D.Platform
         public int CountForOpen;
         public bool IsColor {get; set;}
         public bool IsOpen {get; set;}
+        public int IndexDoor {get;set;}
+        public LocationType TypeDoor {get; set;}
+        public LocationType TypeLocation {get; set;}
 
         // Конструктор класса PlatformModel
         // Принимает целевой счет
-        public DoorModel(int score, int countCrystal)
+        public DoorModel(int score, int countCrystal, int index)
         {
             _targetScore = score;
             CountForOpen = countCrystal;
+            IndexDoor = index;
             IsColor = false;
             IsOpen = false;
         }

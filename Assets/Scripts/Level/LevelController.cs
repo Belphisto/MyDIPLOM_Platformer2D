@@ -26,6 +26,7 @@ namespace Platformer2D.Level
     {
         // Модель данных уровня
         private LevelModel model;
+        private LocationModel modelLocation;
         // Представление уровня в игровой сцене
         private LevelView view;
         //Событие для вызова обновления счетчика очков платформы
@@ -47,6 +48,22 @@ namespace Platformer2D.Level
             Bus.Instance.SendScore += HandleScoreUpdate;
         }
 
+        public LevelController(LocationModel model, LevelView view)
+        {
+            this.modelLocation = model;
+            this.view = view;
+
+            SpawnCrystals2();
+            SpawnColorChangeBackground2();
+            SpawnPlatforms2();
+            SpawnPlayer2();
+            SpawnDoor();
+            SpawnChest();
+            
+            //Подписка на событие отправки обновления счетчика очков на уровне в платформу
+            Bus.Instance.SendScore += HandleScoreUpdate;
+        }
+
         // Метод для создания кристаллов на сцене
         private void SpawnCrystals()
         {
@@ -60,11 +77,28 @@ namespace Platformer2D.Level
                 crystal.SetModel(crystalModel); 
             }
         }
+        private void SpawnCrystals2()
+        {
+            foreach (var positionCrystal in modelLocation.PositionCrystal)
+            {
+                var crystal = (CrystalView) UnityEngine.Object.Instantiate(view.crystalPrefab, positionCrystal.Key, Quaternion.identity);
+                var crystalModel = positionCrystal.Value;
+                // Созданная с заданными параметрами модель кристалла передается CrystalModel в представление CrystalView
+                crystal.SetModel(crystalModel); 
+            }
+        }
 
         // Метод для создания изменяющегося фона на сцене
         private void SpawnColorChangeBackground()
         {
             var colorChangeBackground = UnityEngine.Object.Instantiate(view.backgroundPrefab);
+            var controller = new BackgroundControlller(new BackgroundModel(), colorChangeBackground);
+            controller.SetTargerScore(model.TotalScore);
+            colorChangeBackground.SetController(controller);
+        }
+        private void SpawnColorChangeBackground2()
+        {
+            var colorChangeBackground = UnityEngine.Object.Instantiate(view.backgroundPrefab, modelLocation.PositionBackground, Quaternion.identity);
             var controller = new BackgroundControlller(new BackgroundModel(), colorChangeBackground);
             controller.SetTargerScore(model.TotalScore);
             colorChangeBackground.SetController(controller);
@@ -78,6 +112,13 @@ namespace Platformer2D.Level
             SpawnPlatform(model.Bounds, 40, 0f);
 
         }
+        // Метод для создания платформ на уровне
+        public void SpawnPlatforms2()
+        {
+            SpawnPlatform2(modelLocation.PositionPlatformStatic, view.platformPrefab);
+            SpawnPlatform2(modelLocation.PositionPlatformSpecial, view.platformPrefabSpecial);
+            SpawnPlatform2(modelLocation.PositionPlatformBounds, view.platformPrefabBounds);
+        }
 
         // Метод для создания платформы
         private void SpawnPlatform(List<GameObjectModel> platformModels, int score, float speed)
@@ -90,7 +131,15 @@ namespace Platformer2D.Level
                 platform.SetModel(platformModel);
             }
         }
-
+        private void SpawnPlatform2(Dictionary<Vector3, PlatformModel> platformModels, PlatformView platformPrefab)
+        {
+            foreach (var position in platformModels)
+            {
+                var platform = (PlatformView) UnityEngine.Object.Instantiate(platformPrefab, position.Key, Quaternion.identity);
+                var platformModel = position.Value;
+                platform.SetModel(platformModel);
+            }
+        }
 
         // Метод для обработки обновления счета от игрока
         public void HandleScoreUpdate(int score)
@@ -101,7 +150,6 @@ namespace Platformer2D.Level
             // Обновляет счет платформ, когда счет игрока меняется
             OnScoreUpdatePlatfroms?.Invoke(model.CurrentScore);
             Bus.Instance.SendLevelPercent(model.GetPercentLevel());
-            
         }
 
         private void SpawnPlayer()
@@ -120,10 +168,49 @@ namespace Platformer2D.Level
                 Debug.Log("Персонаж с тегом 'Player' не найден");
             }
         }
+        private void SpawnPlayer2()
+        {
+            // Найти персонажа по тегу
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            // Проверить, найден ли персонаж
+            if (player != null)
+            {
+                // Изменить координаты персонажа
+                player.transform.position = modelLocation.PlayerPositionStart;
+            }
+            else
+            {
+                Debug.Log("Персонаж с тегом 'Player' не найден");
+            }
+        }
 
         private void SpawnDoor()
         {
-            
+            foreach (var positionDoor in modelLocation.PositionDoors)
+            {
+                // Находим соответствующий префаб двери
+                DoorView doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypeLocation);
+                if (doorPrefab != null)
+                {
+                    var door = (DoorView) UnityEngine.Object.Instantiate(doorPrefab, positionDoor.Key, Quaternion.identity);
+                    var doorModel = positionDoor.Value;
+                    door.SetModel(doorModel);
+                }
+            }
+        }
+        private void SpawnChest()
+        {
+            if (modelLocation.IsChestLocation)
+            {
+                // случайную платформу из всех платформ на уровне
+                var platforms = new List<Vector3>(modelLocation.PositionPlatformStatic.Keys);
+                var randomPlatformPosition = platforms[UnityEngine.Random.Range(0, platforms.Count)];
+
+                // сундук находится непосредственно над платформой
+                var chestPosition = new Vector3(randomPlatformPosition.x, randomPlatformPosition.y + 1, randomPlatformPosition.z);
+                var chest = (ChestView) UnityEngine.Object.Instantiate(view.chestPrefab, chestPosition, Quaternion.identity);
+            }
         }
 
         private void HandleUpdateLevelPercent()

@@ -1,0 +1,144 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Generator : MonoBehaviour
+{
+    public Vector2 labelSize = new Vector2(2, 1);
+    public int gridSize = 500;
+    public int pointCount = 60;
+
+    public void Start()
+    {
+        var regions = RecursiveBinarySpacePartition(new Rect(0, 0, gridSize, gridSize), 4, true);
+        var platforms = new List<Vector3>();
+        int mazeRegionCount = regions.Count / 10;  // 10% of regions will have a maze
+        for (int i = 0; i < regions.Count; i++)
+        {
+            var region = regions[i];
+            List<Vector3> regionPlatforms;
+            if (i < mazeRegionCount)
+            {
+                // Generate a maze for this region
+                var maze = GenerateMaze((int)region.width, (int)region.height);
+                regionPlatforms = MazeToPlatforms(maze, region);
+            }
+            else
+            {
+                // Fill this region with random platforms
+                regionPlatforms = GridBasedPlatformPlacementWithoutIntersection(pointCount, (int)region.width, labelSize, region);
+            }
+            platforms.AddRange(regionPlatforms);
+        }
+        foreach (var platform in platforms)
+        {
+            Debug.Log($"Platform at: {platform}");
+            // Здесь вы можете добавить код для размещения платформы на позиции platform
+        }
+    }
+
+    public List<Rect> RecursiveBinarySpacePartition(Rect area, int depth, bool horizontal)
+    {
+        var regions = new List<Rect>();
+        if (depth == 0)
+        {
+            regions.Add(area);
+        }
+        else
+        {
+            var split = Random.Range(0.4f, 0.6f); // Случайное разбиение пространства
+            Rect first, second;
+            if (horizontal)
+            {
+                first = new Rect(area.x, area.y, area.width * split, area.height);
+                second = new Rect(area.x + area.width * split, area.y, area.width * (1 - split), area.height);
+            }
+            else
+            {
+                first = new Rect(area.x, area.y, area.width, area.height * split);
+                second = new Rect(area.x, area.y + area.height * split, area.width, area.height * (1 - split));
+            }
+            regions.AddRange(RecursiveBinarySpacePartition(first, depth - 1, !horizontal));
+            regions.AddRange(RecursiveBinarySpacePartition(second, depth - 1, !horizontal));
+        }
+        return regions;
+    }
+
+    public List<Vector3> GridBasedPlatformPlacementWithoutIntersection(int pointCount, int gridSize, Vector2 labelSize, Rect region)
+    {
+        var platforms = new List<Vector3>();
+        for (int i = 0; i < pointCount; i++)
+        {
+            // Генерация случайной точки в пределах сетки
+            var point = new Vector2(Random.Range(region.x, region.xMax), Random.Range(region.y, region.yMax));
+            // Размещение платформы ряд
+                            platforms.Add(new Vector3(platformX, platformY, 0));
+            }
+        }
+        return platforms;
+    }
+
+    public int[,] GenerateMaze(int width, int height)
+    {
+        var maze = new int[height, width];
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                maze[i, j] = 1;
+            }
+        }
+
+        void Generate(int x, int y)
+        {
+            var directions = new List<Vector2> { new Vector2(0, -2), new Vector2(0, 2), new Vector2(-2, 0), new Vector2(2, 0) };
+            var shuffledDirections = directions.OrderBy(a => Random.value).ToList();
+            foreach (var direction in shuffledDirections)
+            {
+                var nx = x + (int)direction.x;
+                var ny = y + (int)direction.y;
+                if (nx >= 0 && nx < width && ny >= 0 && ny < height && maze[ny, nx] == 1)
+                {
+                    maze[y + (int)direction.y / 2, x + (int)direction.x / 2] = 0;
+                    maze[ny, nx] = 0;
+                    Generate(nx, ny);
+                }
+            }
+        }
+
+        Generate(Random.Range(0, width / 2) * 2, Random.Range(0, height / 2) * 2);
+
+        // Добавление случайных "прорезей" в клетках
+        for (int y = 1; y < height - 1; y++)
+        {
+            for (int x = 1; x < width - 1; x++)
+            {
+                if (Random.value < 0.4f)  // Вероятность создания "прорези"
+                {
+                    maze[y, x] = 0;
+                }
+            }
+        }
+
+        return maze;
+    }
+
+    public List<Vector3> MazeToPlatforms(int[,] maze, Rect region)
+    {
+        var platforms = new List<Vector3>();
+        var cellWidth = region.width / maze.GetLength(1);
+        var cellHeight = region.height / maze.GetLength(0);
+        for (int y = 0; y < maze.GetLength(0); y++)
+        {
+            for (int x = 0; x < maze.GetLength(1); x++)
+            {
+                if (maze[y, x] == 0)
+                {
+                    var platformX = region.x + x * cellWidth + cellWidth / 2;
+                    var platformY = region.y + y * cellHeight + cellHeight / 2;
+                    platforms.Add(new Vector3(platformX, platformY, 0));
+                }
+            }
+        }
+        return platforms;
+    }
+}

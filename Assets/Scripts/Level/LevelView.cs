@@ -6,6 +6,7 @@ using Platformer2D.Crystal;
 using Platformer2D.Background;
 using Platformer2D.Player;
 using Platformer2D.Platform;
+using Platformer2D.Generator;
 
 /*
 Класс LevelView представляет визуальное отображение уровня в игре. 
@@ -37,6 +38,7 @@ namespace Platformer2D.Level
         void Start()
         {
             CreateModel();
+            var g = new GeneratorGraph(10,1);
         }
 
         private void CreateModel()

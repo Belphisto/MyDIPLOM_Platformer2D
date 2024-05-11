@@ -1,0 +1,57 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Generator : MonoBehaviour
+{
+    public Vector2 labelSize = new Vector2(2, 1);
+    public int gridSize = 500;
+    public int pointCount = 60;
+
+    public void Start()
+    {
+        var regions = RecursiveBinarySpacePartition(new Rect(0, 0, gridSize, gridSize), 4, true);
+        var platforms = new List<Vector3>();
+        int mazeRegionCount = regions.Count / 10;  // 10% of regions will have a maze
+
+        // Создаем список индексов регионов и перемешиваем его
+        var regionIndices = new List<int>(Enumerable.Range(0, regions.Count));
+        Shuffle(regionIndices);
+
+        for (int i = 0; i < regions.Count; i++)
+        {
+            var region = regions[regionIndices[i]];
+            List<Vector3> regionPlatforms;
+            if (i < mazeRegionCount)
+            {
+                // Generate a maze for this region
+                var maze = GenerateMaze((int)region.width, (int)region.height);
+                regionPlatforms = MazeToPlatforms(maze, region);
+            }
+            else
+            {
+                // Fill this region with random platforms
+                regionPlatforms = GridBasedPlatformPlacementWithoutIntersection(pointCount, (int)region.width, labelSize, region);
+            }
+            platforms.AddRange(regionPlatforms);
+        }
+        foreach (var platform in platforms)
+        {
+            Debug.Log($"Platform at: {platform}");
+            // Здесь вы можете добавить код для размещения платформы на позиции platform
+        }
+    }
+
+    // Метод для перемешивания списка (алгоритм Фишера-Йетса)
+    private void Shuffle<T>(List<T> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            T temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+    }
+
+    // Остальной код остается без изменений...
+}

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum LocationType
+namespace Platformer2D
 {
-    Red,
-    Blue,
-    Green,
-    Sky,
-    Default
+    public enum LocationType
+    {
+        Red,
+        Blue,
+        Green,
+        Sky,
+        Default
+    }
 }
+

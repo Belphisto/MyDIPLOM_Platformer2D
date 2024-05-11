@@ -13,8 +13,8 @@ namespace Platformer2D.Level
 {
     public struct Size
     {
-        public int Width;
-        public int Height;
+        public int X;
+        public int Y;
     }
     public class LocationModel 
     {
@@ -137,20 +137,20 @@ namespace Platformer2D.Level
         public void CreateBoundsPlatform(Vector2 size)
         {
             // Расчет количества платформ для каждой стены
-            int numPlatformsWidth = Mathf.CeilToInt(SizeLocation.Width / size.x);
-            int numPlatformsHeight = Mathf.CeilToInt(SizeLocation.Height / size.y);
+            int numPlatformsX = Mathf.CeilToInt(SizeLocation.X / size.x);
+            int numPlatformsY = Mathf.CeilToInt(SizeLocation.Y / size.y);
 
             // Создание PlatformModel для каждой платформы в каждой стене
             PositionPlatformBounds = new Dictionary<Vector3, PlatformModel>();
-            for (int i = 0; i < numPlatformsWidth; i++)
+            for (int i = 0; i < numPlatformsX; i++)
             {
                 PositionPlatformBounds[new Vector3(i * size.x, 0, 0)] = new PlatformModel(); // Нижняя стена
-                PositionPlatformBounds[new Vector3(i * size.x, SizeLocation.Height, 0)] = new PlatformModel(); // Верхняя стена
+                PositionPlatformBounds[new Vector3(i * size.x, SizeLocation.Y, 0)] = new PlatformModel(); // Верхняя стена
             }
-            for (int i = 0; i < numPlatformsHeight; i++)
+            for (int i = 0; i < numPlatformsY; i++)
             {
                 PositionPlatformBounds[new Vector3(0, i * size.y, 0)] = new PlatformModel(); // Левая стена
-                PositionPlatformBounds[new Vector3(SizeLocation.Width, i * size.y, 0)] = new PlatformModel(); // Правая стена
+                PositionPlatformBounds[new Vector3(SizeLocation.X, i * size.y, 0)] = new PlatformModel(); // Правая стена
             }
 
             int totalObject = PositionPlatformBounds.Count;

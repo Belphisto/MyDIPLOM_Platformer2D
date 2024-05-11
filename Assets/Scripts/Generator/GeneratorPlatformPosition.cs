@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -24,7 +24,7 @@ namespace Platformer2D
             var platforms = new List<Vector3>();
 
             int randomNumber = UnityEngine.Random.Range(4, 10);
-            var regions = RecursiveBinarySpacePartition(new Rect(0, 0, grid.Width, grid.Height), 2, true);
+            var regions = RecursiveBinarySpacePartition(new Rect(0, 0, grid.X, grid.Y), 2, true);
             int mazeRegionCount =0;  // 10% of regions will have a maze
             var regionIndices = new List<int>(Enumerable.Range(0, regions.Count));
             Shuffle(regionIndices);
@@ -35,14 +35,14 @@ namespace Platformer2D
                 if (i < mazeRegionCount)
                 {
                     // Generate a maze for this region
-                    var maze = GenerateMaze((int)region.width, (int)region.height);
+                    var maze = GenerateMaze((int)region.width, (int)region.height, region);
                     regionPlatforms = MazeToPlatforms(maze, region);
                 }
                 else
                 {
                     // Fill this region with random platforms
                     // countPlatform  на регион надо расчитывать, пока передается 10
-                    regionPlatforms = GridBasedPlatformPlacementWithoutIntersection(2, (int)region.width, labelSize, region);
+                    regionPlatforms = GridBasedPlatformPlacementWithoutIntersection(4, (int)region.width, labelSize, region);
                 }
                 platforms.AddRange(regionPlatforms);
             }
@@ -100,7 +100,7 @@ namespace Platformer2D
                 return platforms;
             }
             
-        public int[,] GenerateMaze(int width, int height)
+        public int[,] GenerateMaze(int width, int height, Rect region)
         {
             var maze = new int[height, width];
             for (int i = 0; i < height; i++)
@@ -113,7 +113,7 @@ namespace Platformer2D
 
             void Generate(int x, int y)
             {
-                var directions = new List<Vector2> { new Vector2(0, -2), new Vector2(0, 2), new Vector2(-2, 0), new Vector2(2, 0) };
+                var directions = new List<Vector2> { new Vector2(0, -2), new Vector2(0, 3), new Vector2(-2, 0), new Vector2(3, 0) };
                 var shuffledDirections = directions.OrderBy(a => UnityEngine.Random.value).ToList();
                 foreach (var direction in shuffledDirections)
                 {
@@ -121,21 +121,21 @@ namespace Platformer2D
                     var ny = y + (int)direction.y;
                     if (nx >= 0 && nx < width && ny >= 0 && ny < height && maze[ny, nx] == 1)
                     {
-                        maze[y + (int)direction.y / 2, x + (int)direction.x / 2] = 0;
-                        maze[ny, nx] = 0;
+                        maze[y - (int)region.y + (int)direction.y / 2, x - (int)region.x + (int)direction.x / 2] = 0;
+                        maze[ny - (int)region.y, nx - (int)region.x] = 0;
                         Generate(nx, ny);
                     }
                 }
             }
 
-            Generate(UnityEngine.Random.Range(0, width / 2) * 2, UnityEngine.Random.Range(0, height / 2) * 2);
+            Generate(UnityEngine.Random.Range((int)region.x, (int)region.xMax), UnityEngine.Random.Range((int)region.y, (int)region.yMax));
 
             // Добавление случайных "прорезей" в клетках
             for (int y = 1; y < height - 1; y++)
             {
                 for (int x = 1; x < width - 1; x++)
                 {
-                    if (UnityEngine.Random.value < 0.4f)  // Вероятность создания "прорези"
+                    if (UnityEngine.Random.value < 0.1f)  // Вероятность создания "прорези"
                     {
                         maze[y, x] = 0;
                     }
@@ -156,8 +156,8 @@ namespace Platformer2D
                 {
                     if (maze[y, x] == 0)
                     {
-                        var platformX = region.x + x * cellWidth + cellWidth / 2;
-                        var platformY = region.y + y * cellHeight + cellHeight / 2;
+                        var platformX = region.x + x * cellWidth + cellWidth / 2 - labelSize.x / 2;
+                        var platformY = region.y + y * cellHeight + cellHeight / 2 - labelSize.y / 2;
                         platforms.Add(new Vector3(platformX, platformY, 0));
                     }
                 }

@@ -16,41 +16,26 @@ namespace Platformer2D.Generator
             _difficulty= PlayerPrefs.GetInt("Difficulty");
         }
 
-        /*public LocationModel GenerateNewLocation(int indexLocation, LocationType type, int coefXLoc, int countDoor)
-        {
-            Level.Size size = GenerateLocationSize();
-            var staticplatform = GenerateStaticPlatformPosition(size);
-            var specialplatform = GenerateSpecialPlatformPosition(staticplatform);
-            var newModel = new LocationModel(
-                indexLocation,
-                SelectPlatformCoordinateForChest(staticplatform),
-                type,
-                GetScorePerCrystal(coefXLoc),
-                GetTargetScore(),
-                new Vector3(2, 2, 0),
-                size,
-                GenerateCrystalPosition(size.Width, size.Height, GetCountCrystal(coefXLoc), 5),
-                staticplatform,
-                specialplatform,
-                SelectPlatformCoordinatesForDoors(staticplatform, countDoor)
-            );
-            return newModel;
-        }*/
-
         public LevelModel GenerateNewLocation(int coefXLoc)
         {
+            
             Level.Size size = GenerateLocationSize();
+            Vector2 labelSize = new Vector2(1.0f, 1.3f);
+            GeneratorMazePlatform mazeGenerator = new GeneratorMazePlatform(labelSize);
+            mazeGenerator.GenerateMaze(size.X, size.Y, 0.9f);
+            Rect region = new Rect(0, 0, size.X * labelSize.x, size.Y* labelSize.y);
             var countCrystal = GetCountCrystal(coefXLoc);
             var staticplatform = GenerateStaticPlatformPosition(size);
             var specialplatform = GenerateSpecialPlatformPosition(staticplatform);
             var newModel = new LevelModel(
-                GenerateCrystalPosition(size.Width, size.Height, countCrystal,5),
+                GenerateCrystalPosition(size.X, size.Y, countCrystal,3),
                 staticplatform,
                 specialplatform,
-                GenerateBoundaryPlatforms(size),
+                //GenerateBoundaryPlatforms(size),
+                mazeGenerator.GenerateBorderPlatforms(region),
                 countCrystal*GetScorePerCrystal(coefXLoc),
                 countCrystal,
-                size.Height, size.Width
+                size.Y, size.X
             );
             return newModel;
         }
@@ -60,8 +45,8 @@ namespace Platformer2D.Generator
             var random = new System.Random();
             return new Level.Size
             {
-                Width = random.Next(15, 20), // Генерирует случайное число от 500 до 900 включительно
-                Height = random.Next(10, 20) // Генерирует случайное число от 500 до 700 включительно
+                X = random.Next(15, 20), // Генерирует случайное число от 500 до 900 включительно
+                Y = random.Next(10, 20) // Генерирует случайное число от 500 до 700 включительно
             };
         }
         private int GetScorePerCrystal(int locationIndex)
@@ -123,13 +108,13 @@ namespace Platformer2D.Generator
             }
         }
 
-        private List<Vector3> GenerateCrystalPosition(int width, int height, int numSamples, int relaxationSteps)
+        private List<Vector3> GenerateCrystalPosition(int X, int Y, int numSamples, int relaxationSteps)
         {
             var positions = new List<Vector3>();
             for (int i = 0; i < numSamples; i++)
             {
                 // Генерация случайной точки в пределах сетки
-                var point = new Vector3(Random.Range(0, width), Random.Range(0, height), 0);
+                var point = new Vector3(Random.Range(0, X), Random.Range(0, Y), 0);
                 positions.Add(point); 
             }
 
@@ -144,13 +129,13 @@ namespace Platformer2D.Generator
                     Vector3 direction = nearest - sample;
                     direction.Normalize();
                     // Двигаем точку на расстояние радиуса в направлении ближайшей точки
-                    Vector3 newSample = sample + direction * (width / (float)numSamples);
+                    Vector3 newSample = sample + direction * (X / (float)numSamples);
 
                     // Проверяем, не выходит ли новая точка за границы
-                    if (newSample.x < 0) newSample.x = -newSample.x;
-                    if (newSample.y < 0) newSample.y = -newSample.y;
-                    if (newSample.x > width) newSample.x = 2 * width - newSample.x;
-                    if (newSample.y > height) newSample.y = 2 * height - newSample.y;
+                    if (newSample.x < 2) newSample.x = (X/2 - Random.RandomRange(0,5));
+                    if (newSample.y < 2) newSample.y = Y/2- UnityEngine.Random.RandomRange(0,5);
+                    if (newSample.x > X-2) newSample.x = X/2 - UnityEngine.Random.RandomRange(0,5);
+                    if (newSample.y > Y-2) newSample.y = Y/2- UnityEngine.Random.RandomRange(0,5);
 
                     newSamples.Add(newSample);
                 }
@@ -179,16 +164,39 @@ namespace Platformer2D.Generator
 
         private List<Vector3> GenerateStaticPlatformPosition(Level.Size grid)
         {
-            var gen = new GeneratorPlatformPosition(new Vector2(1.1f, 0.2f), grid);
-            return gen.Position();
+            var gen = new GeneratorPlatformPosition(new Vector2(3f, 4f), grid);
+            //return gen.Position();
+            //var gen2 = new GeneratorMazePlatform(new Vector2(2f,3f));
+            //return gen2.GeneratePlatforms(new Rect(1,1,grid.X-1, grid.Y-1));
+
+            Vector2 labelSize = new Vector2(1.0f, 1.3f);
+            GeneratorMazePlatform mazeGenerator = new GeneratorMazePlatform(labelSize);
+            mazeGenerator.GenerateMaze(grid.X, grid.Y, 0.9f);
+            Rect region = new Rect(0, 0, grid.X * labelSize.x, grid.Y * labelSize.y);
+            List<Vector3> platforms = mazeGenerator.GeneratePlatforms(region);
+            return platforms;
         }
         private List<Vector3> GenerateSpecialPlatformPosition(List<Vector3> statics)
         {
+            /*
             int platformCount = (int)GetPercentCountSpecialPlatform()*statics.Count; // или любое другое выражение, которое вам подходит
             var selectedPlatforms = statics.OrderBy(x => UnityEngine.Random.value).Take(platformCount).ToList();
+
             // Удаляем из staticplatform все платформы, которые есть в selectedPlatforms
             var remainingPlatforms = statics.Except(selectedPlatforms).ToList();
-            return remainingPlatforms;
+            return remainingPlatforms;*/
+            int platformCount = (int)(GetPercentCountSpecialPlatform() * statics.Count); 
+            var selectedPlatforms = new List<Vector3>();
+
+            // Выбираем случайные платформы из statics и добавляем их в selectedPlatforms
+            for (int i = 0; i < platformCount; i++)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, statics.Count);
+                selectedPlatforms.Add(statics[randomIndex]);
+                statics.RemoveAt(randomIndex); // Удаляем выбранную платформу из исходного массива
+            }
+            
+            return selectedPlatforms;
         }
 
         private List<Vector3> SelectPlatformCoordinatesForDoors(List<Vector3> coordinates,  int doorCount)
@@ -209,27 +217,28 @@ namespace Platformer2D.Generator
             var platforms = new List<Vector3>();
 
             // Размер платформы
-            float platformWidth = 1.1f;
-            float platformHeight = 0.5f;
+            float platformX = 1.1f;
+            float platformY = 0.5f;
 
             // Расчет количества платформ для каждой стены
-            int numPlatformsWidth = Mathf.CeilToInt(size.Width / platformWidth);
-            int numPlatformsHeight = Mathf.CeilToInt(size.Height / platformHeight);
+            int numPlatformsX = Mathf.CeilToInt((size.X ) / platformX)+2;
+            int numPlatformsY = Mathf.CeilToInt((size.Y) / platformY)+2;
 
             // Создание платформ для каждой стены
-            for (int i = 0; i < numPlatformsWidth; i++)
+            for (int i = -1; i < numPlatformsX-1; i++)
             {
-                platforms.Add(new Vector3(i * platformWidth, -platformHeight / 2, 0)); // Нижняя стена
-                platforms.Add(new Vector3(i * platformWidth, size.Height + platformHeight / 2, 0)); // Верхняя стена
+                platforms.Add(new Vector3(i * platformX, -platformY*2, 0)); // Нижняя стена
+                platforms.Add(new Vector3(i * platformX,  (size.Y)+platformY*2, 0)); // Верхняя стена
             }
-            for (int i = 0; i < numPlatformsHeight; i++)
+            for (int i =-1; i < numPlatformsY-1; i++)
             {
-                platforms.Add(new Vector3(-platformWidth / 2, i * platformHeight, 0)); // Левая стена
-                platforms.Add(new Vector3(size.Width + platformWidth / 2, i * platformHeight, 0)); // Правая стена
+                platforms.Add(new Vector3(-platformY*2, i * platformY, 0)); // Левая стена
+                platforms.Add(new Vector3((size.X )+platformY*2, i * platformY, 0)); // Правая стена
             }
 
             return platforms;
         }
+
 
 
         private Vector3 SelectPlatformCoordinateForChest(List<Vector3> coordinates)

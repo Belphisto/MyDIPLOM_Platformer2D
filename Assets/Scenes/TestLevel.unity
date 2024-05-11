@@ -609,6 +609,11 @@ MonoBehaviour:
   greenLevelPrefab: {fileID: 2494991899540777728, guid: 9dd6afcaaf6efe746bdc767f8aed2221, type: 3}
   blueLevelPrefab: {fileID: 4448908802475461634, guid: c6a111314b1561448bfbc7185301ab2a, type: 3}
   skyLevelPrefab: {fileID: 3108498460446507666, guid: e95f17f51cd75734697d0b88c9343209, type: 3}
+  redDoorPrefab: {fileID: 4883539794849152232, guid: 0df64157f9107d94395580fb84bcd0a4, type: 3}
+  greenDoorPrefab: {fileID: 3994858575375782763, guid: e0057df01b724514ca054f7c12dd424f, type: 3}
+  blueDoorPrefab: {fileID: 2549054156256999371, guid: e2ca4348ba7cc0444a2daa94e620eecf, type: 3}
+  skyDoorPrefab: {fileID: 192845417314758173, guid: 57d153d0a89b249439bdf5ecb7d930b5, type: 3}
+  chestPrefab: {fileID: 7377234184006411312, guid: 241ef284c72baf341ba4d3540c625586, type: 3}
 --- !u!4 &549949469
 Transform:
   m_ObjectHideFlags: 0
@@ -951,6 +956,10 @@ PrefabInstance:
     - target: {fileID: 3710772662778505092, guid: e2ca4348ba7cc0444a2daa94e620eecf, type: 3}
       propertyPath: m_Name
       value: door-blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710772662778505092, guid: e2ca4348ba7cc0444a2daa94e620eecf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4405622374505415285, guid: e2ca4348ba7cc0444a2daa94e620eecf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3083,6 +3092,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TreasureChest
       objectReference: {fileID: 0}
+    - target: {fileID: 1118351452159287854, guid: 241ef284c72baf341ba4d3540c625586, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7436758533320372871, guid: 241ef284c72baf341ba4d3540c625586, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.1861277
@@ -3179,6 +3192,10 @@ PrefabInstance:
     - target: {fileID: 6660468359414648913, guid: c6a111314b1561448bfbc7185301ab2a, type: 3}
       propertyPath: m_Name
       value: BlueLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6660468359414648913, guid: c6a111314b1561448bfbc7185301ab2a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -6,17 +6,19 @@ using QuikGraph;
 
 namespace Platformer2D.Generator
 {
-    public class GeneratorGraph : MonoBehaviour
+    public class GeneratorGraph
     { 
         private int countLocation;
         private int countStartVertix;
         public Dictionary<int, LocationType> Rooms;
         public Dictionary<int, List<int>> Transitions;
+        public int ChestLocationIndex {get;private set;}
         public GeneratorGraph(int countLocation, int countStartVertix)
         {
             this.countLocation = countLocation;
             this.countStartVertix = countStartVertix;
             GenerateLocations(this.countLocation, this.countStartVertix);
+            ChestLocationIndex = UnityEngine.Random.Range(0, Rooms.Count); 
             PrintGraphInfo(Rooms, Transitions);
         }
 
@@ -50,13 +52,29 @@ namespace Platformer2D.Generator
             // Добавление оставшихся узлов
             for (int i = m; i < n; i++)
             {
-                G.AddVertex(i);
+                /*G.AddVertex(i);
                 var targets = targetList.OrderBy(x => random.Next()).Take(m).ToList();
                 foreach (var target in targets)
                 {
-                    G.AddEdge(new Edge<int>(i, target));
+                    var newEdge = new Edge<int>(i, target);
+                    if (!G.ContainsEdge(newEdge))
+                    {
+                        G.AddEdge(newEdge);
+                    }
                 }
                 targetList.AddRange(targets);
+                targetList.AddRange(Enumerable.Repeat(i, m));*/
+                G.AddVertex(i);
+                var targets = targetList.OrderBy(x => random.Next()).Take(m).ToList();
+                foreach (var target in targets.Take(m))
+                {
+                    var newEdge = new Edge<int>(i, target);
+                    if (!G.ContainsEdge(newEdge))
+                    {
+                        G.AddEdge(newEdge);
+                    }
+                }
+                targetList.AddRange(targets.Take(m));
                 targetList.AddRange(Enumerable.Repeat(i, m));
             }
 

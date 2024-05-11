@@ -35,18 +35,18 @@ namespace Platformer2D.Level
         public int CrystalCount { get; set; }
         public int CurrentScore { get; set; }
 
-
-
         public LevelModel(List<Vector3> crystalPositions,
                 List<Vector3> platformPositions,
                 List<Vector3> specialPlatformPositions, 
-                List<Vector3> doorsPositions,
-                List<LocationType> locations, 
+                List<Vector3> boundsPosition,
+                //List<Vector3> doorsPositions,
+                //List<LocationType> locations, 
                 int score, int count, float x, float y)
         {
             Crystal = crystalPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
             Platform = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
             SpecialPlatform = specialPlatformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
+            Bounds = boundsPosition.Select(pos => new GameObjectModel { Position = pos }).ToList();
             Background = new GameObjectModel { Position = new Vector3 (0,0,0) };
             //Door = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
 
@@ -56,10 +56,10 @@ namespace Platformer2D.Level
             Width = x;
             Height = y;
 
-            Bounds = new List<GameObjectModel>();
+            //Bounds = new List<GameObjectModel>();
         }
 
-        public void Boundarycalculation(Vector2 size)
+        /*public void Boundarycalculation(Vector2 size)
         {
             // Расчет количества платформ для каждой стены
             int numPlatformsWidth = Mathf.CeilToInt(Width / size.x);
@@ -77,7 +77,7 @@ namespace Platformer2D.Level
                 Bounds.Add(new GameObjectModel { Position = new Vector3(0, i * size.y, 0) }); // Левая стена
                 Bounds.Add(new GameObjectModel { Position = new Vector3(Width, i * size.y, 0) }); // Правая стена
             }
-        }
+        }*/
 
         // Метод для увеличения текущего счета
         public void IncrementScore(int amount)

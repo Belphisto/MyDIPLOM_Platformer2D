@@ -9,6 +9,7 @@ namespace Platformer2D.Crystal
     {
         // ССылка на контроллер кристалла
         private CrystalController controller;
+        public LocationType crystalTupe;
 
         // Start is called before the first frame update
         void Start()

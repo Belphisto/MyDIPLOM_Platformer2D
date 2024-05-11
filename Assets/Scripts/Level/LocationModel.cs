@@ -24,6 +24,7 @@ namespace Platformer2D.Level
         public int TotalScore { get; set; }
         public int CurrentScore { get; set; }
         public int TargerScore {get;set;}
+        public int ScorePerCrystal {get;set;}
 
         public Dictionary<Vector3, CrystalModel> PositionCrystal {get;set;}
         public Dictionary<Vector3, PlatformModel> PositionPlatformStatic{get;set;}
@@ -33,24 +34,35 @@ namespace Platformer2D.Level
 
         public Vector3 PositionBackground {get;set;}
         public Vector3 PlayerPositionStart {get;set;}
+        public Vector3 CheastPositionStart {get;set;}
        
         public Size SizeLocation{get;set;}
 
-        public LocationModel(int indexLocation, bool isChestLocation, LocationType typeLocation, int totalScore, int targetScore,
-            Vector3 playerPositionStart, Size sizeLocation,
+        public LocationModel(
+            int indexLocation,
+            Vector3 ChestLocation,
+            LocationType typeLocation,
+
+            int scorePerCrystal,
+            int targetScore,
+
+            Vector3 playerPositionStart,
+             Size sizeLocation,
+
             List<Vector3> crystalPositions, 
             List<Vector3> staticPlatformPositions,
             List<Vector3> specialPlatformPositions,
-            List<Vector3> doorPositions,
-            List<int> doorIndex
+            List<Vector3> doorPositions
+            //List<int> doorIndex
         )
         {
             //численые параметры уровня
             IndexLocation = indexLocation;
-            IsChestLocation = isChestLocation;
+            CheastPositionStart = ChestLocation;
             TypeLocation = typeLocation;
-            TotalScore = totalScore;
+            ScorePerCrystal = scorePerCrystal;
             TargerScore = targetScore;
+            TotalScore = scorePerCrystal*crystalPositions.Count;
             CurrentScore = 0;
             PositionBackground = new Vector3 (0,0,0);
 
@@ -80,27 +92,27 @@ namespace Platformer2D.Level
 
             PositionDoors = new Dictionary<Vector3, DoorModel>();
             int difficulty = PlayerPrefs.GetInt("Difficulty");
-            int countIndex=0;
+            //int countIndex=0;
             int[] threasholds = {60,75,90};
             int countforopen = (int)(threasholds[difficulty - 1] / 100.0 * PositionCrystal.Count);
-            foreach (var pos in doorPositions)
+            /*foreach (var pos in doorPositions)
             {
-                PositionDoors[pos] = new DoorModel(TargerScore, countforopen, doorIndex[countIndex]);
+                PositionDoors[pos] = new DoorModel(TotalScore*TargerScore/100, countforopen);
                 countIndex++;
-            }
+            }*/
 
             CalculateScorePerCrystal();
             CalculatePlatformsTargetScore();
+            CreateBoundsPlatform(new Vector2(1.7f, 0.5f));
         }
 
         // Метод расчета количества очков, приходящихся на один кристалл
         private void CalculateScorePerCrystal()
         {
-            int scorePerCrystal = TotalScore / (PositionCrystal.Count + 1);
             foreach (var crystal in PositionCrystal.Values)
             {
-                crystal.Score = scorePerCrystal;
-                crystal.Type = TypeLocation;
+                crystal.Score = ScorePerCrystal;
+                //crystal.Type = TypeLocation;
             }
         }
 
@@ -121,18 +133,6 @@ namespace Platformer2D.Level
                 platform.TargetScore = currentScore;
             }
         }
-
-        /*public void CalculateDoorValues()
-        {
-            int difficulty = PlayerPrefs.GetInt("Difficulty");
-            foreach (var door in PositionDoors.Values)
-            {
-                door.TargetScore = TargerScore;
-                door.TypeLocation = TypeLocation;
-                int[] threasholds = {60,75,90};
-                door.CountForOpen = (int)(threasholds[difficulty - 1] / 100.0 * PositionCrystal.Count);
-            }
-        }*/
 
         public void CreateBoundsPlatform(Vector2 size)
         {

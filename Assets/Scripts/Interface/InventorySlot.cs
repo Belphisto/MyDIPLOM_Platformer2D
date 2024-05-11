@@ -65,13 +65,13 @@ namespace Platformer2D.Inventory
 
         public void IncrementSlot()
         {
-            SoundManager.Instance.PlaySound(SoundIndexIncrement);
+            //SoundManager.Instance.PlaySound(SoundIndexIncrement);
             Count ++;
         }
 
         public void DecrementSlot(int count)
         {
-            SoundManager.Instance.PlaySound(SoundIndexDecriment);
+            //SoundManager.Instance.PlaySound(SoundIndexDecriment);
             Count = Count-count;
         }
 

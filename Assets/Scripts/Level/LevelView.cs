@@ -6,7 +6,7 @@ using Platformer2D.Crystal;
 using Platformer2D.Background;
 using Platformer2D.Player;
 using Platformer2D.Platform;
-using Platformer2D.Generator;
+
 
 /*
 Класс LevelView представляет визуальное отображение уровня в игре. 
@@ -19,6 +19,7 @@ namespace Platformer2D.Level
     // Класс LevelView используется как префаб для сборки визуальной части уровня на игровой сцене
     public class LevelView : MonoBehaviour
     {
+        public LevelModel model;
         // Префабы для кристаллов, платформ и фона - задаются на игровой сцене
         [SerializeField] public CrystalView crystalPrefab;
         [SerializeField] public PlatformView platformPrefab;
@@ -26,8 +27,8 @@ namespace Platformer2D.Level
         [SerializeField] public PlatformView platformPrefabSpecial;
         [SerializeField] public BackgroundView backgroundPrefab;
 
-        [SerializeField] public DoorView[] doors;  // Все двери
-        [SerializeField] public ChestView chestPrefab;
+        //[SerializeField] public DoorView[] doors;  // Все двери
+        
 
         public LocationType crystalType;
 
@@ -37,8 +38,12 @@ namespace Platformer2D.Level
         // Вызывается перед первым обновлением кадра
         void Start()
         {
-            CreateModel();
-            var g = new GeneratorGraph(10,1);
+            //CreateModel();
+            
+        }
+        public void SetController()
+        {   SetModel();
+            //controller = new LevelController(model, this); 
         }
 
         private void CreateModel()
@@ -73,37 +78,30 @@ namespace Platformer2D.Level
             };
 
             // Создание модели уровня
-            LevelModel model = new LevelModel
-            (
-                coordinatesCrystal,
-                coordinatesPlatforms, 
-                coordinatesPlatformsSpecial,
-                coordinatesDoors,
-                new List<LocationType> { LocationType.Sky, LocationType.Red},
-                // Здесь вы можете добавить остальные параметры модели
-                100,
-                4,
-                20,
-                30
-            );
-
+            
             
 
             // Установка модели
-            SetModel(model);
+            SetModel();
         }
 
-        public void SetModel(LevelModel model)
+        public void SetModel()
         {
             // Создание GameObjectModel для каждого префаба
             model.Crystal.ForEach(c => c.Prefab = crystalPrefab);
             model.Platform.ForEach(p => p.Prefab = platformPrefab);
             model.SpecialPlatform.ForEach(sp => sp.Prefab = platformPrefabSpecial);
+            model.Bounds.ForEach(sp => sp.Prefab = platformPrefabBounds);
             model.Background.Prefab = backgroundPrefab;
 
             
-            model.Boundarycalculation(platformPrefabBounds.GetColliderSize());
+            //model.Boundarycalculation(platformPrefabBounds.GetColliderSize());
             model.Bounds.ForEach(b => b.Prefab = platformPrefabBounds);
+            controller = new LevelController(model, this); 
+        }
+
+        public void SetModel(LocationModel model)
+        {
             controller = new LevelController(model, this); 
         }
 

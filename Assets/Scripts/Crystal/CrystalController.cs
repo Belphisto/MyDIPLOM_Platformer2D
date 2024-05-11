@@ -32,9 +32,11 @@ namespace Platformer2D.Crystal
 
                 // Увеличить счет игрока на значение цены кристалла
                 PlayerController.Instance.GetScore(model.Score); 
-
+                
                 // Отправить событие об уничтожении кристалла
-                Bus.Instance.SendCrystal(model.Type);
+                Debug.LogWarning($"CrystalController HandleTriggerEnter {view.crystalTupe}");
+                Bus.Instance.SendCrystal(view.crystalTupe);
+                Debug.LogWarning($"CrystalController HandleTriggerEnter2 {view.crystalTupe}");
                 // Уничтожить кристалл
                 view.DestroyPoint(); 
             }

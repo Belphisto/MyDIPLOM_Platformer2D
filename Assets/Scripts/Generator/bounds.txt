@@ -1,0 +1,21 @@
+private List<Vector3> GenerateBoundaryPlatforms(Level.Size size)
+{
+    var platforms = new List<Vector3>();
+
+    // Размер платформы
+    float platformWidth = 1.1f;
+    float platformHeight = 0.5f;
+
+    // Расчет количества платформ для каждой стены
+    int numPlatformsWidth = Mathf.CeilToInt(size.Width / platformWidth) + 2;
+    int numPlatformsHeight = Mathf.CeilToInt(size.Height / platformHeight) + 2;
+
+    // Создание платформ для каждой стены
+    for (int i = -1; i <= numPlatformsWidth; i++)
+    {
+        platforms.Add(new Vector3(i * platformWidth, -platformHeight, 0)); // Нижняя стена
+        platforms.Add(new Vector3(i * platformWidth, size.Height, 0)); // Верхняя стена
+    }
+    for (int i = -1; i <= numPlatformsHeight; i++)
+    {
+        platforms.Add(new Vector3(-platformWidth, i * platformHeight, 0)); // Левая ст

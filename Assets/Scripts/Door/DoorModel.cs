@@ -16,6 +16,7 @@ namespace Platformer2D.Platform
         public int IndexDoor {get;set;}
         public LocationType TypeDoor {get; set;}
         public LocationType TypeLocation {get; set;}
+        public List<int> IndexLocation{get;set;}
 
         // Конструктор класса PlatformModel
         // Принимает целевой счет

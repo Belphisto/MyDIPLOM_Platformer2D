@@ -35,13 +35,16 @@ namespace Platformer2D.Level
         public int CrystalCount { get; set; }
         public int CurrentScore { get; set; }
 
+        public int Index{get; set;}
+
         public LevelModel(List<Vector3> crystalPositions,
                 List<Vector3> platformPositions,
                 List<Vector3> specialPlatformPositions, 
                 List<Vector3> boundsPosition,
                 //List<Vector3> doorsPositions,
                 //List<LocationType> locations, 
-                int score, int count, float x, float y)
+                int score, int count, float x, float y,
+                int index)
         {
             Crystal = crystalPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
             Platform = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
@@ -49,12 +52,12 @@ namespace Platformer2D.Level
             Bounds = boundsPosition.Select(pos => new GameObjectModel { Position = pos }).ToList();
             Background = new GameObjectModel { Position = new Vector3 (0,0,0) };
             //Door = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
-
             TotalScore = score;
             CrystalCount = count;
             CurrentScore = 0;
             Width = x;
             Height = y;
+            Index = index;
         }
 
         // Метод для увеличения текущего счета

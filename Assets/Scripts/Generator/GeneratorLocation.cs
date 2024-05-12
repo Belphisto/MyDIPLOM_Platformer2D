@@ -15,7 +15,7 @@ namespace Platformer2D.Generator
             _difficulty= PlayerPrefs.GetInt("Difficulty");
         }
 
-        public LevelModel GenerateNewLocation(int coefXLoc)
+        public LevelModel GenerateNewLocation(int coefXLoc, int indexLocation)
         {
             Level.Size size = GeneratorModel.GenerateLocationSize();
             Vector2 labelSize = new Vector2(1.0f, 1.3f);
@@ -46,7 +46,8 @@ namespace Platformer2D.Generator
                 countCrystal*GeneratorModel.GetScorePerCrystal(coefXLoc, _difficulty),
     
                 countCrystal,
-                size.Y, size.X
+                size.Y, size.X,
+                indexLocation
             );
             Debug.Log(countCrystal*GeneratorModel.GetScorePerCrystal(coefXLoc, _difficulty));
             return newModel;

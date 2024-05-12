@@ -56,36 +56,21 @@ namespace Platformer2D.Level
             foreach (var gameObjectModel in model.Crystal)
             {
                 var crystal = (CrystalView) UnityEngine.Object.Instantiate(gameObjectModel.Prefab, gameObjectModel.Position, Quaternion.identity);
+                crystal.transform.SetParent(view.transform);
                 var crystalModel = new CrystalModel(scorePerCrystal);
                 //Debug.LogWarning($"{view.crystalType}");
                 // Созданная с заданными параметрами модель кристалла передается CrystalModel в представление CrystalView
                 crystal.SetModel(crystalModel); 
             }
         }
-        private void SpawnCrystals2()
-        {
-            foreach (var positionCrystal in modelLocation.PositionCrystal)
-            {
-                var crystal = (CrystalView) UnityEngine.Object.Instantiate(view.crystalPrefab, positionCrystal.Key, Quaternion.identity);
-                var crystalModel = positionCrystal.Value;
-                // Созданная с заданными параметрами модель кристалла передается CrystalModel в представление CrystalView
-                crystal.SetModel(crystalModel); 
-            } 
-        }
 
         // Метод для создания изменяющегося фона на сцене
         private void SpawnColorChangeBackground()
         {
             var colorChangeBackground = UnityEngine.Object.Instantiate(view.backgroundPrefab);
+            colorChangeBackground.transform.SetParent(view.transform);
             var controller = new BackgroundControlller(new BackgroundModel(), colorChangeBackground);
             controller.SetTargerScore(model.TotalScore);
-            colorChangeBackground.SetController(controller);
-        }
-        private void SpawnColorChangeBackground2()
-        {
-            var colorChangeBackground = UnityEngine.Object.Instantiate(view.backgroundPrefab, modelLocation.PositionBackground, Quaternion.identity);
-            var controller = new BackgroundControlller(new BackgroundModel(), colorChangeBackground);
-            controller.SetTargerScore(modelLocation.TotalScore);
             colorChangeBackground.SetController(controller);
         }
 
@@ -111,7 +96,7 @@ namespace Platformer2D.Level
             int score = 0;
             /*foreach (var gameObjectModel in platformModels)
             {
-                var platform = (PlatformView) UnityEngine.Object.Instantiate(gameObjectModel.Prefab, gameObjectModel.Position, Quaternion.identity);
+                var platform = (PlatformView) UnityыEngine.Object.Instantiate(gameObjectModel.Prefab, gameObjectModel.Position, Quaternion.identity);
                 var platformModel = new PlatformModel(score);
                 platformModel.StartPosition = gameObjectModel.Position;
                 platform.SetModel(platformModel);
@@ -123,7 +108,7 @@ namespace Platformer2D.Level
 
                 // Создаем платформу
                 var platform = (PlatformView)UnityEngine.Object.Instantiate(platformModels[i].Prefab, platformModels[i].Position, Quaternion.identity);
-
+                platform.transform.SetParent(view.transform);
                 // Создаем модель платформы и устанавливаем начальное значение score
                 var platformModel = new PlatformModel(score);
                 //Debug.Log($"TargetScoreForPlatform = {score}");

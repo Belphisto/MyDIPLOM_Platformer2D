@@ -56,7 +56,7 @@ namespace Platformer2D
             // Выбираем соответствующий префаб LevelView
             LevelView levelPrefab = levelPrefabs[locationType];
             // Создаем экземпляр префаба LevelView
-            LevelModel newModel = generatorLocations.GenerateNewLocation(2);
+            LevelModel newModel = generatorLocations.GenerateNewLocation(2, 0);
             LevelView levelInstance = Instantiate(levelPrefab);
             levelInstance.model = newModel;
             levelInstance.SetModel();

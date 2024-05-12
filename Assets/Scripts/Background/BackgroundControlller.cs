@@ -42,7 +42,7 @@ namespace Platformer2D.Background
         {
             if (model.TargetScore == 0)
             {
-                Debug.Log("TargetScore is zero, cannot calculate progress");
+                //Debug.Log("TargetScore is zero, cannot calculate progress");
                 return;
             }
             // Вычисление прогресса в достижении целевого количества очков
@@ -64,7 +64,7 @@ namespace Platformer2D.Background
                 Mathf.Lerp(view.CurrentColor.b, model.TargetColor.b, view.T),
                 view.CurrentColor.a
             );
-            Debug.Log($"Update Color {newColor}");
+            //Debug.Log($"Update Color {newColor}");
 
             // Применение нового цвета к представлению
             view.ChangeColor(newColor);

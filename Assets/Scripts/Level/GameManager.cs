@@ -22,7 +22,10 @@ namespace Platformer2D
 
         private Dictionary<LocationType, LevelView> levelPrefabs;
         private GeneratorGraph _locationNetwork;
+
         private GeneratorLocation generatorLocations;
+        private Dictionary<int, (int, int)> doorToLocations;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -33,11 +36,14 @@ namespace Platformer2D
                 { LocationType.Blue, blueLevelPrefab},
                 { LocationType.Sky, skyLevelPrefab},
             };
+            
 
             var (countLocation, countStartVertix) = GetCountLocationWithDifficilty();
             _locationNetwork = new GeneratorGraph(countLocation, countStartVertix);
             generatorLocations = new GeneratorLocation();
-
+            doorToLocations = GeneratorGraph.GraphToLocations(_locationNetwork);
+            GeneratorGraph.PrintGraphToLocations(_locationNetwork);
+            
             TestCreateLocation();
         }
 
@@ -50,7 +56,7 @@ namespace Platformer2D
             // Выбираем соответствующий префаб LevelView
             LevelView levelPrefab = levelPrefabs[locationType];
             // Создаем экземпляр префаба LevelView
-            LevelModel newModel = generatorLocations.GenerateNewLocation(1);
+            LevelModel newModel = generatorLocations.GenerateNewLocation(2);
             LevelView levelInstance = Instantiate(levelPrefab);
             levelInstance.model = newModel;
             levelInstance.SetModel();

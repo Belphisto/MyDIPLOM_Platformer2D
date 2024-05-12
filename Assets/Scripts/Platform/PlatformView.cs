@@ -24,11 +24,9 @@ namespace Platformer2D.Platform
         }
 
         // Метод для установки модели платформы
-        public virtual void SetModel(PlatformModel model)
+        public virtual void SetModel(PlatformModel model1)
         {
-            controller = new PlatformController(model, this);
-            Debug.Log($"SetModel PlatformController model.TargetScore = {model.TargetScore}");
-        }
+            controller = new PlatformController(model1, this);        }
 
         // Метод Update вызывается каждый кадр
         public void Update()

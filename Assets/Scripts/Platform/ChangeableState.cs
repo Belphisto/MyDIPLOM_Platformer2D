@@ -19,7 +19,7 @@ namespace Platformer2D.Platform
 
         public virtual void ChangeState()
         {   
-            Debug.Log("ChangeState");
+            //Debug.Log("ChangeState");
             stateColor.gameObject.SetActive(true);
             stateColorless.gameObject.SetActive(false);
         }

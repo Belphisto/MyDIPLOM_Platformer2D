@@ -73,7 +73,7 @@ namespace Platformer2D.Player
         public void GetScore(int point)
         {
             model.IncrementScore(point);
-            Debug.Log($"Current PlayerScore = {model.Score}");
+            //Debug.Log($"Current PlayerScore = {model.Score}");
             
             // Вызов события обновления счета, если оно не пустое
             //OnScoreUpdate?.Invoke(point);

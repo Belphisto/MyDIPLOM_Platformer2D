@@ -48,32 +48,16 @@ namespace Platformer2D.Level
             Bus.Instance.SendScore += HandleScoreUpdate;
         }
 
-        public LevelController(LocationModel model, LevelView view)
-        {
-            this.modelLocation = model;
-            this.view = view;
-
-            SpawnCrystals2();
-            SpawnColorChangeBackground2();
-            SpawnPlatforms2();
-            SpawnPlayer2();
-            //SpawnDoor();
-            //SpawnChest();
-            
-            //Подписка на событие отправки обновления счетчика очков на уровне в платформу
-            Bus.Instance.SendScore += HandleScoreUpdate;
-        }
-
         // Метод для создания кристаллов на сцене
         private void SpawnCrystals()
         {
             int scorePerCrystal = model.TotalScore / model.CrystalCount;
-            Debug.Log($"LevelController :SpawnCrystals() scorePerCrystal= {scorePerCrystal}");
+            //Debug.Log($"LevelController :SpawnCrystals() scorePerCrystal= {scorePerCrystal}");
             foreach (var gameObjectModel in model.Crystal)
             {
                 var crystal = (CrystalView) UnityEngine.Object.Instantiate(gameObjectModel.Prefab, gameObjectModel.Position, Quaternion.identity);
                 var crystalModel = new CrystalModel(scorePerCrystal);
-                Debug.LogWarning($"{view.crystalType}");
+                //Debug.LogWarning($"{view.crystalType}");
                 // Созданная с заданными параметрами модель кристалла передается CrystalModel в представление CrystalView
                 crystal.SetModel(crystalModel); 
             }
@@ -108,40 +92,48 @@ namespace Platformer2D.Level
         // Метод для создания платформ на уровне
         public void SpawnPlatforms()
         {
-            SpawnPlatform(model.Platform, 20, 0);
-            SpawnPlatform(model.SpecialPlatform, 40, 0.8f);
-            SpawnPlatform(model.Bounds, 40, 0f);
+            SpawnPlatform(model.Platform);
+            SpawnPlatform(model.SpecialPlatform);
+            SpawnPlatform(model.Bounds);
 
         }
         // Метод для создания платформ на уровне
-        public void SpawnPlatforms2()
-        {
-            SpawnPlatform2(modelLocation.PositionPlatformStatic, view.platformPrefab);
-            SpawnPlatform2(modelLocation.PositionPlatformSpecial, view.platformPrefabSpecial);
-            SpawnPlatform2(modelLocation.PositionPlatformBounds, view.platformPrefabBounds);
-        }
+
 
         // Метод для создания платформы
-        private void SpawnPlatform(List<GameObjectModel> platformModels, int score, float speed)
+        private void SpawnPlatform(List<GameObjectModel> platformModels)
         {
-            foreach (var gameObjectModel in platformModels)
+            int totalScore = model.TotalScore;
+            int totalPlatforms = platformModels.Count;
+            int averageScorePerPlatform = (totalScore/platformModels.Count);
+            if (averageScorePerPlatform == 0) averageScorePerPlatform = 1;
+            Debug.Log(averageScorePerPlatform);
+            int score = 0;
+            /*foreach (var gameObjectModel in platformModels)
             {
                 var platform = (PlatformView) UnityEngine.Object.Instantiate(gameObjectModel.Prefab, gameObjectModel.Position, Quaternion.identity);
-                var platformModel = new PlatformModel(score, speed);
+                var platformModel = new PlatformModel(score);
                 platformModel.StartPosition = gameObjectModel.Position;
                 platform.SetModel(platformModel);
-            }
-        }
-        private void SpawnPlatform2(Dictionary<Vector3, PlatformModel> platformModels, PlatformView platformPrefab)
-        {
-            foreach (var position in platformModels)
+            }*/
+            for (int i = 0; i < platformModels.Count; i++)
             {
-                var platform = (PlatformView) UnityEngine.Object.Instantiate(platformPrefab, position.Key, Quaternion.identity);
-                var platformModel = position.Value;
+                // Вычисляем значение score для текущей платформы
+                score+=averageScorePerPlatform;
+
+                // Создаем платформу
+                var platform = (PlatformView)UnityEngine.Object.Instantiate(platformModels[i].Prefab, platformModels[i].Position, Quaternion.identity);
+
+                // Создаем модель платформы и устанавливаем начальное значение score
+                var platformModel = new PlatformModel(score);
+                //Debug.Log($"TargetScoreForPlatform = {score}");
+                platformModel.StartPosition = platformModels[i].Position;
+
+                // Устанавливаем модель для платформы
                 platform.SetModel(platformModel);
-                Debug.Log("SpawnPlatforms");
             }
         }
+
 
         // Метод для обработки обновления счета от игрока
         public void HandleScoreUpdate(int score)
@@ -170,22 +162,7 @@ namespace Platformer2D.Level
                 Debug.Log("Персонаж с тегом 'Player' не найден");
             }
         }
-        private void SpawnPlayer2()
-        {
-            // Найти персонажа по тегу
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-            // Проверить, найден ли персонаж
-            if (player != null)
-            {
-                // Изменить координаты персонажа
-                player.transform.position = modelLocation.PlayerPositionStart;
-            }
-            else
-            {
-                Debug.Log("Персонаж с тегом 'Player' не найден");
-            }
-        }
 
         private void SpawnDoor()
         {

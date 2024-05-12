@@ -28,14 +28,24 @@ namespace Platformer2D.Platform
             this.view = view;
             // Подписка на событие обновления счета
             LevelController.OnScoreUpdatePlatfroms += HandleScoreUpdate;
-            Debug.Log($"evelController.OnScoreUpdate += HandleScoreUpdate;");
+            //Debug.Log($"evelController.OnScoreUpdate += HandleScoreUpdate;");
         }
         
         // Обработка события текущего счета
         private void HandleScoreUpdate(int score)
         {
-            if (score >= model.TargetScore) view.ChangeState();
-            Debug.Log($"HandleScoreUpdate(int score) PlatformController: score {score}, model.TargetScore = {model.TargetScore}");
+            if (score >= model.TargetScore) 
+            {
+                view.ChangeState();
+                model.IsColor = true;
+                }
+
+            //Debug.Log($"HandleScoreUpdate(int score) PlatformController: score {score}, model.TargetScore = {model.TargetScore}");
+        }
+
+        public int GetTargerScore()
+        {
+            return model.TargetScore;
         }
 
         // Метод Update вызывается каждый кадр для обновления состояния платформы

@@ -55,29 +55,7 @@ namespace Platformer2D.Level
             CurrentScore = 0;
             Width = x;
             Height = y;
-
-            //Bounds = new List<GameObjectModel>();
         }
-
-        /*public void Boundarycalculation(Vector2 size)
-        {
-            // Расчет количества платформ для каждой стены
-            int numPlatformsWidth = Mathf.CeilToInt(Width / size.x);
-            int numPlatformsHeight = Mathf.CeilToInt(Height / size.y);
-
-            // Создание GameObjectModel для каждой платформы в каждой стене
-            
-            for (int i = 0; i < numPlatformsWidth; i++)
-            {
-                Bounds.Add(new GameObjectModel { Position = new Vector3(i * size.x, 0, 0) }); // Нижняя стена
-                Bounds.Add(new GameObjectModel { Position = new Vector3(i * size.x, Height, 0) }); // Верхняя стена
-            }
-            for (int i = 0; i < numPlatformsHeight; i++)
-            {
-                Bounds.Add(new GameObjectModel { Position = new Vector3(0, i * size.y, 0) }); // Левая стена
-                Bounds.Add(new GameObjectModel { Position = new Vector3(Width, i * size.y, 0) }); // Правая стена
-            }
-        }*/
 
         // Метод для увеличения текущего счета
         public void IncrementScore(int amount)

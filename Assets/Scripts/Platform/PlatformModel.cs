@@ -23,10 +23,10 @@ namespace Platformer2D.Platform
 
         // Конструктор класса PlatformModel
         // Принимает целевой счет
-        public PlatformModel(int score, float speed)
+        public PlatformModel(int score)
         {
             _targetScore = score;
-            _speed = speed;
+            _speed = 0;
             IsColor = false;
         }
         public PlatformModel()

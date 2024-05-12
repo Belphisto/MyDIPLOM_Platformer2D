@@ -1,23 +1,22 @@
- using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Platformer2D.Level;
 using System.Linq;
 
-namespace Platformer2D
+namespace Platformer2D.Generator
 {
-    public class GeneratorPlatformPosition 
+    public class GeneratorGridPlatform : MonoBehaviour
     {
         private Vector2 labelSize;
         private Size grid;
-        public GeneratorPlatformPosition (Vector2 labelSize, Size grid)
+        public GeneratorGridPlatform (Vector2 labelSize, Size grid)
         {
             this.labelSize = labelSize;
             this.grid = grid;
         }
 
-        public List<Vector3> Position()
+        public List<Vector3> PositionStaticPlatforms()
         {
             var platforms = new List<Vector3>();
 
@@ -84,9 +83,37 @@ namespace Platformer2D
                 // Генерация случайной точки в пределах сетки
                 var point = new Vector2(UnityEngine.Random.Range(region.x, region.xMax), UnityEngine.Random.Range(region.y, region.yMax));
                 // Размещение платформы ряд
-                    platforms.Add(new Vector3(point.x, point.y, 0));
+               platforms.Add(new Vector3(point.x, point.y, 0));
             }
                 return platforms;
         }
+
+        public List<Vector3> GenerateBoundaryPlatforms()
+        {
+            var platforms = new List<Vector3>();
+
+            // Размер платформы
+            float platformX = 1.1f;
+            float platformY = 0.5f;
+
+            // Расчет количества платформ для каждой стены
+            int numPlatformsX = Mathf.CeilToInt((grid.X ) / platformX)+2;
+            int numPlatformsY = Mathf.CeilToInt((grid.Y) / platformY)+2;
+
+            // Создание платформ для каждой стены
+            for (int i = -1; i < numPlatformsX-1; i++)
+            {
+                platforms.Add(new Vector3(i * platformX, -platformY*2, 0)); // Нижняя стена
+                platforms.Add(new Vector3(i * platformX,  (grid.Y)+platformY*2, 0)); // Верхняя стена
+            }
+            for (int i =-1; i < numPlatformsY-1; i++)
+            {
+                platforms.Add(new Vector3(-platformY*2, i * platformY, 0)); // Левая стена
+                platforms.Add(new Vector3((grid.X )+platformY*2, i * platformY, 0)); // Правая стена
+            }
+
+            return platforms;
+        }
     }
+
 }

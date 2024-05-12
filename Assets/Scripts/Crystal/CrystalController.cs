@@ -28,15 +28,15 @@ namespace Platformer2D.Crystal
             // Проверка, что персонаж  PlayerController вошел в триггер
             if (other.gameObject == PlayerController.Instance.View.gameObject) 
             {
-                Debug.Log($"HandleTriggerEnter CrystalController: crystal.Score = {model.Score}");
+                //Debug.Log($"HandleTriggerEnter CrystalController: crystal.Score = {model.Score}");
 
                 // Увеличить счет игрока на значение цены кристалла
                 PlayerController.Instance.GetScore(model.Score); 
                 
                 // Отправить событие об уничтожении кристалла
-                Debug.LogWarning($"CrystalController HandleTriggerEnter {view.crystalTupe}");
+                //Debug.LogWarning($"CrystalController HandleTriggerEnter {view.crystalTupe}");
                 Bus.Instance.SendCrystal(view.crystalTupe);
-                Debug.LogWarning($"CrystalController HandleTriggerEnter2 {view.crystalTupe}");
+                //Debug.LogWarning($"CrystalController HandleTriggerEnter2 {view.crystalTupe}");
                 // Уничтожить кристалл
                 view.DestroyPoint(); 
             }

@@ -100,11 +100,6 @@ namespace Platformer2D.Level
             controller = new LevelController(model, this); 
         }
 
-        public void SetModel(LocationModel model)
-        {
-            controller = new LevelController(model, this); 
-        }
-
 
         // Update is called once per frame
         void Update()

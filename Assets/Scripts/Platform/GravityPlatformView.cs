@@ -10,7 +10,7 @@ namespace Platformer2D.Platform
         {
             // Создание нового контроллера GravityPlatform
             controller = new GravityPlatformController(model, this);
-            Debug.Log($"SetModel GravityPlatformController model.TargetScore = {model.TargetScore}");
+            //Debug.Log($"SetModel GravityPlatformController model.TargetScore = {model.TargetScore}");
         }
 
         // Метод, вызываемый при входе в триггер

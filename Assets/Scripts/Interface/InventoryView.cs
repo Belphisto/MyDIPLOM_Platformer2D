@@ -110,7 +110,7 @@ namespace Platformer2D.Inventory
 
         public void IncrementSlot(LocationType type)
         {
-            Debug.LogWarning($"IncrementSlot inventoryview {type}");
+            //Debug.LogWarning($"IncrementSlot inventoryview {type}");
             //SoundManager.Instance.PlaySound(1);
             foreach (var slot in slots)
             {

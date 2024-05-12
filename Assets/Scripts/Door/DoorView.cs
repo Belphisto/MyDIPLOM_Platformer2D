@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,6 +10,7 @@ namespace Platformer2D.Platform
     public class DoorView : ChangeableState
     {
         protected DoorController controller;
+        [SerializeField] private int IndexLocation;
         public LocationType type;
         //public TypeSlot slot;
         
@@ -21,6 +23,7 @@ namespace Platformer2D.Platform
         public virtual void SetModel(DoorModel model)
         {
             controller = new DoorController(model, this);
+            IndexLocation = model.IndexLocation; 
         }
 
         // Метод Awake вызывается при инициализации объекта

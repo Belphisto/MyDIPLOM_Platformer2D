@@ -46,6 +46,12 @@ namespace Platformer2D
         {
             UdateLevel?.Invoke(count);
         }
+
+        public event Action <int> IndexNextLocation;
+        public void SendNextIndexLocation (int index)
+        {
+            IndexNextLocation?.Invoke(index);
+        }
     }
 }
 

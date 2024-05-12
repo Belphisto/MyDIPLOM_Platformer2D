@@ -11,7 +11,7 @@ namespace Platformer2D.Platform
         {
             // Создание нового контроллера Disappearing
             controller = new DisappearingPlatformController(model, this);
-            Debug.Log($"SetModel DisappearingPlatformController model.TargetScore = {model.TargetScore}");
+            //Debug.Log($"SetModel DisappearingPlatformController model.TargetScore = {model.TargetScore}");
         }
     }
 

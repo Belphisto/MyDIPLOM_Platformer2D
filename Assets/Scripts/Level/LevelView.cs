@@ -27,7 +27,7 @@ namespace Platformer2D.Level
         [SerializeField] public PlatformView platformPrefabSpecial;
         [SerializeField] public BackgroundView backgroundPrefab;
 
-        //[SerializeField] public DoorView[] doors;  // Все двери
+        [SerializeField] public DoorView[] doors;  // Все двери
         
 
         public LocationType crystalType;
@@ -93,10 +93,19 @@ namespace Platformer2D.Level
             model.SpecialPlatform.ForEach(sp => sp.Prefab = platformPrefabSpecial);
             model.Bounds.ForEach(sp => sp.Prefab = platformPrefabBounds);
             model.Background.Prefab = backgroundPrefab;
-
-            
-            //model.Boundarycalculation(platformPrefabBounds.GetColliderSize());
             model.Bounds.ForEach(b => b.Prefab = platformPrefabBounds);
+            Debug.Log("model is " + (model == null ? "null" : "not null"));
+            Debug.Log("model.Doors is " + (model.Doors == null ? "null" : "not null"));
+
+            // Назначение префабов для model.Doors
+            foreach (var door in model.Doors)
+            {
+                // Получение индекса префаба двери на основе типа локации
+                int doorPrefabIndex = (int)door.Value.TypeDoor;
+                // Назначение соответствующего префаба двери
+                door.Key.Prefab = doors[doorPrefabIndex];
+            }
+
             controller = new LevelController(model, this); 
         }
 

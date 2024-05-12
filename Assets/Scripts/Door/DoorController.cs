@@ -26,7 +26,7 @@ namespace Platformer2D.Platform
         private void HandleScoreUpdate(int score)
         {
             if (score >= model.TargetScore) view.ChangeState();
-            Debug.Log($"HandleScoreUpdate(int score) PlatformController: score {score}, model.TargetScore = {model.TargetScore}");
+            //Debug.Log($"HandleScoreUpdate(int score) PlatformController: score {score}, model.TargetScore = {model.TargetScore}");
         }
 
         public bool IsColor()
@@ -47,6 +47,7 @@ namespace Platformer2D.Platform
                         model.IsOpen = true;
                         InventoryView.Instance.DecrementSlot(view.type, model.CountForOpen);
                         InventoryView.Instance.IncrementSlot(LocationType.Default);
+                        Bus.Instance.SendNextIndexLocation(model.IndexLocation);
                     }
                     else
                     {

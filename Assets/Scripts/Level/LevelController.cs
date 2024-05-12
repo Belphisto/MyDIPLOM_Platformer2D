@@ -44,6 +44,7 @@ namespace Platformer2D.Level
             SpawnColorChangeBackground();
             SpawnPlatforms();
             SpawnPlayer();
+            SpawnDoor();
             //Подписка на событие отправки обновления счетчика очков на уровне в платформу
             Bus.Instance.SendScore += HandleScoreUpdate;
         }
@@ -151,17 +152,22 @@ namespace Platformer2D.Level
 
         private void SpawnDoor()
         {
-            /*foreach (var positionDoor in modelLocation.PositionDoors)
+            foreach (var positionDoor in model.Doors)
             {
                 // Находим соответствующий префаб двери
                 DoorView doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypeLocation);
+                Debug.Log("model.Doors is " + (doorPrefab == null ? "null" : "not null"));
+
                 if (doorPrefab != null)
                 {
-                    var door = (DoorView) UnityEngine.Object.Instantiate(doorPrefab, positionDoor.Key, Quaternion.identity);
+                    var door = (DoorView) UnityEngine.Object.Instantiate(doorPrefab, positionDoor.Key.Position, Quaternion.identity);
                     var doorModel = positionDoor.Value;
+                    doorModel.CountForOpen = model.TargetCountForDoors;
+                    doorModel.TargetScore = model.TotalScore/2;
+                    Debug.Log($"door.SetModel: CountForOpen= {doorModel.CountForOpen}, TargetScore= {doorModel.TargetScore }");
                     door.SetModel(doorModel);
                 }
-            }*/
+            }
         }
         private void SpawnChest()
         {

@@ -49,6 +49,21 @@ namespace Platformer2D.Generator
             }
         }
 
+        public static int GetTargetCountForOpenPercent(int _difficulty)
+        {
+            switch (_difficulty)
+            {
+                case 1:
+                    return 30;
+                case 2:
+                    return 50;
+                case 3:
+                    return 70;
+                default:
+                    return 0;
+            }
+        }
+
         public static float GetPercentCountSpecialPlatform(int _difficulty)
         {
             switch (_difficulty)

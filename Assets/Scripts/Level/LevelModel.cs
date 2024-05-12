@@ -22,9 +22,11 @@ namespace Platformer2D.Level
     {
         public List<GameObjectModel> Crystal { get; set; }
         public List<GameObjectModel> Platform { get; set; }
-        public Dictionary<GameObjectModel, DoorView> Doors {get;set;}
+        //public Dictionary<GameObjectModel, DoorView> Doors2 {get;set;}
         public List<GameObjectModel> SpecialPlatform { get; set; }
         public List<GameObjectModel> Bounds { get; set; }
+
+        public Dictionary<GameObjectModel, DoorModel> Doors {get;set;}
         public GameObjectModel Background { get; set; }
 
         // Общий счет, количество кристаллов и текущий счет игрока
@@ -34,6 +36,7 @@ namespace Platformer2D.Level
         public int TotalScore { get; set; }
         public int CrystalCount { get; set; }
         public int CurrentScore { get; set; }
+        public int TargetCountForDoors { get; set; }
 
         public int Index{get; set;}
 
@@ -58,6 +61,41 @@ namespace Platformer2D.Level
             Width = x;
             Height = y;
             Index = index;
+        }
+
+        public LevelModel(List<Vector3> crystalPositions,
+                List<Vector3> platformPositions,
+                List<Vector3> specialPlatformPositions, 
+                List<Vector3> boundsPosition,
+                //List<LocationType> locations, 
+                int score, int count, float x, float y,
+                int index,
+                Dictionary<Vector3, DoorModel> doorsPositions,
+                int targetCountForDoors)
+        {
+            Crystal = crystalPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
+            Platform = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
+            SpecialPlatform = specialPlatformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
+            Bounds = boundsPosition.Select(pos => new GameObjectModel { Position = pos }).ToList();
+            Background = new GameObjectModel { Position = new Vector3 (0,0,0) };
+            //Door = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
+            TotalScore = score;
+            CrystalCount = count;
+            CurrentScore = 0;
+            Width = x;
+            Height = y;
+            Index = index;
+            TargetCountForDoors = targetCountForDoors;
+            Doors = new Dictionary<GameObjectModel, DoorModel>();
+            //доназначить моделям дверей параметры. На этом этапе назначены:
+            // IndexDoor, TypeDoor, TypeLocation, IndexLocation 
+            // не хватает int score, int countCrystal,
+            foreach (var doorPosition in doorsPositions)
+            {
+                GameObjectModel doorGameObject = new GameObjectModel { Position = doorPosition.Key };
+                Doors[doorGameObject] = doorPosition.Value;
+            }
+            Debug.Log("LevelModel After Create: model.Doors is " + (Doors == null ? "null" : "not null"));
         }
 
         // Метод для увеличения текущего счета

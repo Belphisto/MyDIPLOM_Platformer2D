@@ -26,7 +26,6 @@ namespace Platformer2D.Platform
         private void HandleScoreUpdate(int score)
         {
             if (score >= model.TargetScore) view.ChangeState();
-            //Debug.Log($"HandleScoreUpdate(int score) PlatformController: score {score}, model.TargetScore = {model.TargetScore}");
         }
 
         public bool IsColor()
@@ -40,14 +39,12 @@ namespace Platformer2D.Platform
             {
                 if (isCorrectActiveSlot && Input.GetKeyDown(KeyCode.F))
                 {
-                    //Debug.Log("PressF");
                     if (activeslot.Count >= model.CountForOpen)
                     {
                         Debug.Log("Door Opened");
                         model.IsOpen = true;
                         InventoryView.Instance.DecrementSlot(view.type, model.CountForOpen);
                         InventoryView.Instance.IncrementSlot(LocationType.Default);
-                        Bus.Instance.SendNextIndexLocation(model.IndexLocation);
                     }
                     else
                     {
@@ -57,7 +54,11 @@ namespace Platformer2D.Platform
             }
             else
             {
-                Debug.Log("Door was open early");
+                if(Input.GetKeyDown(KeyCode.Return))
+                {
+                    Debug.Log($"New location index: {model.IndexLocation}");
+                    Bus.Instance.SendNextIndexLocation(model.IndexLocation);
+                }
             }
         }
 
@@ -66,35 +67,42 @@ namespace Platformer2D.Platform
             if (collision.gameObject.CompareTag("Player"))
             {
                 activeslot = InventoryView.Instance.GetActiveSlot();
-                if (activeslot != null && (activeslot.locationType == view.type || activeslot.locationType == model.TypeDoor))
+                
+                if (activeslot != null && (activeslot.locationType == model.TypesLocation.Item2 || activeslot.locationType == model.TypesLocation.Item1))
                 {
                     Debug.Log("Active correctSlot");
+                    
                     isCorrectActiveSlot = true;
                 }
-                Debug.Log("Player has entered the door trigger");
+                Debug.Log("activeslot.locationType " + activeslot.locationType);
+                Debug.Log("view.type == " + view.type);
+                Debug.Log("model.TypeDoor == " + model.TypeDoor);
             }
         }
 
         public void OnTriggerStay2D(Collider2D collision)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            /*if (collision.gameObject.CompareTag("Player"))
             {
                 activeslot = InventoryView.Instance.GetActiveSlot();
-                if (activeslot != null && activeslot.locationType == view.type)
+                if (activeslot != null && (activeslot.locationType == view.type|| activeslot.locationType == model.TypeDoor))
                 {
+                    Debug.Log("Active correctSlot");
                     isCorrectActiveSlot = true;
                 }
                 else
                 {
+                    Debug.Log("Deactive correctSlot");
                     isCorrectActiveSlot = false;
                 }
-            }
+            }*/
         }
 
         public void OnTriggerExit2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
+                Debug.Log("Deactive correctSlot");
                 isCorrectActiveSlot = false;
                 Debug.Log("Player has exited the door trigger");
             }

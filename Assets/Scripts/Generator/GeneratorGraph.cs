@@ -23,7 +23,7 @@ namespace Platformer2D.Generator
         }
 
         /*https://www.nuget.org/packages/QuikGraph#supportedframeworks-body-tab*/
-        public void GenerateLocations(int countLocation, int countStartVertix)
+        private void GenerateLocations(int countLocation, int countStartVertix)
         {
             var G2 = BarabasiAlbertGraph(countLocation, countStartVertix);
             Debug.Log("[Generator]Vertices: " + string.Join(", ", G2.Vertices));
@@ -97,13 +97,13 @@ namespace Platformer2D.Generator
             textLog +="Levels: ";
             foreach (var room in rooms)
             {
-                textLog +=$"Level {room.Key + 1}: {room.Value}, ";
+                textLog +=$"Level {room.Key}: {room.Value}, ";
             }
 
             textLog +="\nPrexod:";
             foreach (var (room, transitionRooms) in transitions)
             {
-                textLog +=$"\nLevel {room + 1}: {rooms[room]} -> {string.Join(", ", transitionRooms.Select(r => $"Level {r + 1}: {rooms[r]}"))}";
+                textLog +=$"\nLevel {room}: {rooms[room]} -> {string.Join(", ", transitionRooms.Select(r => $"Level {r + 1}: {rooms[r]}"))}";
             }
             Debug.Log($" [Generator] {textLog}");
         }
@@ -118,31 +118,16 @@ namespace Platformer2D.Generator
                 foreach (var targetVertex in edge.Value)
                 {
                     doorToLocations[sourceVertex] = (sourceVertex, targetVertex);
+                    //Debug.Log($"doorToLocations[{sourceVertex}] = ({sourceVertex}, {targetVertex})");
                 }
             }
-
+            foreach (var entry in doorToLocations)
+            {
+                //Debug.Log($"{{ {entry.Key}, {entry.Value} }}, // Дверь {entry.Key} связывает локации {entry.Value.Item1} и {entry.Value.Item2}");
+            }
             return doorToLocations;
         }
 
-        public static void PrintGraphToLocations(GeneratorGraph _locationNetwork)
-        {
-            var doorToLocations = new Dictionary<int, (int, int)>();
-
-            foreach (var edge in _locationNetwork.Transitions)
-            {
-                int sourceVertex = edge.Key;
-                foreach (var targetVertex in edge.Value)
-                {
-                    doorToLocations[sourceVertex] = (sourceVertex, targetVertex);
-                }
-            }
-
-            Debug.Log("DoorToLocations = new Dictionary<int, (int, int)>");
-            foreach (var entry in doorToLocations)
-            {
-                Debug.Log($"{{ {entry.Key}, {entry.Value} }}, // Дверь {entry.Key} связывает локации {entry.Value.Item1} и {entry.Value.Item2}");
-            }
-        }
     }
 
 }

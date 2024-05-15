@@ -15,12 +15,17 @@ namespace Platformer2D
         [SerializeField] public LevelView blueLevelPrefab;
         [SerializeField] public LevelView skyLevelPrefab;
 
+        [SerializeField] public DoorView redDoorPrefab;
+        [SerializeField] public DoorView greenDoorPrefab;
+        [SerializeField] public DoorView blueDoorPrefab;
+        [SerializeField] public DoorView skyDoorPrefab;
+        [SerializeField] public ChestView chestPrefab;
+
         private Dictionary<LocationType, LevelView> levelPrefabs;
         private GeneratorGraph _locationNetwork;
 
         private GeneratorLocation generatorLocations;
         private Dictionary<int, (int, int)> doorToLocations;
-        private Dictionary<int, LevelView> createdLevels;
         private Dictionary<int, DoorModel> doorModels;
         private List<int> indexCreatedLocation;
         private List<LevelView> levelViews;
@@ -37,125 +42,91 @@ namespace Platformer2D
                 { LocationType.Blue, blueLevelPrefab},
                 { LocationType.Sky, skyLevelPrefab},
             };
+            
+
             var (countLocation, countStartVertix) = GetCountLocationWithDifficilty();
-
             _locationNetwork = new GeneratorGraph(countLocation, countStartVertix);
-            generatorLocations = new GeneratorLocation();
-
             doorToLocations = GeneratorGraph.GraphToLocations(_locationNetwork);
-
-            createdLevels = new Dictionary<int, LevelView>();
+            //Debug.Log(doorToLocations[0].ToString());
+            // добавить двери 
             levelViews = new List<LevelView>();
             doorModels = new Dictionary<int, DoorModel>();
-            indexCreatedLocation = new List<int>();
-
-
+             indexCreatedLocation = new List<int>();
             CreateDoorModels();
 
+            generatorLocations = new GeneratorLocation();
+            
+            GeneratorGraph.PrintGraphToLocations(_locationNetwork);
             indexCurrentLocation = 0;
-            StartNewLocation(indexCurrentLocation);
+            //TestCreateLocation();
+            StartNewLocation(0);
         }
 
         private void CreateOrLoadLocation(int indexNext)
         {
-
-            DeactivateAllLevels();
-            if (createdLevels.ContainsKey(indexNext))
+            /*if (indexCreatedLocation.Contains(indexNext))
             {
-                createdLevels[indexNext].gameObject.SetActive(true);
+
             }
             else
             {
                 StartNewLocation(indexNext);
-            }
+            }*/
+            levelViews[0].gameObject.SetActive(false);
+            StartNewLocation(indexNext);
         }
 
         private void StartNewLocation(int index)
         {
-
-
+            indexCreatedLocation.Add(index);
             indexCurrentLocation = index;
-            var doorInNewModel = GetDoorModelsForIndexLocation(index);
+            var doorInNewModel = GetDoorModelsForLocation(index);
             LocationType locationType = _locationNetwork.Rooms[index];
             LevelView levelPrefab = levelPrefabs[locationType];
+            int edgeCount = _locationNetwork.Transitions[index].Count;
+
             LevelModel newModel = generatorLocations.GenerateNewLocation(2, index, doorInNewModel, 3);
             LevelView levelInstance = Instantiate(levelPrefab);
-            createdLevels[index] = levelInstance; //  добавление уровня в словарь
+            levelViews.Add(levelInstance);
             levelInstance.model = newModel;
             levelInstance.SetModel();
-            levelInstance.gameObject.SetActive(true);
-
-
 
         }
 
-        private void DeactivateAllLevels()
+        private void Deactive(int index)
         {
-            foreach (var level in createdLevels.Values)
-            {
-                level.gameObject.SetActive(false);
-            }
+
+        }
+
+        private void Active(int index)
+        {
+            
         }
 
         private void CreateDoorModels()
         {
             Debug.Log(doorToLocations.ToString());
-            /*foreach (var door in doorToLocations)
+            foreach (var door in doorToLocations)
             {
                 //модель двери
                 DoorModel doorModel = new DoorModel();
                 doorModel.IndexDoor = door.Key;
                 doorModel.TypeDoor = _locationNetwork.Rooms[door.Key];
-                doorModel.TypeLocation = _locationNetwork.Rooms[door.Value.Item1];
+                doorModel.TypeLocation = _locationNetwork.Rooms[door.Value.Item2];
                 doorModel.IndexLocation = door.Value.Item1;
 
                 //модель двери в словарь
                 doorModels[door.Key] = doorModel;
-            }*/
-
-            foreach (var entry in doorToLocations)
-            {
-                //модель двери
-                DoorModel doorModel = new DoorModel();
-                doorModel.IndexDoor = entry.Key;
-                doorModel.IndexLocation = entry.Value.Item1;
-
-                doorModel.IndexesLocation = (entry.Value.Item1, entry.Value.Item2);
-                Debug.Log($"IndexDoor = {doorModel.IndexDoor}, doorModel.IndexesLocation = {doorModel.IndexesLocation.Item1}, {doorModel.IndexesLocation.Item2} ");
-                
-                doorModel.TypesLocation = (_locationNetwork.Rooms[entry.Value.Item1], _locationNetwork.Rooms[entry.Value.Item2]);
-                
-                doorModel.TypesDoors = (_locationNetwork.Rooms[entry.Value.Item2], _locationNetwork.Rooms[entry.Value.Item1]);
-
-                //doorModel.TypeLocation = _locationNetwork.Rooms[entry.Value.Item2];
-                //doorModel.TypeDoor = _locationNetwork.Rooms[entry.Value.Item1];
-                //модель двери в словарь
-                doorModels[entry.Key] = doorModel;
             }
-
         }
 
         private List<DoorModel> GetDoorModelsForLocation(int currentLocationIndex)
         {
-            var doorsForLocation = doorToLocations.Where(
-                d=> d.Value.Item2 == currentLocationIndex || d.Value.Item1
-                 == currentLocationIndex).Select(d => d.Key);
+            //d=> d.Value.Item1 == currentLocationIndex ||
+            var doorsForLocation = doorToLocations.Where(d=> d.Value.Item2 == currentLocationIndex || d.Value.Item1 == currentLocationIndex).Select(d => d.Key);
 
             var doorModelsForLocation = doorsForLocation.Select(d => doorModels[d]).ToList();
             return doorModelsForLocation;
-        }
-
-        private List<DoorModel> GetDoorModelsForIndexLocation(int currentLocationIndex)
-        {
-            var models = new List<DoorModel>();
-            foreach (var doorModel in doorModels.Values)
-            {
-                if (doorModel.IndexesLocation.Item1 == currentLocationIndex || doorModel.IndexesLocation.Item2 == currentLocationIndex)
-                {
-                    models.Add(doorModel);
-                }
-            }
-            return models;
         }
 
         /*private void TestCreateLocation()

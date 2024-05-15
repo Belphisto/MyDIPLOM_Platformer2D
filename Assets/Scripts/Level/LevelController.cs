@@ -39,12 +39,12 @@ namespace Platformer2D.Level
         {
             this.model = model;
             this.view = view;
-
-            SpawnCrystals();
-            SpawnColorChangeBackground();
+            SpawnColorChangeBackground(); //
+            SpawnCrystals(); //
             SpawnPlatforms();
             SpawnPlayer();
             SpawnDoor();
+            SpawnChest();
             //Подписка на событие отправки обновления счетчика очков на уровне в платформу
             Bus.Instance.SendScore += HandleScoreUpdate;
         }
@@ -83,7 +83,7 @@ namespace Platformer2D.Level
             SpawnPlatform(model.Bounds);
 
         }
-        // Метод для создания платформ на уровне
+
 
 
         // Метод для создания платформы
@@ -95,27 +95,19 @@ namespace Platformer2D.Level
             if (averageScorePerPlatform == 0) averageScorePerPlatform = 1;
             Debug.Log(averageScorePerPlatform);
             int score = 0;
-            /*foreach (var gameObjectModel in platformModels)
-            {
-                var platform = (PlatformView) UnityыEngine.Object.Instantiate(gameObjectModel.Prefab, gameObjectModel.Position, Quaternion.identity);
-                var platformModel = new PlatformModel(score);
-                platformModel.StartPosition = gameObjectModel.Position;
-                platform.SetModel(platformModel);
-            }*/
             for (int i = 0; i < platformModels.Count; i++)
             {
-                // Вычисляем значение score для текущей платформы
+                // значение score для текущей платформы
                 score+=averageScorePerPlatform;
 
-                // Создаем платформу
                 var platform = (PlatformView)UnityEngine.Object.Instantiate(platformModels[i].Prefab, platformModels[i].Position, Quaternion.identity);
                 platform.transform.SetParent(view.transform);
-                // Создаем модель платформы и устанавливаем начальное значение score
+                //  модель платформы и начальное значение score
                 var platformModel = new PlatformModel(score);
                 //Debug.Log($"TargetScoreForPlatform = {score}");
                 platformModel.StartPosition = platformModels[i].Position;
 
-                // Устанавливаем модель для платформы
+                // модель для платформы
                 platform.SetModel(platformModel);
             }
         }
@@ -154,8 +146,16 @@ namespace Platformer2D.Level
         {
             foreach (var positionDoor in model.Doors)
             {
-                // Находим соответствующий префаб двери
-                DoorView doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypeLocation);
+                DoorView doorPrefab = new DoorView();
+                //DoorView doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypeDoor);
+                if (positionDoor.Value.IndexDoor == positionDoor.Value.IndexesLocation.Item1)
+                {
+                    doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item2);
+                }
+                else
+                {
+                    doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item1);
+                }
                 Debug.Log("model.Doors is " + (doorPrefab == null ? "null" : "not null"));
 
                 if (doorPrefab != null)
@@ -163,6 +163,7 @@ namespace Platformer2D.Level
                     var door = (DoorView) UnityEngine.Object.Instantiate(doorPrefab, positionDoor.Key.Position, Quaternion.identity);
                     door.transform.SetParent(view.transform);
                     var doorModel = positionDoor.Value;
+                    
                     doorModel.CountForOpen = model.TargetCountForDoors;
                     doorModel.TargetScore = model.TotalScore/2;
                     Debug.Log($"door.SetModel: CountForOpen= {doorModel.CountForOpen}, TargetScore= {doorModel.TargetScore }");
@@ -172,16 +173,15 @@ namespace Platformer2D.Level
         }
         private void SpawnChest()
         {
-            /*if (modelLocation.IsChestLocation)
+            if (model.Chest.Item2 != null && model.Chest.Item1 != null)
             {
-                // случайную платформу из всех платформ на уровне
-                var platforms = new List<Vector3>(modelLocation.PositionPlatformStatic.Keys);
-                var randomPlatformPosition = platforms[UnityEngine.Random.Range(0, platforms.Count)];
-
-                // сундук находится непосредственно над платформой
-                var chestPosition = new Vector3(randomPlatformPosition.x, randomPlatformPosition.y + 1, randomPlatformPosition.z);
-                var chest = (ChestView) UnityEngine.Object.Instantiate(view.chestPrefab, chestPosition, Quaternion.identity);
-            }*/
+                // Создание экземпляра сундука
+                var chest = (ChestView)UnityEngine.Object.Instantiate(model.Chest.Item1.Prefab, model.Chest.Item1.Position, Quaternion.identity);
+                chest.transform.SetParent(view.transform);
+                var chestModel = model.Chest.Item2;
+                Debug.Log($"door.SetModel: CountForOpenChest= {chestModel.CountForOpen}, TargetScore= {chestModel.TargetScore }");
+                chest.SetModel(chestModel);
+            }
         }
 
         private void HandleUpdateLevelPercent()

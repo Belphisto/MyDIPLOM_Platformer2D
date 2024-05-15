@@ -48,7 +48,7 @@ namespace Platformer2D.Platform
         public void OnTriggerEnter2D(Collider2D collision)
         {
             controller.OnTriggerEnter2D(collision);
-            Debug.Log($"Need: {controller.GetCountCrystal().ToString()}");
+            //Debug.Log($"Need: {controller.GetCountCrystal().ToString()}");
         }
         public void OnTriggerStay2D(Collider2D collision)
         {

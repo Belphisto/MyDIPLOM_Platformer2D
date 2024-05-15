@@ -18,6 +18,10 @@ namespace Platformer2D.Platform
         public LocationType TypeLocation {get; set;}
         public int IndexLocation{get;set;}
 
+        public (int,int) IndexesLocation {get;set;}
+        public (LocationType,LocationType) TypesLocation{get;set;}
+        public (LocationType,LocationType) TypesDoors{get;set;}
+
         // Конструктор класса PlatformModel
         // Принимает целевой счет
         public DoorModel(int score, int countCrystal, int index)

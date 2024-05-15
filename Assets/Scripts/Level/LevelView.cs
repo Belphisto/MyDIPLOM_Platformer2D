@@ -29,6 +29,7 @@ namespace Platformer2D.Level
 
         [SerializeField] public DoorView[] doors;  // Все двери
         
+        [SerializeField] public ChestView ChestPrefab;  // Все двери
 
         public LocationType crystalType;
 
@@ -89,6 +90,7 @@ namespace Platformer2D.Level
         {
             // Создание GameObjectModel для каждого префаба
             model.Crystal.ForEach(c => c.Prefab = crystalPrefab);
+            model.Chest.Item1.Prefab = ChestPrefab;
             model.Platform.ForEach(p => p.Prefab = platformPrefab);
             model.SpecialPlatform.ForEach(sp => sp.Prefab = platformPrefabSpecial);
             model.Bounds.ForEach(sp => sp.Prefab = platformPrefabBounds);

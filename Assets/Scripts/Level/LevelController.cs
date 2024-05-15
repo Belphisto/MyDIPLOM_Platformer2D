@@ -161,6 +161,7 @@ namespace Platformer2D.Level
                 if (doorPrefab != null)
                 {
                     var door = (DoorView) UnityEngine.Object.Instantiate(doorPrefab, positionDoor.Key.Position, Quaternion.identity);
+                    door.transform.SetParent(view.transform);
                     var doorModel = positionDoor.Value;
                     doorModel.CountForOpen = model.TargetCountForDoors;
                     doorModel.TargetScore = model.TotalScore/2;

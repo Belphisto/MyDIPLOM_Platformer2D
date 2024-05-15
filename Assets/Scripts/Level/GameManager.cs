@@ -123,7 +123,7 @@ namespace Platformer2D
         private List<DoorModel> GetDoorModelsForLocation(int currentLocationIndex)
         {
             //d=> d.Value.Item1 == currentLocationIndex ||
-            var doorsForLocation = doorToLocations.Where(d=> d.Value.Item2 == currentLocationIndex).Select(d => d.Key);
+            var doorsForLocation = doorToLocations.Where(d=> d.Value.Item2 == currentLocationIndex || d.Value.Item1 == currentLocationIndex).Select(d => d.Key);
 
             var doorModelsForLocation = doorsForLocation.Select(d => doorModels[d]).ToList();
             return doorModelsForLocation;

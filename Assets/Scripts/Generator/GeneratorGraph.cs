@@ -103,7 +103,7 @@ namespace Platformer2D.Generator
             textLog +="\nPrexod:";
             foreach (var (room, transitionRooms) in transitions)
             {
-                textLog +=$"\nLevel {room}: {rooms[room]} -> {string.Join(", ", transitionRooms.Select(r => $"Level {r + 1}: {rooms[r]}"))}";
+                textLog +=$"\nLevel {room}: {rooms[room]} -> {string.Join(", ", transitionRooms.Select(r => $"Level {r}: {rooms[r]}"))}";
             }
             Debug.Log($" [Generator] {textLog}");
         }

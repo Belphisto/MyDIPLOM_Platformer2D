@@ -74,12 +74,12 @@ namespace Platformer2D.Player
         {
             model.IncrementScore(point);
             //Debug.Log($"Current PlayerScore = {model.Score}");
-            
+            Bus.Instance.SendAllScore(model.Score);
             // Вызов события обновления счета, если оно не пустое
             //OnScoreUpdate?.Invoke(point);
             Bus.Instance.Send(point);
-            Bus.Instance.SendBackground(model.Score);
-            Bus.Instance.SendAllScore(model.Score);
+            //Bus.Instance.SendBackground(model.Score);
+            //Bus.Instance.SendAllScore(model.Score);
         }
 
         //Метод для управления гравитацией

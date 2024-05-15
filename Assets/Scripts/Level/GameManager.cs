@@ -63,9 +63,11 @@ namespace Platformer2D
             if (createdLevels.ContainsKey(indexNext))
             {
                 createdLevels[indexNext].gameObject.SetActive(true);
+                Debug.Log($"createdLevels[{indexNext}].gameObject.SetActive(true)");
             }
             else
             {
+                Debug.Log($"[GameManager] StartNewLocation(indexNext) {indexNext}");
                 StartNewLocation(indexNext);
             }
         }
@@ -73,12 +75,20 @@ namespace Platformer2D
         private void StartNewLocation(int index)
         {
 
-
             indexCurrentLocation = index;
             var doorInNewModel = GetDoorModelsForIndexLocation(index);
             LocationType locationType = _locationNetwork.Rooms[index];
             LevelView levelPrefab = levelPrefabs[locationType];
-            LevelModel newModel = generatorLocations.GenerateNewLocation(2, index, doorInNewModel, 3);
+            LevelModel newModel;
+            if (index == 0)
+            {
+                newModel = generatorLocations.GenerateNewLocation(2, index, doorInNewModel, 3);
+            }
+            else
+            {
+                newModel = generatorLocations.GenerateNewLocation(2, index, doorInNewModel);
+            }
+            
             LevelView levelInstance = Instantiate(levelPrefab);
             createdLevels[index] = levelInstance; //  добавление уровня в словарь
             levelInstance.model = newModel;

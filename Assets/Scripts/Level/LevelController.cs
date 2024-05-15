@@ -30,7 +30,7 @@ namespace Platformer2D.Level
         // Представление уровня в игровой сцене
         private LevelView view;
         //Событие для вызова обновления счетчика очков платформы
-        public static event Action<int> OnScoreUpdatePlatfroms;
+        //public static event Action<int> OnScoreUpdatePlatfroms;
         
         // Конструктор класса
         // Принимает модель и представление
@@ -47,6 +47,17 @@ namespace Platformer2D.Level
             SpawnChest();
             //Подписка на событие отправки обновления счетчика очков на уровне в платформу
             Bus.Instance.SendScore += HandleScoreUpdate;
+            model.CurrentScore = 0;
+        }
+
+        public void OnEnable()
+        {
+            Bus.Instance.SendScore += HandleScoreUpdate;
+        }
+
+        public void OnDisable()
+        {
+            Bus.Instance.SendScore -= HandleScoreUpdate;
         }
 
         // Метод для создания кристаллов на сцене
@@ -116,11 +127,15 @@ namespace Platformer2D.Level
         // Метод для обработки обновления счета от игрока
         public void HandleScoreUpdate(int score)
         {
+            Debug.Log("model.CurrentScore LevelController: " + model.CurrentScore);
             // Увеличивает счетчик текущего количества очков, собранных на уровне
             model.IncrementScore(score);
+            Bus.Instance.SendBackground(model.CurrentScore);
+            //Bus.Instance.SendAllScore(model.CurrentScore);
             // Вызывает событие для передачи текущего счета на уровне в платформу
             // Обновляет счет платформ, когда счет игрока меняется
-            OnScoreUpdatePlatfroms?.Invoke(model.CurrentScore);
+            //OnScoreUpdatePlatfroms?.Invoke(model.CurrentScore); 
+            Bus.Instance.SendForPlatform(model.CurrentScore);
             Bus.Instance.SendLevelPercent(model.GetPercentLevel());
         }
 
@@ -150,11 +165,11 @@ namespace Platformer2D.Level
                 //DoorView doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypeDoor);
                 if (positionDoor.Value.IndexDoor == positionDoor.Value.IndexesLocation.Item1)
                 {
-                    doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item2);
+                    doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item1);
                 }
                 else
                 {
-                    doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item1);
+                    doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item2);
                 }
                 Debug.Log("model.Doors is " + (doorPrefab == null ? "null" : "not null"));
 

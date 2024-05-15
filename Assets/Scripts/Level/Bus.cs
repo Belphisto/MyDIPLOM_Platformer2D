@@ -21,6 +21,12 @@ namespace Platformer2D
         {
             SendBackgroundScore?.Invoke(inpt);
         }
+
+        public event Action <int> SendPlatformsScore;
+        public void SendForPlatform(int inpt)
+        {
+            SendPlatformsScore?.Invoke(inpt);
+        }
         
         //Событие для инертирования управления
         public event Action InvertControls;

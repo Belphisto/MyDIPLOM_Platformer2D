@@ -47,50 +47,15 @@ namespace Platformer2D.Level
             //controller = new LevelController(model, this); 
         }
 
-        private void CreateModel()
-        {
-            List<Vector3> coordinatesCrystal = new List<Vector3>
-            {
-                new Vector3(-1,-1, 0),
-                new Vector3(0, -1, 0),
-                new Vector3(1, -1, 0)
-            };
-
-            List<Vector3> coordinatesPlatforms = new List<Vector3>
-            {
-                new Vector3(-7,-2, 0),
-                new Vector3(-6, -1, 0),
-                new Vector3(-2, -0, 0),
-                new Vector3(-2, -1, 0)
-            };
-
-            List<Vector3> coordinatesPlatformsSpecial = new List<Vector3>
-            {
-                new Vector3(-2,-2, 0),
-                new Vector3(-1, -1, 0),
-                new Vector3(4, -0, 0),
-                new Vector3(5, -1, 0)
-            };
-
-            List<Vector3> coordinatesDoors = new List<Vector3>
-            {
-                new Vector3(10,2, 0),
-                new Vector3(15,2, 0),
-            };
-
-            // Создание модели уровня
-            
-            
-
-            // Установка модели
-            SetModel();
-        }
-
         public void SetModel()
         {
+
             // Создание GameObjectModel для каждого префаба
             model.Crystal.ForEach(c => c.Prefab = crystalPrefab);
-            model.Chest.Item1.Prefab = ChestPrefab;
+            if (model.Chest.Item2 != null)
+            {
+                model.Chest.Item1.Prefab = ChestPrefab;
+            }
             model.Platform.ForEach(p => p.Prefab = platformPrefab);
             model.SpecialPlatform.ForEach(sp => sp.Prefab = platformPrefabSpecial);
             model.Bounds.ForEach(sp => sp.Prefab = platformPrefabBounds);
@@ -107,8 +72,17 @@ namespace Platformer2D.Level
                 // Назначение соответствующего префаба двери
                 door.Key.Prefab = doors[doorPrefabIndex];
             }
-
+            model.CurrentScore = 0;
             controller = new LevelController(model, this); 
+        }
+        private void OnEnable()
+        {
+            controller.OnEnable();
+        }
+
+        private void OnDisable()    
+        {
+            controller.OnDisable();
         }
 
 

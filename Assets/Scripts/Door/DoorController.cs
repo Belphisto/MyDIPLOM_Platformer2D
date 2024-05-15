@@ -18,7 +18,7 @@ namespace Platformer2D.Platform
             this.model = model; 
             this.view = view;
             // Подписка на событие обновления счета
-            LevelController.OnScoreUpdatePlatfroms += HandleScoreUpdate;
+             Bus.Instance.SendPlatformsScore += HandleScoreUpdate;
             
         }
 
@@ -43,7 +43,7 @@ namespace Platformer2D.Platform
                     {
                         Debug.Log("Door Opened");
                         model.IsOpen = true;
-                        InventoryView.Instance.DecrementSlot(view.type, model.CountForOpen);
+                        InventoryView.Instance.DecrementSlot(activeslot.locationType, model.CountForOpen);
                         InventoryView.Instance.IncrementSlot(LocationType.Default);
                     }
                     else
@@ -56,8 +56,19 @@ namespace Platformer2D.Platform
             {
                 if(Input.GetKeyDown(KeyCode.Return))
                 {
-                    Debug.Log($"New location index: {model.IndexLocation}");
-                    Bus.Instance.SendNextIndexLocation(model.IndexLocation);
+                    
+                    int newIndex = 0;
+                    if (model.IndexDoor == model.IndexesLocation.Item1)
+                    {
+                        newIndex = model.IndexesLocation.Item1;
+                        Debug.Log($"New location index: {newIndex}");
+                    }
+                    else
+                    {
+                        newIndex = model.IndexesLocation.Item2;
+                        Debug.Log($"New location index: {newIndex}");
+                    }
+                    Bus.Instance.SendNextIndexLocation(newIndex);
                 }
             }
         }

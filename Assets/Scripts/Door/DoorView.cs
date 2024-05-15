@@ -11,6 +11,9 @@ namespace Platformer2D.Platform
     {
         protected DoorController controller;
         [SerializeField] private int IndexLocation;
+        [SerializeField] private int CountForOpen;
+        [SerializeField] private bool IsOpen;
+        [SerializeField] private int IndexDoor;
         public LocationType type;
         //public TypeSlot slot;
         
@@ -29,8 +32,8 @@ namespace Platformer2D.Platform
         // Метод Awake вызывается при инициализации объекта
         protected override void Awake()
         {
-            DoorModel doorModel= new DoorModel(10, 3, 1);
-            SetModel(doorModel);
+            //DoorModel doorModel= new DoorModel(10, 3, 1);
+            //SetModel(doorModel);
             base.Awake();
         }
 

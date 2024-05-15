@@ -27,7 +27,7 @@ namespace Platformer2D.Platform
             this.model = model;
             this.view = view;
             // Подписка на событие обновления счета
-            LevelController.OnScoreUpdatePlatfroms += HandleScoreUpdate;
+            Bus.Instance.SendPlatformsScore += HandleScoreUpdate;
             //Debug.Log($"evelController.OnScoreUpdate += HandleScoreUpdate;");
         }
         

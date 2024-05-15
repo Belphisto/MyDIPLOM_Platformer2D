@@ -37,30 +37,41 @@ namespace Platformer2D.Platform
         {
             if (!model.IsOpen)
             {
-                if (isCorrectActiveSlot && Input.GetKeyDown(KeyCode.F))
+                if (isCorrectActiveSlot) 
                 {
-                    if (activeslot.Count >= model.CountForOpen)
+                    CameraManager.Instance.UpadteText($"Press F");
+                    CameraManager.Instance.SetActive(true);
+                    if(Input.GetKeyDown(KeyCode.F))
                     {
-                        Debug.Log("Door Opened");
-                        model.IsOpen = true;
-                        InventoryView.Instance.DecrementSlot(activeslot.locationType, model.CountForOpen);
-                        InventoryView.Instance.IncrementSlot(LocationType.Default);
-                    }
-                    else
-                    {
-                        Debug.Log("Недостаточно средств");
+                        if (activeslot.Count >= model.CountForOpen)
+                        {
+                            Debug.Log("Door Opened");
+                            model.IsOpen = true;
+                            CameraManager.Instance.SetActive(false);
+                            InventoryView.Instance.DecrementSlot(activeslot.locationType, model.CountForOpen);
+                            InventoryView.Instance.IncrementSlot(LocationType.Default);
+                        }
+                        else
+                        {
+                            CameraManager.Instance.UpadteText($"not enough crystals");
+                            CameraManager.Instance.SetActive(true);
+                            Debug.Log("not enough crystals");
+                        }
                     }
                 }
             }
             else
             {
+                //CameraManager.Instance.UpadteText($"Press Enter");
+                //CameraManager.Instance.SetActive(true);
                 if(Input.GetKeyDown(KeyCode.Return))
                 {
-                    
+                    CameraManager.Instance.SetActive(false);
                     int newIndex = 0;
                     if (model.IndexDoor == model.IndexesLocation.Item1)
                     {
                         newIndex = model.IndexesLocation.Item1;
+                        
                         Debug.Log($"New location index: {newIndex}");
                     }
                     else
@@ -78,7 +89,8 @@ namespace Platformer2D.Platform
             if (collision.gameObject.CompareTag("Player"))
             {
                 activeslot = InventoryView.Instance.GetActiveSlot();
-                
+                CameraManager.Instance.UpadteText($"Need: {model.CountForOpen}");
+                CameraManager.Instance.SetActive(true);
                 if (activeslot != null && (activeslot.locationType == model.TypesLocation.Item2 || activeslot.locationType == model.TypesLocation.Item1))
                 {
                     Debug.Log("Active correctSlot");
@@ -93,20 +105,12 @@ namespace Platformer2D.Platform
 
         public void OnTriggerStay2D(Collider2D collision)
         {
-            /*if (collision.gameObject.CompareTag("Player"))
+            if (model.IsOpen)
             {
-                activeslot = InventoryView.Instance.GetActiveSlot();
-                if (activeslot != null && (activeslot.locationType == view.type|| activeslot.locationType == model.TypeDoor))
-                {
-                    Debug.Log("Active correctSlot");
-                    isCorrectActiveSlot = true;
-                }
-                else
-                {
-                    Debug.Log("Deactive correctSlot");
-                    isCorrectActiveSlot = false;
-                }
-            }*/
+                CameraManager.Instance.UpadteText($"Press Enter");
+                CameraManager.Instance.SetActive(true);
+            }
+            
         }
 
         public void OnTriggerExit2D(Collider2D collision)
@@ -114,6 +118,7 @@ namespace Platformer2D.Platform
             if (collision.gameObject.CompareTag("Player"))
             {
                 Debug.Log("Deactive correctSlot");
+                CameraManager.Instance.SetActive(false);
                 isCorrectActiveSlot = false;
                 Debug.Log("Player has exited the door trigger");
             }

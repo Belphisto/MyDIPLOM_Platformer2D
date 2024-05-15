@@ -18,11 +18,6 @@ public class StartSceneManager : MonoBehaviour
         SceneManager.LoadScene("TestLevel"); //  имя игровой сцены
     }
 
-    public void LoadGame()
-    {
-        // Загружаем сохраненную игру
-        // Реализация этого метода будет зависеть от того, как вы реализуете сохранение игры
-    }
 
     public void QuitGame()
     {

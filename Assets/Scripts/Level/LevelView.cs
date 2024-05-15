@@ -75,6 +75,7 @@ namespace Platformer2D.Level
             model.CurrentScore = 0;
             controller = new LevelController(model, this); 
         }
+        
         private void OnEnable()
         {
             controller.OnEnable();

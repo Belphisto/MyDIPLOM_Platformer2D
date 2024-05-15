@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Playables;
 namespace Platformer2D
@@ -57,6 +58,12 @@ namespace Platformer2D
         public void SendNextIndexLocation (int index)
         {
             IndexNextLocation?.Invoke(index);
+        }
+
+        public event Action<bool> PlayerFell;
+        public void SendMessage(bool isFell)
+        {
+            PlayerFell?.Invoke(isFell);
         }
     }
 }

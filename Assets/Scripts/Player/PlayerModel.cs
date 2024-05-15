@@ -23,7 +23,7 @@ namespace Platformer2D.Player
         public PlayerModel()
         {
             _speed = 5f;
-            _jumpForce = 5f;
+            _jumpForce = 4f;
             _score = 0;
             _isGrounded = false;
         }

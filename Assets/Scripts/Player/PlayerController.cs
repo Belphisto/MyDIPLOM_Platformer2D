@@ -15,6 +15,7 @@ namespace Platformer2D.Player
 
         // Флаг для отслеживания инвертированного управления
         private bool isControlsInverted = false;
+        private int jumpCount = 0;
 
         // Определение события увеличения счетчика очков
         //public static event Action<int> OnScoreUpdate;
@@ -43,7 +44,11 @@ namespace Platformer2D.Player
         {
             // Управление анимацией и движением персонажа
             // Обработка пользовательского ввода
-            if (model.IsGrounded) view.Animator.SetInteger("state", (int)States.idle);
+            if (model.IsGrounded)
+            {
+                view.Animator.SetInteger("state", (int)States.idle);
+                jumpCount = 0;
+            } 
             float input = Input.GetAxis("Horizontal");
 
             // Инвертирование ввода, если управление инвертировано
@@ -56,16 +61,18 @@ namespace Platformer2D.Player
                 view.Run(view.transform.right * input, model.Speed);
             }
 
-            if (model.IsGrounded && Input.GetButtonDown("Jump"))
+            //if (model.IsGrounded && Input.GetButtonDown("Jump"))
+            if (jumpCount <2 && Input.GetButtonDown("Jump"))
             {
                 view.Jump(view.GetComponent<Rigidbody2D>(), model.JumpForce);
+                jumpCount++; 
             }
         }
 
-        public void CheckGround()
+        public void CheckGround(bool getIsGrounded)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(view.transform.position, 0.9f);
-            model.IsGrounded = colliders.Length > 1;
+            model.IsGrounded = getIsGrounded;
+            // Если персонаж не на земле, устанавливаем состояние анимации на прыжок
             if (!model.IsGrounded) view.Animator.SetInteger("state", (int)States.jump);
         }
 
@@ -92,7 +99,14 @@ namespace Platformer2D.Player
         public void InvertControls()
         {
             isControlsInverted = !isControlsInverted;
-        }                
+        }
+
+        public IEnumerator PlayerFell(bool isFell)
+        {
+            yield return new WaitForSeconds(3);
+            Debug.Log("Bus.Instance.SendMessage(isFell);");
+            Bus.Instance.SendMessage(isFell);
+        }            
     }
     
 }

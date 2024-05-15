@@ -65,6 +65,13 @@ namespace Platformer2D
         {
             PlayerFell?.Invoke(isFell);
         }
+
+
+        public event Action<int> GameWin;
+        public void SendGameWin(int totalScore)
+        {
+            GameWin?.Invoke(totalScore);
+        }
     }
 }
 

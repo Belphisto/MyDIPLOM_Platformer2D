@@ -15,6 +15,7 @@ namespace Platformer2D
 
         public GameObject panel;
         public GameObject panelSettings;
+        public Button ButtonExit;
         public Button GameOverButton;
         public Button GameWinButton;
         //public UnityEngine.UI.Button returnToGame;
@@ -27,6 +28,7 @@ namespace Platformer2D
             // Подписываемся на событие нажатия кнопки
             GameOverButton.onClick.AddListener(OnOkButtonClicked);
             GameWinButton.onClick.AddListener(OnOkButtonClicked);
+            ButtonExit.onClick.AddListener(OnOkButtonClicked);
 
             Bus.Instance.PlayerFell +=OnPlayerFell;
             Bus.Instance.GameWin += GameCompleted;

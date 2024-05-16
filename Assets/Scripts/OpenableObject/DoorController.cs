@@ -40,7 +40,7 @@ namespace Platformer2D.Platform
             {
                 if (isCorrectActiveSlot) 
                 {
-                    CameraManager.Instance.UpadteText($"Press F\n to {model.NextLocation.Item1} Room");
+                    CameraManager.Instance.UpadteText($"Press F to {model.NextLocation.Item1} Room");
                     CameraManager.Instance.SetActive(true);
                     if(Input.GetKeyDown(KeyCode.F))
                     {
@@ -65,7 +65,7 @@ namespace Platformer2D.Platform
             {
                 if (isPlayerInside )
                 {
-                    CameraManager.Instance.UpadteText($"Press Enter\n to {model.NextLocation.Item1} Room");
+                    CameraManager.Instance.UpadteText($"Press Enter to {model.NextLocation.Item1} Room");
                     CameraManager.Instance.SetActive(true);
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
@@ -89,7 +89,7 @@ namespace Platformer2D.Platform
             if (collision.gameObject.CompareTag("Player"))
             {
                 activeslot = InventoryView.Instance.GetActiveSlot();
-                CameraManager.Instance.UpadteText($"Need: {model.CountForOpen}\n to {model.NextLocation.Item1} Room");
+                CameraManager.Instance.UpadteText($"Need: {model.CountForOpen} to {model.NextLocation.Item1} Room");
                 CameraManager.Instance.SetActive(true);
                 if (activeslot != null && (activeslot.locationType == model.CurrentLocation.Item2 || activeslot.locationType == model.NextLocation.Item2))
                 {

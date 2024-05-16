@@ -2368,6 +2368,7 @@ MonoBehaviour:
   audioSources:
   - {fileID: 249559618}
   - {fileID: 1607550397}
+  - {fileID: 1607550397}
 --- !u!1 &1465940710
 GameObject:
   m_ObjectHideFlags: 0

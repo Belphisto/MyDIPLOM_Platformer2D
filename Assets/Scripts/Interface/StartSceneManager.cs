@@ -10,7 +10,7 @@ public class StartSceneManager : MonoBehaviour
     }
     public void StartGame()
     {
-        // Сохраняем выбранный уровень сложности
+        // выбранный уровень сложности
         int difficulty = DifficultyButton.Instance.GetLevelDifficulty();
         if (difficulty == 0)
             return;

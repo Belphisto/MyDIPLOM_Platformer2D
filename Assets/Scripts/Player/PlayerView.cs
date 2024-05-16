@@ -25,6 +25,10 @@ namespace Platformer2D.Player
             PlayerModel model = new PlayerModel();
             controller = new PlayerController(model, this);
         }
+        private void OnDestroy()
+        {
+            controller.OnDestroy();
+        }
 
         // Метод при пробуждении объекта
         private void Awake()

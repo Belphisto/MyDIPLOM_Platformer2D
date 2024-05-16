@@ -100,8 +100,8 @@ namespace Platformer2D.Generator
             Debug.Log("countCrystal" + countCrystal);
             Debug.Log("percent" + percent);
             Debug.Log("countForOpen" + countForOpen);
-            var chestModel = new DoorModel();
-            chestModel.CountForOpen = countForChest;
+            var chestModel = new ChestModel();
+            chestModel.TargetScore = countForChest;
 
             var newModel = new LevelModel(
 

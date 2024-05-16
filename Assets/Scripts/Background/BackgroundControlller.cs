@@ -69,6 +69,11 @@ namespace Platformer2D.Background
             // Применение нового цвета к представлению
             view.ChangeColor(newColor);
         }
+
+        public void OnDestroy()
+        {
+            Bus.Instance.SendBackgroundScore -= HandleScoreUpdate;
+        }
     }
     
 }

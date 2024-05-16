@@ -6,9 +6,26 @@ using UnityEngine;
 using UnityEngine.Playables;
 namespace Platformer2D
 {
-    public class Bus
+    public class Bus 
     {
-        public static Bus Instance {get;} = new Bus();
+        public static Bus Instance {get; private set;} = new Bus();
+
+        
+        public void Destroy()
+        {
+            /*SendScore = null;
+            SendBackgroundScore = null;
+            SendPlatformsScore = null;
+            InvertControls = null;
+            UpdateCrystal = null;
+            UdateTotalScore = null;
+            UdateLevel = null;
+            IndexNextLocation = null;
+            PlayerFell = null;
+            GameWin = null;*/
+            Instance = null;
+        }
+        
 
         public event Action <int> SendScore;
 

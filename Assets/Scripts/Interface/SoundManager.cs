@@ -18,7 +18,7 @@ public class SoundManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Это делает объект постоянным между сценами
+            //DontDestroyOnLoad(gameObject); // Это делает объект постоянным между сценами
         }
     }
 

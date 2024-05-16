@@ -39,6 +39,12 @@ namespace Platformer2D.Player
             Bus.Instance.InvertControls += InvertControls;
         }
 
+        public void OnDestroy()
+        {
+            //Bus.Instance.InvertControls -= InvertControls;
+            _instance = null;
+        }
+
         // Метод, вызываемый каждый кадр
         public void Update()
         {
@@ -87,6 +93,10 @@ namespace Platformer2D.Player
             Bus.Instance.Send(point);
             //Bus.Instance.SendBackground(model.Score);
             //Bus.Instance.SendAllScore(model.Score);
+        }
+        public int SendTotalScore()
+        {
+            return model.Score;
         }
 
         //Метод для управления гравитацией

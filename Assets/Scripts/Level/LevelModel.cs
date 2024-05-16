@@ -26,7 +26,7 @@ namespace Platformer2D.Level
         public List<GameObjectModel> SpecialPlatform { get; set; }
         public List<GameObjectModel> Bounds { get; set; }
 
-        public (GameObjectModel,DoorModel) Chest {get; set; }
+        public (GameObjectModel,ChestModel) Chest {get; set; }
 
         public Dictionary<GameObjectModel, DoorModel> Doors {get;set;}
         public GameObjectModel Background { get; set; }
@@ -104,7 +104,7 @@ namespace Platformer2D.Level
                 int index,
                 Dictionary<Vector3, DoorModel> doorsPositions,
                 int targetCountForDoors,
-                (Vector3, DoorModel) chestPosition)
+                (Vector3, ChestModel) chestPosition)
         {
             Crystal = crystalPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
             Platform = platformPositions.Select(pos => new GameObjectModel { Position = pos }).ToList();
@@ -126,7 +126,7 @@ namespace Platformer2D.Level
             }
 
             GameObjectModel chestGameObject = new GameObjectModel { Position = chestPosition.Item1 };
-            DoorModel chestModel = chestPosition.Item2;
+            ChestModel chestModel = chestPosition.Item2;
             Chest = (chestGameObject, chestModel);
         }
 

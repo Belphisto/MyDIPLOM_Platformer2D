@@ -57,6 +57,10 @@ namespace Platformer2D
             indexCurrentLocation = 0;
             StartNewLocation(indexCurrentLocation);
         }
+        private void OnDestroy()
+        {
+            Bus.Instance.IndexNextLocation -= CreateOrLoadLocation;
+        }
 
         private void CreateOrLoadLocation(int indexNext)
         {

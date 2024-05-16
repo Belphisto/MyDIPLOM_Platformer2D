@@ -30,6 +30,11 @@ namespace Platformer2D.Platform
             Bus.Instance.SendPlatformsScore += HandleScoreUpdate;
             //Debug.Log($"evelController.OnScoreUpdate += HandleScoreUpdate;");
         }
+
+        public void OnDestroy()
+        {
+            Bus.Instance.SendPlatformsScore -= HandleScoreUpdate;
+        }
         
         // Обработка события текущего счета
         private void HandleScoreUpdate(int score)

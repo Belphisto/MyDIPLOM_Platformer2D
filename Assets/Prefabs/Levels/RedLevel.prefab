@@ -54,5 +54,5 @@ MonoBehaviour:
   - {fileID: 3994858575375782763, guid: e0057df01b724514ca054f7c12dd424f, type: 3}
   - {fileID: 4883539794849152232, guid: 0df64157f9107d94395580fb84bcd0a4, type: 3}
   - {fileID: 192845417314758173, guid: 57d153d0a89b249439bdf5ecb7d930b5, type: 3}
-  ChestPrefab: {fileID: 7377234184006411312, guid: 241ef284c72baf341ba4d3540c625586, type: 3}
+  ChestPrefab: {fileID: 3635725419264128299, guid: 6f0eeadc34c43cd4c8b93daed2a2bb72, type: 3}
   crystalType: 0

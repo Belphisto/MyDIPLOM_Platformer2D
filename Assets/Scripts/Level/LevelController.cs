@@ -60,6 +60,7 @@ namespace Platformer2D.Level
             Bus.Instance.SendScore -= HandleScoreUpdate;
         }
 
+
         // Метод для создания кристаллов на сцене
         private void SpawnCrystals()
         {
@@ -195,7 +196,7 @@ namespace Platformer2D.Level
                 var chest = (ChestView)UnityEngine.Object.Instantiate(model.Chest.Item1.Prefab, model.Chest.Item1.Position, Quaternion.identity);
                 chest.transform.SetParent(view.transform);
                 var chestModel = model.Chest.Item2;
-                Debug.Log($"door.SetModel: CountForOpenChest= {chestModel.CountForOpen}, TargetScore= {chestModel.TargetScore }");
+                Debug.Log($"door.SetModel: CountForOpenChest= {chestModel.TargetScore}, TargetScore= {chestModel.TargetScore }");
                 chest.SetModel(chestModel);
             }
         }

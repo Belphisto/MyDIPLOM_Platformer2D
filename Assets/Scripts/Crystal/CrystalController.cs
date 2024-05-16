@@ -41,6 +41,8 @@ namespace Platformer2D.Crystal
                 view.DestroyPoint(); 
             }
         }
+
+        
     }
 
 }

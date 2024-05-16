@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using Unity.VisualScripting;
 
 /*
 Класс BackgroundView представляет визуальное отображение фона. 
@@ -51,6 +52,10 @@ namespace Platformer2D.Background
         public void SetController(BackgroundControlller controlller)
         {
             this._backgroundController = controlller;
+        }
+        private void OnDestroy()
+        {
+            _backgroundController.OnDestroy();
         }
     }
     

@@ -32,6 +32,13 @@ namespace Platformer2D
             Bus.Instance.GameWin += GameCompleted;
             //UnityEngine.Cursor.visible = false;
         }
+        private void OnDestroy()
+        {
+            GameOverButton.onClick.RemoveListener(OnOkButtonClicked);
+            GameWinButton.onClick.RemoveListener(OnOkButtonClicked);
+            Bus.Instance.PlayerFell -= OnPlayerFell;
+            Bus.Instance.GameWin -= GameCompleted;
+        }
 
         void Update()
         {
@@ -43,12 +50,26 @@ namespace Platformer2D
             }
         }
 
+        private void DestroyAllObjects()
+        {
+            // Получаем активную сцену
+            Scene activeScene = SceneManager.GetActiveScene();
+
+            // Получаем все корневые объекты в сцене
+            GameObject[] rootObjects = activeScene.GetRootGameObjects();
+
+            // Проходим по каждому корневому объекту и его дочерним объектам
+            foreach (GameObject rootObject in rootObjects)
+            {
+                Destroy(rootObject);
+            }
+        }
+
         private void OnOkButtonClicked()
         {
-            // Выгружаем текущую сцену
-            //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-
-            // Загружаем сцену StartScene
+            //SceneManager.UnloadSceneAsync("TestScene");
+            //DestroyAllObjects();
+            //DBus.Instance.Destroy();
             SceneManager.LoadScene("StartScene");
         }
 
@@ -66,9 +87,11 @@ namespace Platformer2D
         private void  GameCompleted(int count)
         {
             panelGameWint.gameObject.SetActive(true);
-            textTotalScore.text = count.ToString();
-            UnityEngine.Cursor.visible = false;
+            textTotalScore.text ="Game win with score: " + count.ToString() ;
+            UnityEngine.Cursor.visible = true;
         }
+
+        
     }
 }
 

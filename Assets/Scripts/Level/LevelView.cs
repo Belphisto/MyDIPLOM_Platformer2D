@@ -86,6 +86,11 @@ namespace Platformer2D.Level
             controller.OnDisable();
         }
 
+        private void OnDestroy()
+        {
+            controller.OnDisable();
+        }
+
 
         // Update is called once per frame
         void Update()

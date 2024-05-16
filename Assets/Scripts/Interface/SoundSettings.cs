@@ -32,7 +32,7 @@ public class SoundSettings : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // объект постоянный между сценами
+             //DontDestroyOnLoad(gameObject); // объект постоянный между сценами
         }
 
         // Загрузка сохраненных настроек или значений по умолчанию

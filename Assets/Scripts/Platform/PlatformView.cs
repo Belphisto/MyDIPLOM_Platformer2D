@@ -45,6 +45,10 @@ namespace Platformer2D.Platform
             stateColor.gameObject.SetActive(controller.IsColor());
             stateColorless.gameObject.SetActive(!controller.IsColor());
         }
+         public void OnDestroy()
+        {
+            controller.OnDestroy();
+        }
 
     }
     

@@ -2,23 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 namespace Platformer2D.Inventory
 {
     public class InventoryView : MonoBehaviour
     {
         public static InventoryView Instance { get; private set; }
-        public Text CountRed;
-        public Text CountGreen;
-        public Text CountBlue;
-        public Text CountSky;
-        public Text CountDoorItem;
+        public TextMeshProUGUI CountRed;
+        public TextMeshProUGUI CountGreen;
+        public TextMeshProUGUI CountBlue;
+        public TextMeshProUGUI CountSky;
+        public TextMeshProUGUI CountDoorItem;
 
-        public Text TotalScoreInGame;
-        public Text PersentLevel;
+        public TextMeshProUGUI TotalScoreInGame;
+        public TextMeshProUGUI PersentLevel;
 
         public InventorySlot[] slots;  // Список слотов
 
-        private Dictionary<LocationType, Text> scoreTexts;
+        private Dictionary<LocationType, TextMeshProUGUI> scoreTexts;
 
         private List<string> itemType;
         private void Awake()
@@ -39,7 +40,9 @@ namespace Platformer2D.Inventory
         // Start is called before the first frame update
         void Start()
         {
-            scoreTexts = new Dictionary<LocationType, Text>
+            SoundManager.Instance.PlaySound(0);
+
+            scoreTexts = new Dictionary<LocationType, TextMeshProUGUI>
             {
                 { LocationType.Red, CountRed },
                 { LocationType.Green, CountGreen },
@@ -47,7 +50,7 @@ namespace Platformer2D.Inventory
                 { LocationType.Sky, CountSky },
                 { LocationType.Default, CountDoorItem}
             };
-
+            
             // Установить начальное значение текстовых полей в 0
             foreach (var text in scoreTexts.Values)
             {
@@ -63,6 +66,18 @@ namespace Platformer2D.Inventory
             {
                 slot.OnActivate += HandleSlotActivation;
             }
+        }
+        private void OnDestroy()
+        {
+            Bus.Instance.UpdateCrystal -= IncrementSlot;
+            Bus.Instance.UdateTotalScore -= UpdateTotalScore;
+            Bus.Instance.UdateLevel -= UpdatePercent;
+
+            foreach (var slot in slots)
+            {
+                slot.OnActivate -= HandleSlotActivation;
+            }
+            Instance = null;
         }
 
         private void UpdateTotalScore(int score)
@@ -97,7 +112,7 @@ namespace Platformer2D.Inventory
         }
         public void DecrementSlot(LocationType type, int count)
         {
-            
+            SoundManager.Instance.PlaySound(2);
             foreach (var slot in slots)
             {
                 if (slot.locationType == type)
@@ -111,7 +126,7 @@ namespace Platformer2D.Inventory
         public void IncrementSlot(LocationType type)
         {
             //Debug.LogWarning($"IncrementSlot inventoryview {type}");
-            //SoundManager.Instance.PlaySound(1);
+            SoundManager.Instance.PlaySound(1);
             foreach (var slot in slots)
             {
                 if (slot.locationType == type)

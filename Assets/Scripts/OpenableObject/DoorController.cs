@@ -9,6 +9,7 @@ namespace Platformer2D.Platform
     public class DoorController
     {
         protected DoorModel model;
+        private bool isPlayerInside = false;
         protected DoorView view;
         protected bool isCorrectActiveSlot = false;
         protected InventorySlot activeslot;
@@ -33,13 +34,13 @@ namespace Platformer2D.Platform
             return model.IsColor;
         }
 
-        public virtual void Update()
+        internal virtual void Update()
         {
             if (!model.IsOpen)
             {
                 if (isCorrectActiveSlot) 
                 {
-                    CameraManager.Instance.UpadteText($"Press F");
+                    CameraManager.Instance.UpadteText($"Press F\n to {model.NextLocation.Item1} Room");
                     CameraManager.Instance.SetActive(true);
                     if(Input.GetKeyDown(KeyCode.F))
                     {
@@ -62,16 +63,25 @@ namespace Platformer2D.Platform
             }
             else
             {
-                if(Input.GetKeyDown(KeyCode.Return))
+                if (isPlayerInside )
+                {
+                    CameraManager.Instance.UpadteText($"Press Enter\n to {model.NextLocation.Item1} Room");
+                    CameraManager.Instance.SetActive(true);
+                    if (Input.GetKeyDown(KeyCode.Return))
+                    {
+                        CameraManager.Instance.SetActive(false);
+                        int newIndex = model.NextLocation.Item1;
+                        Debug.Log($"New location index: {newIndex}");
+                        Bus.Instance.SendNextIndexLocation(newIndex);
+                    }
+                }
+                else
                 {
                     CameraManager.Instance.SetActive(false);
-                    int newIndex = model.NextLocation.Item1;
-                        
-                    Debug.Log($"New location index: {newIndex}");
-
-                    Bus.Instance.SendNextIndexLocation(newIndex);
                 }
+                
             }
+            
         }
 
         public void OnTriggerEnter2D(Collider2D collision)
@@ -79,7 +89,7 @@ namespace Platformer2D.Platform
             if (collision.gameObject.CompareTag("Player"))
             {
                 activeslot = InventoryView.Instance.GetActiveSlot();
-                CameraManager.Instance.UpadteText($"Need: {model.CountForOpen}");
+                CameraManager.Instance.UpadteText($"Need: {model.CountForOpen}\n to {model.NextLocation.Item1} Room");
                 CameraManager.Instance.SetActive(true);
                 if (activeslot != null && (activeslot.locationType == model.CurrentLocation.Item2 || activeslot.locationType == model.NextLocation.Item2))
                 {
@@ -92,10 +102,13 @@ namespace Platformer2D.Platform
 
         public void OnTriggerStay2D(Collider2D collision)
         {
-            if (model.IsOpen)
+            if (collision.gameObject.CompareTag("Player"))
             {
-                CameraManager.Instance.UpadteText($"Press Enter");
-                CameraManager.Instance.SetActive(true);
+                Debug.Log("OnTriggerStay2D(Player)");
+                if (model.IsOpen)
+                {
+                    isPlayerInside = true;
+                }
             }
         }
 
@@ -106,6 +119,7 @@ namespace Platformer2D.Platform
                 Debug.Log("Deactive correctSlot");
                 CameraManager.Instance.SetActive(false);
                 isCorrectActiveSlot = false;
+                 isPlayerInside = false;
                 //Debug.Log("Player has exited the door trigger");
             }
         }

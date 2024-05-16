@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Platformer2D.Level;
+using System.Drawing;
 using System.Linq;
 
 namespace Platformer2D.Generator
@@ -21,7 +21,7 @@ namespace Platformer2D.Generator
             var platforms = new List<Vector3>();
 
             int randomNumber = UnityEngine.Random.Range(2, 5);
-            var regions = RecursiveBinarySpacePartition(new Rect(0, 0, grid.X, grid.Y), randomNumber, true);
+            var regions = RecursiveBinarySpacePartition(new Rect(0, 0, grid.Width, grid.Height), randomNumber, true);
 
             var regionIndices = new List<int>(Enumerable.Range(0, regions.Count));
             Shuffle(regionIndices);
@@ -97,19 +97,19 @@ namespace Platformer2D.Generator
             float platformY = 0.5f;
 
             // Расчет количества платформ для каждой стены
-            int numPlatformsX = Mathf.CeilToInt((grid.X ) / platformX)+2;
-            int numPlatformsY = Mathf.CeilToInt((grid.Y) / platformY)+2;
+            int numPlatformsX = Mathf.CeilToInt((grid.Width ) / platformX)+2;
+            int numPlatformsY = Mathf.CeilToInt((grid.Height) / platformY)+2;
 
             // Создание платформ для каждой стены
             for (int i = -1; i < numPlatformsX-1; i++)
             {
                 platforms.Add(new Vector3(i * platformX, -platformY*2, 0)); // Нижняя стена
-                platforms.Add(new Vector3(i * platformX,  (grid.Y)+platformY*2, 0)); // Верхняя стена
+                platforms.Add(new Vector3(i * platformX,  (grid.Height)+platformY*2, 0)); // Верхняя стена
             }
             for (int i =-1; i < numPlatformsY-1; i++)
             {
                 platforms.Add(new Vector3(-platformY*2, i * platformY, 0)); // Левая стена
-                platforms.Add(new Vector3((grid.X )+platformY*2, i * platformY, 0)); // Правая стена
+                platforms.Add(new Vector3((grid.Width )+platformY*2, i * platformY, 0)); // Правая стена
             }
 
             return platforms;

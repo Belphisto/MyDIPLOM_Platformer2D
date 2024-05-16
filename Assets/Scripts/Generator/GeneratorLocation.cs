@@ -49,13 +49,13 @@ namespace Platformer2D.Generator
 
         public LevelModel GenerateNewLocation(int coefXLoc, int indexLocation, List<Platform.DoorModel> doorModels)
         {
-            Level.Size size = GeneratorModel.GenerateLocationSize();
+            Size size = GeneratorModel.GenerateLocationSize();
             Vector2 labelSize = new Vector2(1.0f, 1.3f);
             
             // генерация кристаллов
             var genCrystal = new GeneratorCrystalPosition();
             var countCrystal = GeneratorModel.GetCountCrystal(coefXLoc, _difficulty);
-            var crystalPositions = genCrystal.GenerateCrystalPosition(size.X, size.Y, countCrystal,3);
+            var crystalPositions = genCrystal.GenerateCrystalPosition(size.Width, size.Height, countCrystal,3);
 
             (List<Vector3>staticplatform, List<Vector3>specialplatform, List<Vector3>borderplatform) = RandomGridOrMazePlatforms(labelSize, size);
 
@@ -74,9 +74,9 @@ namespace Platformer2D.Generator
                 countCrystal*GeneratorModel.GetScorePerCrystal(coefXLoc, _difficulty),
     
                 countCrystal,
-                size.Y, size.X,
+                size.Height, size.Width,
                 indexLocation,
-                GenerateDoorPosition(staticplatform, doorModels, size.Y),
+                GenerateDoorPosition(staticplatform, doorModels, size.Height),
                 countForOpen
             );
             Debug.Log($"GeneratorLocation: CountForOpen= {countForOpen}, countCrystal = {countCrystal} ");
@@ -85,13 +85,13 @@ namespace Platformer2D.Generator
 
         public LevelModel GenerateNewLocation(int coefXLoc, int indexLocation, List<Platform.DoorModel> doorModels, int countForChest)
         {
-            Level.Size size = GeneratorModel.GenerateLocationSize();
+            Size size = GeneratorModel.GenerateLocationSize();
             Vector2 labelSize = new Vector2(1.0f, 1.3f);
             
             // генерация кристаллов
             var genCrystal = new GeneratorCrystalPosition();
             var countCrystal = GeneratorModel.GetCountCrystal(coefXLoc, _difficulty);
-            var crystalPositions = genCrystal.GenerateCrystalPosition(size.X, size.Y, countCrystal,3);
+            var crystalPositions = genCrystal.GenerateCrystalPosition(size.Width, size.Height, countCrystal,3);
 
             (List<Vector3>staticplatform, List<Vector3>specialplatform, List<Vector3>borderplatform) = RandomGridOrMazePlatforms(labelSize, size);
 
@@ -113,9 +113,9 @@ namespace Platformer2D.Generator
                 countCrystal*GeneratorModel.GetScorePerCrystal(coefXLoc, _difficulty),
     
                 countCrystal,
-                size.Y, size.X,
+                size.Height, size.Width,
                 indexLocation,
-                GenerateDoorPosition(staticplatform, doorModels, size.Y),
+                GenerateDoorPosition(staticplatform, doorModels, size.Height),
                 countForOpen,
                 (SelectPlatformCoordinateForChest(staticplatform), chestModel)
             );
@@ -123,7 +123,7 @@ namespace Platformer2D.Generator
             return newModel;
         }
 
-        private (List<Vector3>, List<Vector3>, List<Vector3>) RandomGridOrMazePlatforms(Vector2 labelSize, Level.Size grid)
+        private (List<Vector3>, List<Vector3>, List<Vector3>) RandomGridOrMazePlatforms(Vector2 labelSize, Size grid)
         {
             // Случайное число от 0 до 9 с равной вероятностью
             int randomNumber = UnityEngine.Random.Range(0, 10);
@@ -141,7 +141,7 @@ namespace Platformer2D.Generator
             }
         }
 
-        private (List<Vector3>, List<Vector3>, List<Vector3>) RandomGridPlatforms(Vector2 labelSize, Level.Size grid)
+        private (List<Vector3>, List<Vector3>, List<Vector3>) RandomGridPlatforms(Vector2 labelSize, Size grid)
         {
             var gen = new GeneratorGridPlatform(labelSize, grid);
 
@@ -152,11 +152,11 @@ namespace Platformer2D.Generator
             return (positionStaticPlatforms,positionSpecialPlatforms, positionBoundaryPlatforms);
         }
 
-        private (List<Vector3>, List<Vector3>, List<Vector3>) MazePlatforms(Vector2 labelSize, Level.Size grid)
+        private (List<Vector3>, List<Vector3>, List<Vector3>) MazePlatforms(Vector2 labelSize, Size grid)
         {
             GeneratorMazePlatform mazeGenerator = new GeneratorMazePlatform(labelSize);
-            mazeGenerator.GenerateMaze(grid.X, grid.Y, 0.9f);
-            Rect region = new Rect(0, 0, grid.X * labelSize.x, grid.Y* labelSize.y);
+            mazeGenerator.GenerateMaze(grid.Width, grid.Height, 0.9f);
+            Rect region = new Rect(0, 0, grid.Width * labelSize.x, grid.Height* labelSize.y);
             List<Vector3> platformsStatic = mazeGenerator.GeneratePlatforms(region);
             List<Vector3> platformsSpecial =GenerateSpecialPlatformPosition(platformsStatic);
             List<Vector3> platformsBorder = mazeGenerator.GenerateBorderPlatforms(region);
@@ -166,7 +166,7 @@ namespace Platformer2D.Generator
         
 
 
-        private List<Vector3> GenerateStaticPlatformPosition(Level.Size grid)
+        private List<Vector3> GenerateStaticPlatformPosition(Size grid)
         {
             var gen = new GeneratorPlatformPosition(new Vector2(3f, 4f), grid);
             //return gen.Position();
@@ -175,8 +175,8 @@ namespace Platformer2D.Generator
 
             Vector2 labelSize = new Vector2(1.0f, 1.3f);
             GeneratorMazePlatform mazeGenerator = new GeneratorMazePlatform(labelSize);
-            mazeGenerator.GenerateMaze(grid.X, grid.Y, 0.9f);
-            Rect region = new Rect(0, 0, grid.X * labelSize.x, grid.Y * labelSize.y);
+            mazeGenerator.GenerateMaze(grid.Width, grid.Height, 0.9f);
+            Rect region = new Rect(0, 0, grid.Width * labelSize.x, grid.Height * labelSize.y);
             List<Vector3> platforms = mazeGenerator.GeneratePlatforms(region);
             return platforms;
         }

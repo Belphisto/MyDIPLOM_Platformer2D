@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Drawing;
 namespace Platformer2D.Generator
 {
     public static class GeneratorModel 
@@ -79,13 +80,13 @@ namespace Platformer2D.Generator
             }
         }
 
-        public static Level.Size GenerateLocationSize()
+        public static Size GenerateLocationSize()
         {
             var random = new System.Random();
-            return new Level.Size
+            return new Size
             {
-                X = random.Next(15, 20), // Генерирует случайное число от 500 до 900 включительно
-                Y = random.Next(10, 20) // Генерирует случайное число от 500 до 700 включительно
+                Width = random.Next(15, 20), // Генерирует случайное число от 500 до 900 включительно
+                Height = random.Next(10, 20) // Генерирует случайное число от 500 до 700 включительно
             };
         }
     }

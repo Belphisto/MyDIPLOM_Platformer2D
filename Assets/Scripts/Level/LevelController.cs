@@ -27,7 +27,6 @@ namespace Platformer2D.Level
     {
         // Модель данных уровня
         private LevelModel model;
-        private LocationModel modelLocation;
         // Представление уровня в игровой сцене
         private LevelView view;
         //Событие для вызова обновления счетчика очков платформы

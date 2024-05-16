@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Platformer2D.Level;
+using System.Drawing;
 using System.Linq;
 
 namespace Platformer2D
@@ -22,7 +22,7 @@ namespace Platformer2D
             var platforms = new List<Vector3>();
 
             int randomNumber = UnityEngine.Random.Range(2, 5);
-            var regions = RecursiveBinarySpacePartition(new Rect(0, 0, grid.X, grid.Y), randomNumber, true);
+            var regions = RecursiveBinarySpacePartition(new Rect(0, 0, grid.Width, grid.Height), randomNumber, true);
 
             var regionIndices = new List<int>(Enumerable.Range(0, regions.Count));
             Shuffle(regionIndices);

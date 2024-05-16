@@ -45,7 +45,7 @@ namespace Platformer2D.Platform
                     {
                         if (activeslot.Count >= model.CountForOpen)
                         {
-                            Debug.Log("Door Opened");
+                            //Debug.Log("Door Opened");
                             model.IsOpen = true;
                             CameraManager.Instance.SetActive(false);
                             InventoryView.Instance.DecrementSlot(activeslot.locationType, model.CountForOpen);
@@ -55,7 +55,7 @@ namespace Platformer2D.Platform
                         {
                             CameraManager.Instance.UpadteText($"not enough crystals");
                             CameraManager.Instance.SetActive(true);
-                            Debug.Log("not enough crystals");
+                            //Debug.Log("not enough crystals");
                         }
                     }
                 }
@@ -83,7 +83,7 @@ namespace Platformer2D.Platform
                 CameraManager.Instance.SetActive(true);
                 if (activeslot != null && (activeslot.locationType == model.CurrentLocation.Item2 || activeslot.locationType == model.NextLocation.Item2))
                 {
-                    Debug.Log("Active correctSlot");
+                    //Debug.Log("Active correctSlot");
                     
                     isCorrectActiveSlot = true;
                 }
@@ -106,7 +106,7 @@ namespace Platformer2D.Platform
                 Debug.Log("Deactive correctSlot");
                 CameraManager.Instance.SetActive(false);
                 isCorrectActiveSlot = false;
-                Debug.Log("Player has exited the door trigger");
+                //Debug.Log("Player has exited the door trigger");
             }
         }
 

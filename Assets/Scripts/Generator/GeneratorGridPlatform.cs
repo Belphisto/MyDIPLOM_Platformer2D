@@ -25,12 +25,13 @@ namespace Platformer2D.Generator
 
             var regionIndices = new List<int>(Enumerable.Range(0, regions.Count));
             Shuffle(regionIndices);
+            
             for (int i = 0; i < regions.Count; i++)
             {
                 var region = regions[i];
                 List<Vector3> regionPlatforms;
                 
-                regionPlatforms = GridBasedPlatformPlacementWithoutIntersection(4, (int)region.width, labelSize, region);
+                regionPlatforms = GridBasedPlatformPlacementWithoutIntersection(9, (int)region.width, labelSize, region);
                 
                 platforms.AddRange(regionPlatforms);
             }
@@ -108,8 +109,11 @@ namespace Platformer2D.Generator
             }
             for (int i =-1; i < numPlatformsY-1; i++)
             {
-                platforms.Add(new Vector3(-platformY*2, i * platformY, 0)); // Левая стена
-                platforms.Add(new Vector3((grid.Width )+platformY*2, i * platformY, 0)); // Правая стена
+                if (i % 2 == 0)
+                {
+                    platforms.Add(new Vector3(-platformY*2, i * platformY, 0)); // Левая стена
+                    platforms.Add(new Vector3((grid.Width )+platformY*2, i * platformY, 0)); // Правая стена
+                }
             }
 
             return platforms;

@@ -26,7 +26,7 @@ namespace Platformer2D.Platform
         public virtual void SetModel(DoorModel model)
         {
             controller = new DoorController(model, this);
-            IndexLocation = model.IndexLocation; 
+            IndexLocation = model.NextLocation.Item1; 
         }
 
         // Метод Awake вызывается при инициализации объекта
@@ -51,7 +51,7 @@ namespace Platformer2D.Platform
         public void OnTriggerEnter2D(Collider2D collision)
         {
             controller.OnTriggerEnter2D(collision);
-            //Debug.Log($"Need: {controller.GetCountCrystal().ToString()}");
+
         }
         public void OnTriggerStay2D(Collider2D collision)
         {

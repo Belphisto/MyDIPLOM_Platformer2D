@@ -18,7 +18,7 @@ namespace Platformer2D.Platform
             this.model = model; 
             this.view = view;
             // Подписка на событие обновления счета
-             Bus.Instance.SendPlatformsScore += HandleScoreUpdate;
+            Bus.Instance.SendPlatformsScore += HandleScoreUpdate;
             
         }
 
@@ -67,18 +67,10 @@ namespace Platformer2D.Platform
                 if(Input.GetKeyDown(KeyCode.Return))
                 {
                     CameraManager.Instance.SetActive(false);
-                    int newIndex = 0;
-                    if (model.IndexDoor == model.IndexesLocation.Item1)
-                    {
-                        newIndex = model.IndexesLocation.Item1;
+                    int newIndex = model.NextLocation.Item1;
                         
-                        Debug.Log($"New location index: {newIndex}");
-                    }
-                    else
-                    {
-                        newIndex = model.IndexesLocation.Item2;
-                        Debug.Log($"New location index: {newIndex}");
-                    }
+                    Debug.Log($"New location index: {newIndex}");
+
                     Bus.Instance.SendNextIndexLocation(newIndex);
                 }
             }
@@ -91,7 +83,7 @@ namespace Platformer2D.Platform
                 activeslot = InventoryView.Instance.GetActiveSlot();
                 CameraManager.Instance.UpadteText($"Need: {model.CountForOpen}");
                 CameraManager.Instance.SetActive(true);
-                if (activeslot != null && (activeslot.locationType == model.TypesLocation.Item2 || activeslot.locationType == model.TypesLocation.Item1))
+                if (activeslot != null && (activeslot.locationType == model.CurrentLocation.Item2 || activeslot.locationType == model.NextLocation.Item2))
                 {
                     Debug.Log("Active correctSlot");
                     

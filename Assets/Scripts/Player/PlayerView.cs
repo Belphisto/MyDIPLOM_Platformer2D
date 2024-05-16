@@ -87,7 +87,7 @@ namespace Platformer2D.Player
 
             // Проверяем, находится ли персонаж на земле
             bool isGrounded = (leftHitCount > 0 && leftHit[0].collider != null) || (rightHitCount > 0 && rightHit[0].collider != null);
-            Debug.Log("Is player grounded: " + isGrounded);
+            //Debug.Log("Is player grounded: " + isGrounded);
             controller.CheckGround(isGrounded);
         }
 

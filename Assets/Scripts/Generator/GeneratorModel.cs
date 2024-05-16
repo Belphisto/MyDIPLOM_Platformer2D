@@ -54,11 +54,11 @@ namespace Platformer2D.Generator
             switch (_difficulty)
             {
                 case 1:
-                    return 30;
+                    return 20;
                 case 2:
-                    return 50;
+                    return 30;
                 case 3:
-                    return 70;
+                    return 50;
                 default:
                     return 0;
             }

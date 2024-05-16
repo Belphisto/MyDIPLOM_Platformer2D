@@ -108,6 +108,22 @@ namespace Platformer2D.Generator
             Debug.Log($" [Generator] {textLog}");
         }
 
+        public static Dictionary<int, ((int, LocationType), (int, LocationType))> GraphToLocations(Dictionary<int, LocationType> rooms, Dictionary<int, List<int>> transitions)
+        {
+            var doorToLocations = new Dictionary<int, ((int, LocationType), (int, LocationType))>();
+            int doorIndex = 0;
+
+            foreach (var (room, transitionRooms) in transitions)
+            {
+                foreach (var targetRoom in transitionRooms)
+                {
+                    doorToLocations[doorIndex++] = ((room, rooms[room]), (targetRoom, rooms[targetRoom]));
+                }
+            }
+
+            return doorToLocations;
+        }
+
         public static Dictionary<int, (int, int)> GraphToLocations(GeneratorGraph _locationNetwork)
         {
             var doorToLocations = new Dictionary<int, (int, int)>();

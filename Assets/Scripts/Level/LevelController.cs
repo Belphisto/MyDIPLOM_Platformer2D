@@ -8,6 +8,7 @@ using System;
 
 using Platformer2D.Player;
 using Platformer2D.Platform;
+using System.Threading;
 
 /*
 Класс LevelController отвечает за управление уровнем игры. 
@@ -39,10 +40,10 @@ namespace Platformer2D.Level
         {
             this.model = model;
             this.view = view;
-            SpawnColorChangeBackground(); //
             SpawnCrystals(); //
             SpawnPlatforms();
             SpawnPlayer();
+            SpawnColorChangeBackground(); //
             SpawnDoor();
             SpawnChest();
             //Подписка на событие отправки обновления счетчика очков на уровне в платформу
@@ -161,16 +162,17 @@ namespace Platformer2D.Level
         {
             foreach (var positionDoor in model.Doors)
             {
-                DoorView doorPrefab = new DoorView();
+                //DoorView doorPrefab = new DoorView();
                 //DoorView doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypeDoor);
-                if (positionDoor.Value.IndexDoor == positionDoor.Value.IndexesLocation.Item1)
+                /*if (positionDoor.Value.IndexDoor == positionDoor.Value.IndexesLocation.Item1)
                 {
                     doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item1);
                 }
                 else
                 {
                     doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item2);
-                }
+                }*/
+                DoorView doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.NextLocation.Item2);
                 Debug.Log("model.Doors is " + (doorPrefab == null ? "null" : "not null"));
 
                 if (doorPrefab != null)

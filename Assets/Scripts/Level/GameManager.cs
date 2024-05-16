@@ -20,6 +20,7 @@ namespace Platformer2D
 
         private GeneratorLocation generatorLocations;
         private Dictionary<int, (int, int)> doorToLocations;
+        private Dictionary<int, ((int, LocationType), (int, LocationType))>doorToLocation;
         private Dictionary<int, LevelView> createdLevels;
         private Dictionary<int, DoorModel> doorModels;
         private List<int> indexCreatedLocation;
@@ -42,7 +43,7 @@ namespace Platformer2D
             _locationNetwork = new GeneratorGraph(countLocation, countStartVertix);
             generatorLocations = new GeneratorLocation();
 
-            doorToLocations = GeneratorGraph.GraphToLocations(_locationNetwork);
+            doorToLocation = GeneratorGraph.GraphToLocations(_locationNetwork.Rooms, _locationNetwork.Transitions);
 
             createdLevels = new Dictionary<int, LevelView>();
             levelViews = new List<LevelView>();
@@ -50,7 +51,8 @@ namespace Platformer2D
             indexCreatedLocation = new List<int>();
 
 
-            CreateDoorModels();
+            //CreateDoorModels();
+            CreateAllDoors();
 
             indexCurrentLocation = 0;
             StartNewLocation(indexCurrentLocation);
@@ -63,7 +65,7 @@ namespace Platformer2D
             if (createdLevels.ContainsKey(indexNext))
             {
                 createdLevels[indexNext].gameObject.SetActive(true);
-                Debug.Log($"createdLevels[{indexNext}].gameObject.SetActive(true)");
+                Debug.Log($"[GameManager] createdLevels[{indexNext}].gameObject.SetActive(true)");
             }
             else
             {
@@ -74,9 +76,8 @@ namespace Platformer2D
 
         private void StartNewLocation(int index)
         {
-
             indexCurrentLocation = index;
-            var doorInNewModel = GetDoorModelsForIndexLocation(index);
+            var doorInNewModel = GetDoorsForIndexLocation(index);
             LocationType locationType = _locationNetwork.Rooms[index];
             LevelView levelPrefab = levelPrefabs[locationType];
             LevelModel newModel;
@@ -94,9 +95,6 @@ namespace Platformer2D
             levelInstance.model = newModel;
             levelInstance.SetModel();
             levelInstance.gameObject.SetActive(true);
-
-
-
         }
 
         private void DeactivateAllLevels()
@@ -110,18 +108,6 @@ namespace Platformer2D
         private void CreateDoorModels()
         {
             Debug.Log(doorToLocations.ToString());
-            /*foreach (var door in doorToLocations)
-            {
-                //модель двери
-                DoorModel doorModel = new DoorModel();
-                doorModel.IndexDoor = door.Key;
-                doorModel.TypeDoor = _locationNetwork.Rooms[door.Key];
-                doorModel.TypeLocation = _locationNetwork.Rooms[door.Value.Item1];
-                doorModel.IndexLocation = door.Value.Item1;
-
-                //модель двери в словарь
-                doorModels[door.Key] = doorModel;
-            }*/
 
             foreach (var entry in doorToLocations)
             {
@@ -142,7 +128,27 @@ namespace Platformer2D
                 //модель двери в словарь
                 doorModels[entry.Key] = doorModel;
             }
+        }
 
+        //current method for doors
+        private void CreateAllDoors()
+        {
+            foreach (var entry in doorToLocation)
+            {
+                DoorModel doorModel = new DoorModel();
+                doorModel.IndexDoor = entry.Key;
+
+                // Current location
+                doorModel.CurrentLocation = entry.Value.Item1;
+
+                // Next location
+                doorModel.NextLocation = entry.Value.Item2;
+
+                // Add the door model to the dictionary
+                doorModels[entry.Key] = doorModel;
+                 // Print the door model values
+ Debug.Log($"Door Index: {doorModel.IndexDoor}, Current Location: {doorModel.CurrentLocation.Item1}, {doorModel.CurrentLocation.Item2}, Next Location: {doorModel.NextLocation.Item1}, {doorModel.NextLocation.Item2}");
+            }
         }
 
         private List<DoorModel> GetDoorModelsForLocation(int currentLocationIndex)
@@ -167,22 +173,20 @@ namespace Platformer2D
             }
             return models;
         }
-
-        /*private void TestCreateLocation()
+        
+        //current and next doors
+        private List<DoorModel> GetDoorsForIndexLocation(int currentLocationIndex)
         {
-            // индекс и тип локации
-            int locationIndex = _locationNetwork.ChestLocationIndex;
-            LocationType locationType = _locationNetwork.Rooms[locationIndex];
-            int edgeCount = _locationNetwork.Transitions[locationIndex].Count;
-            //  соответствующий префаб LevelView
-            LevelView levelPrefab = levelPrefabs[locationType];
-            //  экземпляр префаба LevelView
-            LevelModel newModel = generatorLocations.GenerateNewLocation(2, 0);
-            LevelView levelInstance = Instantiate(levelPrefab);
-            levelInstance.model = newModel;
-            levelInstance.SetModel();
-            // добавить как-то двери
-        }*/
+            var doorModelsForLocation = new List<DoorModel>();
+            foreach (var doorModel in doorModels.Values)
+            {
+                if (doorModel.CurrentLocation.Item1 == currentLocationIndex)
+                {
+                    doorModelsForLocation.Add(doorModel);
+                }
+            }
+            return doorModelsForLocation;
+        }
 
         // Update is called once per frame
         void Update()

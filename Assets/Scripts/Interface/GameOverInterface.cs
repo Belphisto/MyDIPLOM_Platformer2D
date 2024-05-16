@@ -30,7 +30,7 @@ namespace Platformer2D
 
             Bus.Instance.PlayerFell +=OnPlayerFell;
             Bus.Instance.GameWin += GameCompleted;
-            UnityEngine.Cursor.visible = false;
+            //UnityEngine.Cursor.visible = false;
         }
 
         void Update()
@@ -39,7 +39,7 @@ namespace Platformer2D
             {
                 // Переключает активность панели при нажатии клавиши Esc
                 panelSettings.SetActive(!panelSettings.activeSelf);
-                UnityEngine.Cursor.visible = !UnityEngine.Cursor.visible;
+                //UnityEngine.Cursor.visible = !UnityEngine.Cursor.visible;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Platformer2D
             {
                 Debug.Log("gameover");
                 panel.SetActive(true);
-                UnityEngine.Cursor.visible = false;
+                //UnityEngine.Cursor.visible = false;
 
             }
         }

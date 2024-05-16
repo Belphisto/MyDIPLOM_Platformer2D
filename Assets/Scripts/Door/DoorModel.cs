@@ -16,6 +16,8 @@ namespace Platformer2D.Platform
         public int IndexDoor {get;set;}
         public LocationType TypeDoor {get; set;}
         public LocationType TypeLocation {get; set;}
+        public (int, LocationType) CurrentLocation {get; set;}
+        public (int, LocationType) NextLocation {get; set;}
         public int IndexLocation{get;set;}
 
         public (int,int) IndexesLocation {get;set;}

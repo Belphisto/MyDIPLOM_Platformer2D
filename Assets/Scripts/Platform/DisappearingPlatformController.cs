@@ -15,6 +15,12 @@ namespace Platformer2D.Platform
             view.StartCoroutine(DisappearRoutine());
         }
 
+        public void RestartDisappearRoutine()
+        {
+            view.StopCoroutine(DisappearRoutine());
+            view.StartCoroutine(DisappearRoutine());
+        }
+
         private IEnumerator DisappearRoutine()
         {
             Collider2D collider = view.GetComponent<Collider2D>();

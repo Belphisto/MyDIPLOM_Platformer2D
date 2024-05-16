@@ -38,9 +38,7 @@ namespace Platformer2D.Platform
             {
                 view.ChangeState();
                 model.IsColor = true;
-                }
-
-            //Debug.Log($"HandleScoreUpdate(int score) PlatformController: score {score}, model.TargetScore = {model.TargetScore}");
+            }
         }
 
         public int GetTargerScore()

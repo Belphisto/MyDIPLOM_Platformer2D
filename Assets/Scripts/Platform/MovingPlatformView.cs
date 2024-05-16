@@ -13,6 +13,15 @@ namespace Platformer2D.Platform
             controller = new MovingPlatformController(model, this);
             Debug.Log($"SetModel MovingPlatformController model.TargetScore = {model.TargetScore}");
         }
+
+        private void OnEnable()
+        {
+            // Restart the coroutine when the GameObject is set to active
+            if (controller != null)
+            {
+                ((MovingPlatformController)controller).RestartStartMoving();
+            }
+        }
     }
 
 }

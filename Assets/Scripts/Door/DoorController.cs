@@ -62,8 +62,6 @@ namespace Platformer2D.Platform
             }
             else
             {
-                //CameraManager.Instance.UpadteText($"Press Enter");
-                //CameraManager.Instance.SetActive(true);
                 if(Input.GetKeyDown(KeyCode.Return))
                 {
                     CameraManager.Instance.SetActive(false);
@@ -89,9 +87,6 @@ namespace Platformer2D.Platform
                     
                     isCorrectActiveSlot = true;
                 }
-                Debug.Log("activeslot.locationType " + activeslot.locationType);
-                Debug.Log("view.type == " + view.type);
-                Debug.Log("model.TypeDoor == " + model.TypeDoor);
             }
         }
 
@@ -102,7 +97,6 @@ namespace Platformer2D.Platform
                 CameraManager.Instance.UpadteText($"Press Enter");
                 CameraManager.Instance.SetActive(true);
             }
-            
         }
 
         public void OnTriggerExit2D(Collider2D collision)

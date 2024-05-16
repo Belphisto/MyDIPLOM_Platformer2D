@@ -17,6 +17,12 @@ namespace Platformer2D.Platform
             this.view = view;
         }
 
+        public void RestartStartMoving()
+        {
+            view.StopCoroutine(StartMoving());
+            view.StartCoroutine(StartMoving());
+        }
+        
         public override void Update()
         {
             if (!isMoving)

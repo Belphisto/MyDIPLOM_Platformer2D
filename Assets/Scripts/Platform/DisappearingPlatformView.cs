@@ -13,6 +13,14 @@ namespace Platformer2D.Platform
             controller = new DisappearingPlatformController(model, this);
             //Debug.Log($"SetModel DisappearingPlatformController model.TargetScore = {model.TargetScore}");
         }
+
+        private void OnEnable()
+        {
+            if (controller != null)
+            {
+                ((DisappearingPlatformController)controller).RestartDisappearRoutine();
+            }
+        }
     }
 
 }

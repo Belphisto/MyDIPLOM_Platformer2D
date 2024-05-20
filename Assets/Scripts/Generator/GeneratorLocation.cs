@@ -200,11 +200,30 @@ namespace Platformer2D.Generator
         private List<Vector3> SelectPlatformCoordinatesForDoors(List<Vector3> coordinates,  int doorCount)
         {
             //  случайные координаты для дверей
-            var doorCoordinates = coordinates.OrderBy(x => UnityEngine.Random.value).Take(doorCount).ToList();
+            /*var doorCoordinates = coordinates.OrderBy(x => UnityEngine.Random.value).Take(doorCount).ToList();
             for (int i = 0; i < doorCoordinates.Count; i++)
             {
                 doorCoordinates[i] = new Vector3(doorCoordinates[i].x, doorCoordinates[i].y + 1, doorCoordinates[i].z);
+            }*/
+            var doorCoordinates = new List<Vector3>();
+            var randomCoordinates = coordinates.OrderBy(x => UnityEngine.Random.value).ToList();
+
+            foreach (var coordinate in randomCoordinates)
+            {
+                if (doorCoordinates.Count == doorCount)
+                {
+                    break;
+                }
+
+                bool isNearOtherDoor = doorCoordinates.Any(doorCoordinate =>
+                    System.Math.Abs(doorCoordinate.x - coordinate.x) <= 3 && System.Math.Abs(doorCoordinate.y - coordinate.y) <= 3);
+
+                if (!isNearOtherDoor)
+                {
+                    doorCoordinates.Add(new Vector3(coordinate.x, coordinate.y + 1, coordinate.z));
+                }
             }
+
 
             return doorCoordinates;
         }

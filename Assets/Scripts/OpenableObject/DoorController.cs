@@ -9,94 +9,111 @@ namespace Platformer2D.Platform
     public class DoorController
     {
         protected DoorModel model;
-        private bool isPlayerInside = false;
         protected DoorView view;
+
+        private bool isPlayerInside = false;
         protected bool isCorrectActiveSlot = false;
         protected InventorySlot activeslot;
-        // Start is called before the first frame update
+
         public DoorController(DoorModel model, DoorView view)
         {
             this.model = model; 
             this.view = view;
-            // Подписка на событие обновления счета
-            Bus.Instance.SendPlatformsScore += HandleScoreUpdate;
+            //Bus.Instance.SendPlatformsScore += HandleScoreUpdate;
+        }
+
+        //private void HandleScoreUpdate(int score)
+        //{
+        //    if (score >= model.TargetScore) view.ChangeState();
+        //}
+
+        //public bool IsColor()
+        //{
+        //    return model.IsColor;
+        //}
+
+        internal virtual void Update()
+        {
+            if (isPlayerInside)
+            {
+                CheckActiveSlot();
+                HandleDoorInteraction();
+            }
             
         }
 
-        // Обработка события текущего счета
-        private void HandleScoreUpdate(int score)
+        private void CheckActiveSlot()
         {
-            if (score >= model.TargetScore) view.ChangeState();
+            activeslot = InventoryView.Instance.GetActiveSlot();
+            if (activeslot != null && (activeslot.locationType == model.CurrentLocation.Item2 || activeslot.locationType == model.NextLocation.Item2))
+            {
+                isCorrectActiveSlot = true;
+            }
+            else
+            {
+                isCorrectActiveSlot = false;
+                CameraManager.Instance.UpadteText("Incorrect Inventory slot selected");
+                CameraManager.Instance.SetActive(true);
+            }
         }
 
-        public bool IsColor()
-        {
-            return model.IsColor;
-        }
-
-        internal virtual void Update()
+        private void HandleDoorInteraction()
         {
             if (!model.IsOpen)
             {
                 if (isCorrectActiveSlot) 
                 {
-                    CameraManager.Instance.UpadteText($"Press F to {model.NextLocation.Item1} Room");
-                    CameraManager.Instance.SetActive(true);
-                    if(Input.GetKeyDown(KeyCode.F))
+                    if(activeslot.Count < model.CountForOpen)
                     {
-                        if (activeslot.Count >= model.CountForOpen)
-                        {
-                            //Debug.Log("Door Opened");
-                            model.IsOpen = true;
-                            CameraManager.Instance.SetActive(false);
-                            InventoryView.Instance.DecrementSlot(activeslot.locationType, model.CountForOpen);
-                            InventoryView.Instance.IncrementSlot(LocationType.Default);
-                        }
-                        else
-                        {
-                            CameraManager.Instance.UpadteText($"not enough crystals");
-                            CameraManager.Instance.SetActive(true);
-                            //Debug.Log("not enough crystals");
-                        }
+                        CameraManager.Instance.UpadteText("Not enough crystal");
+                        CameraManager.Instance.SetActive(true);
+                    }
+                    else
+                    {
+                        OpenDoorWithFKey();
                     }
                 }
             }
             else
             {
-                if (isPlayerInside )
-                {
-                    CameraManager.Instance.UpadteText($"Press Enter to {model.NextLocation.Item1} Room");
-                    CameraManager.Instance.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.Return))
-                    {
-                        CameraManager.Instance.SetActive(false);
-                        int newIndex = model.NextLocation.Item1;
-                        Debug.Log($"New location index: {newIndex}");
-                        Bus.Instance.SendNextIndexLocation(newIndex);
-                    }
-                }
-                else
-                {
-                    CameraManager.Instance.SetActive(false);
-                }
-                
+                EnterNextRoomWithEnterKey();
             }
-            
+        }
+
+        private void OpenDoorWithFKey()
+        {
+            CameraManager.Instance.UpadteText($"Press F to open door in {model.NextLocation.Item1} Room");
+            CameraManager.Instance.SetActive(true);
+            if(Input.GetKeyDown(KeyCode.F))
+            {
+                model.IsOpen = true;
+                CameraManager.Instance.SetActive(false);
+                InventoryView.Instance.DecrementSlot(activeslot.locationType, model.CountForOpen);
+                InventoryView.Instance.IncrementSlot(LocationType.Default);
+                view.ChangeState();
+            }
+        }
+
+        private void EnterNextRoomWithEnterKey()
+        {
+            CameraManager.Instance.UpadteText($"Press Enter to {model.NextLocation.Item1} Room");
+            CameraManager.Instance.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                CameraManager.Instance.SetActive(false);
+                int newIndex = model.NextLocation.Item1;
+                Debug.Log($"Next location index: {newIndex}");
+                Bus.Instance.SendNextIndexLocation(newIndex);
+            }
         }
 
         public void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                activeslot = InventoryView.Instance.GetActiveSlot();
+                isPlayerInside = true;
                 CameraManager.Instance.UpadteText($"Need: {model.CountForOpen} to {model.NextLocation.Item1} Room");
                 CameraManager.Instance.SetActive(true);
-                if (activeslot != null && (activeslot.locationType == model.CurrentLocation.Item2 || activeslot.locationType == model.NextLocation.Item2))
-                {
-                    //Debug.Log("Active correctSlot");
-                    
-                    isCorrectActiveSlot = true;
-                }
             }
         }
 
@@ -104,11 +121,7 @@ namespace Platformer2D.Platform
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                Debug.Log("OnTriggerStay2D(Player)");
-                if (model.IsOpen)
-                {
-                    isPlayerInside = true;
-                }
+                isPlayerInside = true;
             }
         }
 
@@ -116,11 +129,10 @@ namespace Platformer2D.Platform
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Deactive correctSlot");
+                isPlayerInside = false;
                 CameraManager.Instance.SetActive(false);
                 isCorrectActiveSlot = false;
-                 isPlayerInside = false;
-                //Debug.Log("Player has exited the door trigger");
+                CameraManager.Instance.SetActive(false);
             }
         }
 
@@ -129,5 +141,4 @@ namespace Platformer2D.Platform
             return model.CountForOpen;
         }
     }
-
 }

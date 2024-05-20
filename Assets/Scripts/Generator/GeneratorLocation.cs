@@ -183,13 +183,6 @@ namespace Platformer2D.Generator
 
         private List<Vector3> GenerateSpecialPlatformPosition(List<Vector3> statics)
         {
-            /*
-            int platformCount = (int)GetPercentCountSpecialPlatform()*statics.Count; // или любое другое выражение, которое вам подходит
-            var selectedPlatforms = statics.OrderBy(x => UnityEngine.Random.value).Take(platformCount).ToList();
-
-            // Удаляем из staticplatform все платформы, которые есть в selectedPlatforms
-            var remainingPlatforms = statics.Except(selectedPlatforms).ToList();
-            return remainingPlatforms;*/
             int platformCount = (int)(GeneratorModel.GetPercentCountSpecialPlatform(_difficulty) * statics.Count); 
             var selectedPlatforms = new List<Vector3>();
 

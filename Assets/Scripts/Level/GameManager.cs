@@ -32,6 +32,7 @@ namespace Platformer2D
         // Start is called before the first frame update
         void Start()
         {
+            Bus.Instance.GetGameResults = GetRoomInfo;
             Bus.Instance.IndexNextLocation += CreateOrLoadLocation;
             levelPrefabs = new Dictionary<LocationType, LevelView>
             {
@@ -167,6 +168,26 @@ namespace Platformer2D
                 default:
                     return (10, 1); // значения по умолчанию
             }
+        }
+
+        public string GetRoomInfo()
+        {
+            string roomInfo = "";
+            for (int i = 0; i < _locationNetwork.Rooms.Count; i++)
+            {
+                if (createdLevels.ContainsKey(i))
+                {
+                    // Если комната была загружена, процент ее прохождения
+                    int percentComplete = createdLevels[i].model.GetPercentLevel();
+                    roomInfo += $"Room {i}: Progress {percentComplete}%\n";
+                }
+                else
+                {
+                    // Иначе сообщение, что комната не активирована
+                    roomInfo += $"Room {i}: was inactive\n";
+                }
+            }
+            return roomInfo;
         }
     }
 

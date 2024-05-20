@@ -13,16 +13,6 @@ namespace Platformer2D
         
         public void Destroy()
         {
-            /*SendScore = null;
-            SendBackgroundScore = null;
-            SendPlatformsScore = null;
-            InvertControls = null;
-            UpdateCrystal = null;
-            UdateTotalScore = null;
-            UdateLevel = null;
-            IndexNextLocation = null;
-            PlayerFell = null;
-            GameWin = null;*/
             Instance = null;
         }
         
@@ -89,6 +79,16 @@ namespace Platformer2D
         {
             GameWin?.Invoke(totalScore);
         }
+
+
+        public event Action<string> GameCompletedResult; //событие для отправки информации
+        public Func<string> GetGameResults; //делегат для получения информации
+        public void SendGameCompletedResult(string roomInfo) 
+        {
+            GameCompletedResult?.Invoke(roomInfo);
+        }
+
+        
     }
 }
 

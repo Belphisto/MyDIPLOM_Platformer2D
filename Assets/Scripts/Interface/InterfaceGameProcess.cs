@@ -32,8 +32,8 @@ namespace Platformer2D
 
             Bus.Instance.PlayerFell +=OnPlayerFell;
             Bus.Instance.GameWin += GameCompleted;
-            //UnityEngine.Cursor.visible = false;
         }
+        
         private void OnDestroy()
         {
             GameOverButton.onClick.RemoveListener(OnOkButtonClicked);
@@ -69,9 +69,6 @@ namespace Platformer2D
 
         private void OnOkButtonClicked()
         {
-            //SceneManager.UnloadSceneAsync("TestScene");
-            //DestroyAllObjects();
-            //DBus.Instance.Destroy();
             SceneManager.LoadScene("StartScene");
         }
 
@@ -81,15 +78,14 @@ namespace Platformer2D
             {
                 Debug.Log("gameover");
                 panel.SetActive(true);
-                //UnityEngine.Cursor.visible = false;
-
             }
         }
 
         private void  GameCompleted(int count)
         {
             panelGameWint.gameObject.SetActive(true);
-            textTotalScore.text ="Game win with score: " + count.ToString() ;
+            string roomInfo = Bus.Instance.GetGameResults();
+            textTotalScore.text ="Game win with score: " + count.ToString() + roomInfo ;
             UnityEngine.Cursor.visible = true;
         }
 

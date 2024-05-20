@@ -149,7 +149,7 @@ namespace Platformer2D.Level
             if (player != null)
             {
                 // Изменить координаты персонажа
-                player.transform.position = new Vector3(2, 2, 0);
+                player.transform.position = new Vector3(1, 1, 0);
             }
             else
             {
@@ -162,16 +162,6 @@ namespace Platformer2D.Level
         {
             foreach (var positionDoor in model.Doors)
             {
-                //DoorView doorPrefab = new DoorView();
-                //DoorView doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypeDoor);
-                /*if (positionDoor.Value.IndexDoor == positionDoor.Value.IndexesLocation.Item1)
-                {
-                    doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item1);
-                }
-                else
-                {
-                    doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.TypesDoors.Item2);
-                }*/
                 DoorView doorPrefab = Array.Find(view.doors, door => door.type == positionDoor.Value.NextLocation.Item2);
                 Debug.Log("model.Doors is " + (doorPrefab == null ? "null" : "not null"));
 

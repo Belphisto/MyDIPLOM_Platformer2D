@@ -19,6 +19,9 @@ namespace Platformer2D.Player
         public int Score { get => _score; private set => _score = value; }
         public bool IsGrounded { get => _isGrounded; set => _isGrounded = value; }
 
+        private bool _isMooving = true;
+        public bool IsMooving { get => _isMooving; set => _isMooving = value;}
+
         //Конструктор модели персонажа с параметрами по умолчанию
         public PlayerModel()
         {

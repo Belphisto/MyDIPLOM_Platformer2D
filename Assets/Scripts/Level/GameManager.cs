@@ -5,6 +5,8 @@ using UnityEngine;
 using Platformer2D.Generator;
 using Platformer2D.Platform;
 using System.Linq;
+using UnityEngine.Diagnostics;
+using Platformer2D.Player;
 
 namespace Platformer2D
 {
@@ -69,6 +71,7 @@ namespace Platformer2D
             if (createdLevels.ContainsKey(indexNext))
             {
                 createdLevels[indexNext].gameObject.SetActive(true);
+                PlayerController.Instance.CurrentType = createdLevels[indexNext].crystalType;
                 Debug.Log($"[GameManager] createdLevels[{indexNext}].gameObject.SetActive(true)");
             }
             else
@@ -99,6 +102,7 @@ namespace Platformer2D
             levelInstance.model = newModel;
             levelInstance.SetModel();
             levelInstance.gameObject.SetActive(true);
+            PlayerController.Instance.CurrentType = levelInstance.crystalType;
         }
 
         private void DeactivateAllLevels()
@@ -106,31 +110,6 @@ namespace Platformer2D
             foreach (var level in createdLevels.Values)
             {
                 level.gameObject.SetActive(false);
-            }
-        }
-
-        private void CreateDoorModels()
-        {
-            Debug.Log(doorToLocations.ToString());
-
-            foreach (var entry in doorToLocations)
-            {
-                //модель двери
-                DoorModel doorModel = new DoorModel();
-                doorModel.IndexDoor = entry.Key;
-                doorModel.IndexLocation = entry.Value.Item1;
-
-                doorModel.IndexesLocation = (entry.Value.Item1, entry.Value.Item2);
-                Debug.Log($"IndexDoor = {doorModel.IndexDoor}, doorModel.IndexesLocation = {doorModel.IndexesLocation.Item1}, {doorModel.IndexesLocation.Item2} ");
-                
-                doorModel.TypesLocation = (_locationNetwork.Rooms[entry.Value.Item1], _locationNetwork.Rooms[entry.Value.Item2]);
-                
-                doorModel.TypesDoors = (_locationNetwork.Rooms[entry.Value.Item2], _locationNetwork.Rooms[entry.Value.Item1]);
-
-                //doorModel.TypeLocation = _locationNetwork.Rooms[entry.Value.Item2];
-                //doorModel.TypeDoor = _locationNetwork.Rooms[entry.Value.Item1];
-                //модель двери в словарь
-                doorModels[entry.Key] = doorModel;
             }
         }
 
@@ -153,29 +132,6 @@ namespace Platformer2D
                  // Print the door model values
  Debug.Log($"Door Index: {doorModel.IndexDoor}, Current Location: {doorModel.CurrentLocation.Item1}, {doorModel.CurrentLocation.Item2}, Next Location: {doorModel.NextLocation.Item1}, {doorModel.NextLocation.Item2}");
             }
-        }
-
-        private List<DoorModel> GetDoorModelsForLocation(int currentLocationIndex)
-        {
-            var doorsForLocation = doorToLocations.Where(
-                d=> d.Value.Item2 == currentLocationIndex || d.Value.Item1
-                 == currentLocationIndex).Select(d => d.Key);
-
-            var doorModelsForLocation = doorsForLocation.Select(d => doorModels[d]).ToList();
-            return doorModelsForLocation;
-        }
-
-        private List<DoorModel> GetDoorModelsForIndexLocation(int currentLocationIndex)
-        {
-            var models = new List<DoorModel>();
-            foreach (var doorModel in doorModels.Values)
-            {
-                if (doorModel.IndexesLocation.Item1 == currentLocationIndex || doorModel.IndexesLocation.Item2 == currentLocationIndex)
-                {
-                    models.Add(doorModel);
-                }
-            }
-            return models;
         }
         
         //current and next doors

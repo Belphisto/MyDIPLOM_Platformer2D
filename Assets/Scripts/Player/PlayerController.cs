@@ -17,6 +17,8 @@ namespace Platformer2D.Player
         private bool isControlsInverted = false;
         private int jumpCount = 0;
 
+        public LocationType CurrentType {get;set;}
+
         // Определение события увеличения счетчика очков
         //public static event Action<int> OnScoreUpdate;
 
@@ -48,6 +50,8 @@ namespace Platformer2D.Player
         // Метод, вызываемый каждый кадр
         public void Update()
         {
+            if (!model.IsMooving) return;
+
             // Управление анимацией и движением персонажа
             // Обработка пользовательского ввода
             if (model.IsGrounded)
@@ -86,14 +90,10 @@ namespace Platformer2D.Player
         public void GetScore(int point)
         {
             model.IncrementScore(point);
-            //Debug.Log($"Current PlayerScore = {model.Score}");
             Bus.Instance.SendAllScore(model.Score);
-            // Вызов события обновления счета, если оно не пустое
-            //OnScoreUpdate?.Invoke(point);
             Bus.Instance.Send(point);
-            //Bus.Instance.SendBackground(model.Score);
-            //Bus.Instance.SendAllScore(model.Score);
         }
+
         public int SendTotalScore()
         {
             return model.Score;
@@ -113,9 +113,21 @@ namespace Platformer2D.Player
 
         public IEnumerator PlayerFell(bool isFell)
         {
+            model.IsMooving = false;
             yield return new WaitForSeconds(3);
-            Debug.Log("Bus.Instance.SendMessage(isFell);");
-            Bus.Instance.SendMessage(isFell);
+            if (CurrentType == LocationType.Sky)
+            {
+                Debug.Log("Bus.Instance.SendMessage(isFell);");
+                Bus.Instance.SendMessage(isFell);
+            }
+            else
+            {
+                view.transform.position = new Vector3(1, 1, 0);
+            }
+            yield return new WaitForSeconds(1);
+            view.Refreez();
+            model.IsMooving = true;
+            
         }            
     }
     

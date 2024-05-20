@@ -23,6 +23,20 @@ namespace Platformer2D.Inventory
         {
             icon = GetComponent<Image>();
             Count = 0;
+
+            StartCoroutine(ActivateAfterDelay());
+        }
+
+        IEnumerator ActivateAfterDelay()
+        {
+            yield return new WaitForSeconds(0.03f);
+
+            // Check if this is the first slot (i.e., the 'Q' slot)
+            if (activationKey == KeyCode.Q)
+            {
+                // Activate the slot
+                Activate();
+            }
         }
 
         private static Dictionary<LocationType, Color> locationColors = new Dictionary<LocationType, Color>

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer2D.Inventory;
 using UnityEngine;
 
 namespace Platformer2D.Player
@@ -11,6 +12,7 @@ namespace Platformer2D.Player
         private SpriteRenderer _sprite;
         private Animator _animator;
         private Rigidbody2D _rb;
+        
 
         //свойство доступа к аниматору из др. классов
         public Animator Animator {get => _animator; set => _animator = value;}
@@ -25,6 +27,8 @@ namespace Platformer2D.Player
             PlayerModel model = new PlayerModel();
             controller = new PlayerController(model, this);
         }
+
+
         private void OnDestroy()
         {
             controller.OnDestroy();
@@ -67,8 +71,8 @@ namespace Platformer2D.Player
         }
 
         // Метод на каждом физическом шаге
- //найти нижнюю точку коллайдера персонажа. От нее сделать влево и вправо небольшой отступ и по ним кидать вниз на короткое расстояние два рейкаста  (рейксастить прямоугольник )
- //boxCast - contactfilter (не считал персонажа) - он не должен быть шире размера персонажа
+    //найти нижнюю точку коллайдера персонажа. От нее сделать влево и вправо небольшой отступ и по ним кидать вниз на короткое расстояние два рейкаста  (рейксастить прямоугольник )
+    //boxCast - contactfilter (не считал персонажа) - он не должен быть шире размера персонажа
         void FixedUpdate()
         {
             // Находим нижнюю точку коллайдера персонажа и делаем небольшой отступ вверх
@@ -95,9 +99,6 @@ namespace Platformer2D.Player
             controller.CheckGround(isGrounded);
         }
 
-
-
-
         void OnTriggerEnter2D(Collider2D other)
         {
             // Проверяем, является ли столкнувшийся объект триггером с тегом LowerWordLimit
@@ -106,7 +107,12 @@ namespace Platformer2D.Player
                 // Замораживаем координаты персонажа
                 _rb.constraints = RigidbodyConstraints2D.FreezeAll;
                 StartCoroutine(controller.PlayerFell(true));
+                
             }
+        }
+        public void Refreez()
+        {
+            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 }

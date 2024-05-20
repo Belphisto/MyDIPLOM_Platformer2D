@@ -37,6 +37,7 @@ namespace Platformer2D.Inventory
             }
 
         }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -66,7 +67,28 @@ namespace Platformer2D.Inventory
             {
                 slot.OnActivate += HandleSlotActivation;
             }
+
+            StartCoroutine(SimulatedKeyPress());
         }
+
+        IEnumerator SimulatedKeyPress()
+        {
+            yield return new WaitForSeconds(2);
+            Input.GetKeyDown(KeyCode.Q);
+        }
+
+        public InventorySlot GetSlotByKey(KeyCode key)
+        {
+            foreach (var slot in slots)
+            {
+                if (slot.activationKey == key)
+                {
+                    return slot;
+                }
+            }
+            return null;
+        }
+
         private void OnDestroy()
         {
             Bus.Instance.UpdateCrystal -= IncrementSlot;

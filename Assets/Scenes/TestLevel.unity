@@ -4328,7 +4328,7 @@ MonoBehaviour:
   activationKey: 113
   SoundIndexIncrement: 0
   SoundIndexDecriment: 0
-  _isActive: 0
+  _isActive: 1
   locationType: 0
 --- !u!1 &1649728456
 GameObject:

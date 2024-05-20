@@ -128,7 +128,7 @@ namespace Platformer2D.Level
         // Метод для обработки обновления счета от игрока
         public void HandleScoreUpdate(int score)
         {
-            Debug.Log("model.CurrentScore LevelController: " + model.CurrentScore);
+           // Debug.Log("model.CurrentScore LevelController: " + model.CurrentScore);
             // Увеличивает счетчик текущего количества очков, собранных на уровне
             model.IncrementScore(score);
             Bus.Instance.SendBackground(model.CurrentScore);

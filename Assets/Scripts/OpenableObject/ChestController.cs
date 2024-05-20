@@ -21,36 +21,67 @@ namespace Platformer2D.Platform
         
         internal void Update()
         {
+            if (isPlayerInside)
+            {
+                CheckActiveSlot();
+                HandleChestInteraction();
+            }
+        }
+
+        private void CheckActiveSlot()
+        {
+            activeslot = InventoryView.Instance.GetActiveSlot();
+            if (activeslot != null && (activeslot.locationType == LocationType.Default))
+            {
+                isCorrectActiveSlot = true;
+            }
+            else
+            {
+                isCorrectActiveSlot = false;
+                CameraManager.Instance.UpadteText("Incorrect Inventory slot selected");
+            }
+        }
+
+        private void HandleChestInteraction()
+        {
             if (!model.IsOpen)
             {
                 if (isCorrectActiveSlot)
                 {
-                    CameraManager.Instance.UpadteText($"Press F for chest");
-                    CameraManager.Instance.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.F))
+                    if(activeslot.Count < model.TargetScore)
                     {
-                        if (activeslot.Count >= model.TargetScore)
-                        {
-                            model.IsOpen = true;
-                            InventoryView.Instance.DecrementSlot(view.type, model.TargetScore);
-                        }
+                        CameraManager.Instance.UpadteText("Not enough crystal. Need: {model.TargetScore} to open chest");
                     }
-                    
                     else
                     {
-                        CameraManager.Instance.UpadteText($"Not count");
-                        CameraManager.Instance.SetActive(true);
+                        OpenChestWithFKey();
                     }
                 }
             }
             else
             {
-                if (isPlayerInside && Input.GetKeyDown(KeyCode.Return))
-                {
-                    CameraManager.Instance.SetActive(false);
-                    Debug.Log($"GameWin");
-                    EndGame();
-                }
+                EndGameWithEnterKey();
+            }
+        }
+
+        private void OpenChestWithFKey()
+        {
+            CameraManager.Instance.UpadteText($"Press F for chest");
+            if(Input.GetKeyDown(KeyCode.F))
+            {
+                model.IsOpen = true;
+                InventoryView.Instance.DecrementSlot(view.type, model.TargetScore);
+            }
+        }
+
+        private void EndGameWithEnterKey()
+        {
+            CameraManager.Instance.UpadteText($"Press Enter");
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                CameraManager.Instance.SetActive(false);
+                Debug.Log($"GameWin");
+                EndGame();
             }
         }
 
@@ -63,15 +94,9 @@ namespace Platformer2D.Platform
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                activeslot = InventoryView.Instance.GetActiveSlot();
-                CameraManager.Instance.UpadteText($"Need: {model.TargetScore}");
+                isPlayerInside = true;
+                CameraManager.Instance.UpadteText($"Need: {model.TargetScore} to open chest");
                 CameraManager.Instance.SetActive(true);
-                if (activeslot != null && (activeslot.locationType == LocationType.Default))
-                {
-                    //Debug.Log("Active correctSlot");
-                    
-                    isCorrectActiveSlot = true;
-                }
             }
         }
 
@@ -79,14 +104,7 @@ namespace Platformer2D.Platform
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                Debug.Log("OnTriggerStay2D(Player)");
-            if (model.IsOpen)
-            {
-                CameraManager.Instance.UpadteText($"Press Enter");
-                CameraManager.Instance.SetActive(true);
-
                 isPlayerInside = true;
-            }
             }
         }
 
@@ -94,13 +112,8 @@ namespace Platformer2D.Platform
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                Debug.Log("OnTriggerStay2D(Player)");
-            if (model.IsOpen)
-            {
-                CameraManager.Instance.SetActive(false);
-
                 isPlayerInside = false;
-            }
+                CameraManager.Instance.SetActive(false);
             }
         }
 

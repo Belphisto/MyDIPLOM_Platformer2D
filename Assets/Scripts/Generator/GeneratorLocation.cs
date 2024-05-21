@@ -129,16 +129,16 @@ namespace Platformer2D.Generator
             int randomNumber = UnityEngine.Random.Range(0, 10);
 
             // Выбор метода в зависимости от случайного числа
-            //if (randomNumber < 8)
-           // {
-            //    // Метод для генерации платформ на основе сетки (вероятность 80%)
-               // return MazePlatforms(labelSize, grid);
-           // }
-          //  else
-            //{
-                // Метод для генерации платформ на основе лабиринта (вероятность 20%)
+            if (randomNumber < 7)
+            {
+                // Метод для генерации платформ на основе сетки (вероятность 70%)
+                return MazePlatforms(labelSize, grid);
+            }
+            else
+            {
+                // Метод для генерации платформ на основе лабиринта (вероятность 30%)
                return RandomGridPlatforms(new Vector2(2.0f, 3.0f), grid);
-           // }
+            }
         }
 
         private (List<Vector3>, List<Vector3>, List<Vector3>) RandomGridPlatforms(Vector2 labelSize, Size grid)
@@ -163,24 +163,6 @@ namespace Platformer2D.Generator
             return(platformsStatic, platformsSpecial, platformsBorder);
         }
         
-        
-
-
-        private List<Vector3> GenerateStaticPlatformPosition(Size grid)
-        {
-            var gen = new GeneratorPlatformPosition(new Vector2(3f, 4f), grid);
-            //return gen.Position();
-            //var gen2 = new GeneratorMazePlatform(new Vector2(2f,3f));
-            //return gen2.GeneratePlatforms(new Rect(1,1,grid.X-1, grid.Y-1));
-
-            Vector2 labelSize = new Vector2(1.0f, 1.3f);
-            GeneratorMazePlatform mazeGenerator = new GeneratorMazePlatform(labelSize);
-            mazeGenerator.GenerateMaze(grid.Width, grid.Height, 0.9f);
-            Rect region = new Rect(0, 0, grid.Width * labelSize.x, grid.Height * labelSize.y);
-            List<Vector3> platforms = mazeGenerator.GeneratePlatforms(region);
-            return platforms;
-        }
-
         private List<Vector3> GenerateSpecialPlatformPosition(List<Vector3> statics)
         {
             int platformCount = (int)(GeneratorModel.GetPercentCountSpecialPlatform(_difficulty) * statics.Count); 
@@ -199,12 +181,6 @@ namespace Platformer2D.Generator
 
         private List<Vector3> SelectPlatformCoordinatesForDoors(List<Vector3> coordinates,  int doorCount)
         {
-            //  случайные координаты для дверей
-            /*var doorCoordinates = coordinates.OrderBy(x => UnityEngine.Random.value).Take(doorCount).ToList();
-            for (int i = 0; i < doorCoordinates.Count; i++)
-            {
-                doorCoordinates[i] = new Vector3(doorCoordinates[i].x, doorCoordinates[i].y + 1, doorCoordinates[i].z);
-            }*/
             var doorCoordinates = new List<Vector3>();
             var randomCoordinates = coordinates.OrderBy(x => UnityEngine.Random.value).ToList();
 
@@ -224,27 +200,6 @@ namespace Platformer2D.Generator
                 }
             }
 
-
-            return doorCoordinates;
-        }
-
-        private List<Vector3> SelectPlatformCoordinatesForDoors(List<Vector3> coordinates, int doorCount, int gridSize)
-        {
-            // Выбираем случайные координаты для дверей
-            var doorCoordinates = coordinates.OrderBy(x => UnityEngine.Random.value).Take(doorCount).ToList();
-            for (int i = 0; i < doorCoordinates.Count; i++)
-            {
-                // Если дверь находится в нижней половине сетки, разместить ее над платформой
-                if (doorCoordinates[i].y < gridSize / 2)
-                {
-                    doorCoordinates[i] = new Vector3(doorCoordinates[i].x, doorCoordinates[i].y + 1, doorCoordinates[i].z);
-                }
-                // Иначе, разместить ее под платформой
-                else
-                {
-                    doorCoordinates[i] = new Vector3(doorCoordinates[i].x, doorCoordinates[i].y - 1, doorCoordinates[i].z);
-                }
-            }
 
             return doorCoordinates;
         }

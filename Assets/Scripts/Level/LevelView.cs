@@ -78,7 +78,7 @@ namespace Platformer2D.Level
         
         private void OnEnable()
         {
-            controller.OnEnable();
+            controller?.OnEnable();
         }
 
         private void OnDisable()    

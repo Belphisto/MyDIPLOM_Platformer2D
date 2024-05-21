@@ -89,9 +89,10 @@ namespace Platformer2D
             LocationType locationType = _locationNetwork.Rooms[index];
             LevelView levelPrefab = levelPrefabs[locationType];
             LevelModel newModel;
+            int difficulty = PlayerPrefs.GetInt("Difficulty");
             if (index == 0)
             {
-                newModel = generatorLocations.GenerateNewLocation(2, index, doorInNewModel, 3);
+                newModel = generatorLocations.GenerateNewLocation(2, index, doorInNewModel, GeneratorModel.GetCountForChest(difficulty));
             }
             else
             {
@@ -157,17 +158,7 @@ namespace Platformer2D
         private (int,int) GetCountLocationWithDifficilty()
         {
             int difficulty = PlayerPrefs.GetInt("Difficulty");
-            switch (difficulty)
-            {
-                case 1:
-                    return (5, 1); // для уровня сложности 1
-                case 2:
-                    return (10, 1); // для уровня сложности 2
-                case 3:
-                    return (15, 2); // для уровня сложности 3
-                default:
-                    return (10, 1); // значения по умолчанию
-            }
+            return GeneratorModel.GetCountLocationWithDifficilty(difficulty);
         }
 
         public string GetRoomInfo()

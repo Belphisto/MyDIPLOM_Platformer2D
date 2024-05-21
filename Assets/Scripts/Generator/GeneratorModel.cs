@@ -35,21 +35,6 @@ namespace Platformer2D.Generator
             }
         }
 
-        public static int GetTargetScore(int _difficulty)
-        {
-            switch (_difficulty)
-            {
-                case 1:
-                    return 60;
-                case 2:
-                    return 70;
-                case 3:
-                    return 85;
-                default:
-                    return 0;
-            }
-        }
-
         public static int GetTargetCountForOpenPercent(int _difficulty)
         {
             switch (_difficulty)
@@ -88,6 +73,36 @@ namespace Platformer2D.Generator
                 Width = random.Next(15, 20), // Генерирует случайное число от 500 до 900 включительно
                 Height = random.Next(10, 20) // Генерирует случайное число от 500 до 700 включительно
             };
+        }
+
+        public static int GetCountForChest(int _difficulty)
+        {
+            switch (_difficulty)
+            {
+                case 1:
+                    return 3;
+                case 2:
+                    return 5;
+                case 3:
+                    return 10;
+                default:
+                    return 5;
+            }
+        }
+
+        public static (int,int) GetCountLocationWithDifficilty(int _difficulty)
+        {
+            switch (_difficulty)
+            {
+                case 1:
+                    return (5, 1); // для уровня сложности 1
+                case 2:
+                    return (10, 1); // для уровня сложности 2
+                case 3:
+                    return (15, 1); // для уровня сложности 3
+                default:
+                    return (10, 1); // значения по умолчанию
+            }
         }
     }
 }

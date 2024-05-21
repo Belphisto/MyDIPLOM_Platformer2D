@@ -129,16 +129,16 @@ namespace Platformer2D.Generator
             int randomNumber = UnityEngine.Random.Range(0, 10);
 
             // Выбор метода в зависимости от случайного числа
-            if (randomNumber < 8)
-            {
-                // Метод для генерации платформ на основе сетки (вероятность 80%)
-                return MazePlatforms(labelSize, grid);
-            }
-            else
-            {
+            //if (randomNumber < 8)
+           // {
+            //    // Метод для генерации платформ на основе сетки (вероятность 80%)
+               // return MazePlatforms(labelSize, grid);
+           // }
+          //  else
+            //{
                 // Метод для генерации платформ на основе лабиринта (вероятность 20%)
-                return RandomGridPlatforms(new Vector2(1.0f, 1.0f), grid);
-            }
+               return RandomGridPlatforms(new Vector2(2.0f, 3.0f), grid);
+           // }
         }
 
         private (List<Vector3>, List<Vector3>, List<Vector3>) RandomGridPlatforms(Vector2 labelSize, Size grid)

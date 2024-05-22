@@ -33,6 +33,10 @@ namespace Platformer2D.Background
     
         void Start()
         {
+            
+        }
+        void Awake()
+        {
             _image = GetComponentInChildren<Image>(); 
             _currentColor = _image.color;
             // Создание модели и контроллера фона
@@ -41,7 +45,6 @@ namespace Platformer2D.Background
             var canvas = GetComponent<Canvas>();
             canvas.worldCamera = Camera.main;
         }
-
         // Метод для изменения цвета фона
         public void ChangeColor(Color newColor)
         {

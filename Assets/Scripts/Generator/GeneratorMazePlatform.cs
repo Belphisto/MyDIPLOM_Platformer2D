@@ -12,7 +12,7 @@ namespace Platformer2D
         {
             this.labelSize = labelSize;
         }
-        public List<Vector3> GenerateBorderPlatforms(Rect region)
+        /*public List<Vector3> GenerateBorderPlatforms(Rect region)
         {
             var platforms = new List<Vector3>();
             var cellWidth = region.width / maze.GetLength(1);
@@ -33,7 +33,34 @@ namespace Platformer2D
             }
 
             return platforms;
+        }*/
+
+        public List<Vector3> GenerateBorderPlatforms(Rect region)
+        {
+            var platforms = new List<Vector3>();
+            var cellWidth = region.width / maze.GetLength(1);
+            var cellHeight = region.height / maze.GetLength(0);
+
+            // Генерируем верхнюю и нижнюю границы
+            for (int x = -2; x < maze.GetLength(1); x++)
+            {
+                platforms.Add(new Vector3(region.x + x * cellWidth + cellWidth / 2 - labelSize.x / 2, region.y - cellHeight / 2, 0)); // Верхняя граница
+                platforms.Add(new Vector3(region.x + x * cellWidth + cellWidth / 2 - labelSize.x / 2, region.y + region.height - cellHeight / 2, 0)); // Нижняя граница
+            }
+
+            // Генерируем левую и правую границы
+            for (int y = 0; y < maze.GetLength(0); y++)
+            {
+                platforms.Add(new Vector3(region.x - cellWidth / 2 - 2, region.y + y * cellHeight + cellHeight / 2 - labelSize.y / 2, 0)); // Левая граница
+                platforms.Add(new Vector3(region.x + region.width - cellWidth / 2, region.y + y * cellHeight + cellHeight / 2 - labelSize.y / 2, 0)); // Правая граница
+            }
+
+            return platforms;
         }
+
+
+
+
 
 
         // Генерация лабиринта

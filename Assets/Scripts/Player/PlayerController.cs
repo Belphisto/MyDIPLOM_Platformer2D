@@ -23,12 +23,7 @@ namespace Platformer2D.Player
         //public static event Action<int> OnScoreUpdate;
 
         // Синглтон контроллера игрока
-        private static PlayerController _instance;
-        public static PlayerController Instance
-        {
-            get { return _instance; }
-            private set { _instance = value; }
-        }
+         public static PlayerController Instance { get; private set; }
         // Конструктор контроллера игрока
         public PlayerController(PlayerModel model, PlayerView view)
         {
@@ -39,11 +34,20 @@ namespace Platformer2D.Player
             // Подписка на событие инвертирования управления
             Bus.Instance.InvertControls += InvertControls;
         }
+        public void Awake()
+        {
+            Instance = this;
+        }
+
+        public void SetCurrentType(LocationType type)
+        {
+            CurrentType = type;
+        }
 
         public void OnDestroy()
         {
             //Bus.Instance.InvertControls -= InvertControls;
-            _instance = null;
+            Instance = null;
         }
 
         // Метод, вызываемый каждый кадр

@@ -102,7 +102,26 @@ namespace Platformer2D
             levelInstance.model = newModel;
             levelInstance.SetModel();
             levelInstance.gameObject.SetActive(true);
-            PlayerController.Instance.CurrentType = levelInstance.crystalType;
+
+            // Проверяем, инициализирован ли PlayerController.Instance
+            if (PlayerController.Instance != null)
+            {
+                PlayerController.Instance.SetCurrentType(levelInstance.crystalType);
+            }
+            else
+            {
+                // Если PlayerController.Instance еще не инициализирован, мы можем использовать StartCoroutine, чтобы подождать, пока он не будет готов
+                StartCoroutine(SetCurrentTypeWhenReady(levelInstance.crystalType));
+            }
+        }
+        IEnumerator SetCurrentTypeWhenReady(LocationType type)
+        {
+            while (PlayerController.Instance == null)
+            {
+                yield return null; // Подождите до следующего кадра
+            }
+
+            PlayerController.Instance.SetCurrentType(type);
         }
 
         private void DeactivateAllLevels()

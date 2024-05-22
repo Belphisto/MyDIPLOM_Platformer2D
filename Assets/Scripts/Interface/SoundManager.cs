@@ -56,22 +56,22 @@ public class SoundManager : MonoBehaviour
     void UpdateMusicVolume(float volume)
     {
         foreach (AudioSource audioSource in audioSources)
+    {
+        if (audioSource != null && audioSource.CompareTag("Music"))
         {
-            if (audioSource.CompareTag("Music"))
-            {
-                audioSource.volume = volume;
-            }
+            audioSource.volume = volume;
         }
+    }
     }
 
     void UpdateSFXVolume(float volume)
     {
         foreach (AudioSource audioSource in audioSources)
+    {
+        if (audioSource != null && !audioSource.CompareTag("Music"))
         {
-            if (!audioSource.CompareTag("Music"))
-            {
-                audioSource.volume = volume;
-            }
+            audioSource.volume = volume;
         }
+    }
     }
 }

@@ -24,8 +24,7 @@ namespace Platformer2D.Player
         void Start()
         {
             //создание новой модели игрока и контроллера для управления пользовательским вводом
-            PlayerModel model = new PlayerModel();
-            controller = new PlayerController(model, this);
+            
         }
 
 
@@ -42,6 +41,9 @@ namespace Platformer2D.Player
             _animator = GetComponentInChildren<Animator>();
             // получение границ коллайдера с объекта на сцене
             _rb = GetComponent<Rigidbody2D>();
+            PlayerModel model = new PlayerModel();
+            controller = new PlayerController(model, this);
+            controller.Awake();
         }
 
         // Метод передвижения персонажа

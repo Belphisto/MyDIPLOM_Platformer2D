@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 public class StartSceneManager : MonoBehaviour
 {
+    public GameObject PanelManual;
+    public GameObject Player;
     private void Start()
     {
         SoundManager.Instance.PlaySound(0);
         
     }
-    public void StartGame()
+    public void OK()
     {
         //не работает
         if (SceneManager.GetSceneByBuildIndex(1).isLoaded)
@@ -23,6 +25,11 @@ public class StartSceneManager : MonoBehaviour
             return;
         PlayerPrefs.SetInt("Difficulty", difficulty);
         SceneManager.LoadScene("TestLevel"); //  имя игровой сцены
+    }
+    public void StartGame()
+    {
+        PanelManual.SetActive(true);
+        Player.SetActive(false);
     }
 
     public void QuitGame()

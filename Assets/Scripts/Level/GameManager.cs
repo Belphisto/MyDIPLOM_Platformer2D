@@ -53,8 +53,6 @@ namespace Platformer2D
             doorModels = new Dictionary<int, DoorModel>();
             indexCreatedLocation = new List<int>();
 
-
-            //CreateDoorModels();
             CreateAllDoors();
 
             indexCurrentLocation = 0;

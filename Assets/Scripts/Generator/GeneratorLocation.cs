@@ -102,6 +102,7 @@ namespace Platformer2D.Generator
             Debug.Log("countForOpen" + countForOpen);
             var chestModel = new ChestModel();
             chestModel.TargetScore = countForChest;
+            var doorsPosition = GenerateDoorPosition(staticplatform, doorModels, size.Height);
 
             var newModel = new LevelModel(
 
@@ -115,9 +116,9 @@ namespace Platformer2D.Generator
                 countCrystal,
                 size.Height, size.Width,
                 indexLocation,
-                GenerateDoorPosition(staticplatform, doorModels, size.Height),
+                doorsPosition,
                 countForOpen,
-                (SelectPlatformCoordinateForChest(staticplatform), chestModel)
+                (SelectPlatformCoordinateForChest(staticplatform, new List<Vector3>(doorsPosition.Keys)), chestModel)
             );
             Debug.Log($"GeneratorLocation: CountForOpen= {countForOpen}, countCrystal = {countCrystal} ");
             return newModel;
@@ -217,13 +218,27 @@ namespace Platformer2D.Generator
             return doorsPosition;
         }
 
-        private Vector3 SelectPlatformCoordinateForChest(List<Vector3> coordinates)
+        private Vector3 SelectPlatformCoordinateForChest(List<Vector3> coordinates, List<Vector3> doorCoordinates)
         {
-            //случайная координата для сундука
-            var chestCoordinate = coordinates[UnityEngine.Random.Range(0, coordinates.Count)];
+            Vector3 chestCoordinate;
 
-            // сундук на одну единицу выше платформы
-            chestCoordinate = new Vector3(chestCoordinate.x, chestCoordinate.y + 1, chestCoordinate.z);
+            while (true)
+            {
+                //случайная координата для сундука
+                chestCoordinate = coordinates[UnityEngine.Random.Range(0, coordinates.Count)];
+
+                // сундук на одну единицу выше платформы
+                chestCoordinate = new Vector3(chestCoordinate.x, chestCoordinate.y + 1, chestCoordinate.z);
+
+                // Проверка на пересечение с дверями
+                bool isOverlapping = doorCoordinates.Any(doorCoordinate =>
+                    System.Math.Abs(doorCoordinate.x - chestCoordinate.x) <= 3 && System.Math.Abs(doorCoordinate.y - chestCoordinate.y) <= 3);
+
+                if (!isOverlapping)
+                {
+                    break;
+                }
+            }
 
             return chestCoordinate;
         }

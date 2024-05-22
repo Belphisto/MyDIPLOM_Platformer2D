@@ -29,7 +29,6 @@ namespace Platformer2D.Player
             get { return _instance; }
             private set { _instance = value; }
         }
-
         // Конструктор контроллера игрока
         public PlayerController(PlayerModel model, PlayerView view)
         {

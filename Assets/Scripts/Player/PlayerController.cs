@@ -23,7 +23,7 @@ namespace Platformer2D.Player
         //public static event Action<int> OnScoreUpdate;
 
         // Синглтон контроллера игрока
-         public static PlayerController Instance { get; private set; }
+        public static PlayerController Instance { get; private set; }
         // Конструктор контроллера игрока
         public PlayerController(PlayerModel model, PlayerView view)
         {

@@ -44,7 +44,7 @@ namespace Platformer2D.Generator
                 case 2:
                     return 30;
                 case 3:
-                    return 50;
+                    return 40;
                 default:
                     return 0;
             }
@@ -84,7 +84,7 @@ namespace Platformer2D.Generator
                 case 2:
                     return 5;
                 case 3:
-                    return 10;
+                    return 7;
                 default:
                     return 5;
             }

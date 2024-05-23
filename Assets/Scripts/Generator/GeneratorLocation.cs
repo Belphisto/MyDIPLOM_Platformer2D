@@ -130,7 +130,7 @@ namespace Platformer2D.Generator
             int randomNumber = UnityEngine.Random.Range(0, 10);
 
             // Выбор метода в зависимости от случайного числа
-            if (randomNumber < 7)
+            if (randomNumber < 8)
             {
                 // Метод для генерации платформ на основе сетки (вероятность 70%)
                 return MazePlatforms(labelSize, grid);

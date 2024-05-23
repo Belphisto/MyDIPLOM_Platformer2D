@@ -50,7 +50,7 @@ namespace Platformer2D.Platform
                 {
                     if(activeslot.Count < model.TargetScore)
                     {
-                        CameraManager.Instance.UpadteText($"Not enough crystal. Need: {model.TargetScore} to open chest");
+                        CameraManager.Instance.UpadteText($"Недостаточно. Нужно: {model.TargetScore} для открытия сундука");
                     }
                     else
                     {

@@ -52,7 +52,7 @@ namespace Platformer2D.Platform
             else
             {
                 isCorrectActiveSlot = false;
-                CameraManager.Instance.UpadteText("Incorrect Inventory slot selected");
+                CameraManager.Instance.UpadteText("Выбран неподходящий слот инвентаря");
                 CameraManager.Instance.SetActive(true);
             }
         }
@@ -65,7 +65,7 @@ namespace Platformer2D.Platform
                 {
                     if(activeslot.Count < model.CountForOpen)
                     {
-                        CameraManager.Instance.UpadteText("Not enough crystal");
+                        CameraManager.Instance.UpadteText("Недостаточно кристаллов");
                         CameraManager.Instance.SetActive(true);
                     }
                     else
@@ -82,7 +82,7 @@ namespace Platformer2D.Platform
 
         private void OpenDoorWithFKey()
         {
-            CameraManager.Instance.UpadteText($"Press F to open door in {model.NextLocation.Item1} Room");
+            CameraManager.Instance.UpadteText($"Нажми F для открытия двери в {model.NextLocation.Item1} комнату");
             CameraManager.Instance.SetActive(true);
             if(Input.GetKeyDown(KeyCode.F))
             {
@@ -96,7 +96,7 @@ namespace Platformer2D.Platform
 
         private void EnterNextRoomWithEnterKey()
         {
-            CameraManager.Instance.UpadteText($"Press Enter to {model.NextLocation.Item1} Room");
+            CameraManager.Instance.UpadteText($"Нажми Enter чтобы перейти в {model.NextLocation.Item1} комнату");
             CameraManager.Instance.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Return))
             {
@@ -112,7 +112,7 @@ namespace Platformer2D.Platform
             if (collision.gameObject.CompareTag("Player"))
             {
                 isPlayerInside = true;
-                CameraManager.Instance.UpadteText($"Need: {model.CountForOpen} to {model.NextLocation.Item1} Room");
+                CameraManager.Instance.UpadteText($"Нужно: {model.CountForOpen} кристаллов чтобы открыть {model.NextLocation.Item1} комнату");
                 CameraManager.Instance.SetActive(true);
             }
         }

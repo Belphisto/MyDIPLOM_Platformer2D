@@ -26,8 +26,8 @@ namespace Platformer2D.Generator
         private void GenerateLocations(int countLocation, int countStartVertix)
         {
             var G2 = BarabasiAlbertGraph(countLocation, countStartVertix);
-            Debug.Log("[Generator]Vertices: " + string.Join(", ", G2.Vertices));
-            Debug.Log("[Generator]Edges: " + string.Join(", ", G2.Edges.Select(e => $"({e.Source}, {e.Target})")));
+            Debug.Log("[Generator] [GeneratorGraph] Vertices: " + string.Join(", ", G2.Vertices));
+            Debug.Log("[Generator] [GeneratorGraph] Edges: " + string.Join(", ", G2.Edges.Select(e => $"({e.Source}, {e.Target})")));
             Rooms = AssignRoomsToNodes(G2, new List<LocationType> { LocationType.Red, LocationType.Green, LocationType.Blue, LocationType.Sky});
             GenerateRoomsAndTransitions(G2);
         }
@@ -105,7 +105,7 @@ namespace Platformer2D.Generator
             {
                 textLog +=$"\nLevel {room}: {rooms[room]} -> {string.Join(", ", transitionRooms.Select(r => $"Level {r}: {rooms[r]}"))}";
             }
-            Debug.Log($" [Generator] {textLog}");
+            Debug.Log($" [Generator] [GeneratorGraph] {textLog}");
         }
 
         public static Dictionary<int, ((int, LocationType), (int, LocationType))> GraphToLocations(Dictionary<int, LocationType> rooms, Dictionary<int, List<int>> transitions)

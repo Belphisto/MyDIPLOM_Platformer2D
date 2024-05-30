@@ -11,6 +11,7 @@ namespace Platformer2D
         public GeneratorMazePlatform(Vector2 labelSize)
         {
             this.labelSize = labelSize;
+            Debug.Log($"[Generator][MazePlatform] labelSize = {labelSize}");
         }
         /*public List<Vector3> GenerateBorderPlatforms(Rect region)
         {
@@ -66,6 +67,9 @@ namespace Platformer2D
         // Генерация лабиринта
         public void GenerateMaze(int width, int height, float removalProbability)
         {
+            Debug.Log($"[Generator][MazePlatform] width = {width}");
+            Debug.Log($"[Generator][MazePlatform] height = {height}");
+            Debug.Log($"[Generator][MazePlatform] removalProbability = {removalProbability}");
             maze = new int[height, width];
             Stack<Vector2Int> stack = new Stack<Vector2Int>();
             stack.Push(new Vector2Int(0, 0));

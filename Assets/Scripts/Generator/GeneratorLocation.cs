@@ -49,6 +49,7 @@ namespace Platformer2D.Generator
 
         public LevelModel GenerateNewLocation(int coefXLoc, int indexLocation, List<Platform.DoorModel> doorModels)
         {
+            Debug.Log($"[Generator] indexLocation {indexLocation}");
             Size size = GeneratorModel.GenerateLocationSize();
             Vector2 labelSize = new Vector2(1.0f, 1.3f);
             
@@ -61,9 +62,9 @@ namespace Platformer2D.Generator
 
             int percent = GeneratorModel.GetTargetCountForOpenPercent(_difficulty);
             int countForOpen = (int)(countCrystal*((double)percent/100));
-            Debug.Log("countCrystal" + countCrystal);
-            Debug.Log("percent" + percent);
-            Debug.Log("countForOpen" + countForOpen);
+
+            
+
             var newModel = new LevelModel(
 
                 crystalPositions,
@@ -79,7 +80,11 @@ namespace Platformer2D.Generator
                 GenerateDoorPosition(staticplatform, doorModels, size.Height),
                 countForOpen
             );
-            Debug.Log($"GeneratorLocation: CountForOpen= {countForOpen}, countCrystal = {countCrystal} ");
+
+            Debug.Log($"[Generator] GetScorePerCrystal = {GeneratorModel.GetScorePerCrystal(coefXLoc, _difficulty)}");
+            Debug.Log($"[Generator] countCrystal = {countCrystal}");
+            Debug.Log($"[Generator] countForOpenDoor = {countForOpen}");
+            Debug.Log($"[Generator] size = {size.Height} {size.Width}");
             return newModel;
         }
 
@@ -97,9 +102,7 @@ namespace Platformer2D.Generator
 
             int percent = GeneratorModel.GetTargetCountForOpenPercent(_difficulty);
             int countForOpen = (int)(countCrystal*((double)percent/100));
-            Debug.Log("countCrystal" + countCrystal);
-            Debug.Log("percent" + percent);
-            Debug.Log("countForOpen" + countForOpen);
+           
             var chestModel = new ChestModel();
             chestModel.TargetScore = countForChest;
             var doorsPosition = GenerateDoorPosition(staticplatform, doorModels, size.Height);
@@ -120,7 +123,12 @@ namespace Platformer2D.Generator
                 countForOpen,
                 (SelectPlatformCoordinateForChest(staticplatform, new List<Vector3>(doorsPosition.Keys)), chestModel)
             );
-            Debug.Log($"GeneratorLocation: CountForOpen= {countForOpen}, countCrystal = {countCrystal} ");
+            
+            Debug.Log($"[Generator] GetScorePerCrystal = {GeneratorModel.GetScorePerCrystal(coefXLoc, _difficulty)}");
+            Debug.Log($"[Generator] countCrystal = {countCrystal}");
+            Debug.Log($"[Generator] countForOpenDoor = {countForOpen}");
+            Debug.Log($"[Generator] size = {size.Height} {size.Width}");
+
             return newModel;
         }
 
@@ -128,16 +136,18 @@ namespace Platformer2D.Generator
         {
             // Случайное число от 0 до 9 с равной вероятностью
             int randomNumber = UnityEngine.Random.Range(0, 10);
-
+            Debug.Log($"[Generator] RandomGridOrMazePlatforms: randomNumber = {randomNumber}");
             // Выбор метода в зависимости от случайного числа
             if (randomNumber < 8)
             {
                 // Метод для генерации платформ на основе сетки (вероятность 70%)
+                Debug.Log($"[Generator] Generate MazePlatforms");
                 return MazePlatforms(labelSize, grid);
             }
             else
             {
                 // Метод для генерации платформ на основе лабиринта (вероятность 30%)
+                Debug.Log($"[Generator] Generate RandomGridPlatforms");
                return RandomGridPlatforms(new Vector2(2.0f, 3.0f), grid);
             }
         }

@@ -14,6 +14,8 @@ namespace Platformer2D.Generator
         {
             this.labelSize = labelSize;
             this.grid = grid;
+            Debug.Log($"[Generator][GeneratorGridPlatform] labelSize = {labelSize}");
+            Debug.Log($"[Generator][GeneratorGridPlatform] grid = {grid}");
         }
 
         public List<Vector3> PositionStaticPlatforms()
@@ -22,6 +24,8 @@ namespace Platformer2D.Generator
 
             int randomNumber = 5;
             var regions = RecursiveBinarySpacePartition(new Rect(0, 0, grid.Width, grid.Height), randomNumber, true);
+
+            Debug.Log($"[Generator][GeneratorGridPlatform] regions = {regions.Count}");
 
             var regionIndices = new List<int>(Enumerable.Range(0, regions.Count));
             Shuffle(regionIndices);
@@ -60,6 +64,7 @@ namespace Platformer2D.Generator
             else
             {
                 var split = UnityEngine.Random.Range(0.4f, 0.8f); // Случайное разбиение пространства
+                Debug.Log($"[Generator][GeneratorGridPlatform] split = {split}");
                 Rect first, second;
                 if (horizontal)
                 {
@@ -111,14 +116,11 @@ namespace Platformer2D.Generator
 
         private void ConnectEntryAndExit(List<Vector3> platforms, Rect region)
         {
-            // Находим входную и выходную точки
             Vector3 entryPoint = platforms[0];
             Vector3 exitPoint = platforms[1];
 
-            // Вычисляем минимальное расстояние между входом и выходом
             float minDistance = Mathf.Sqrt(Mathf.Pow(exitPoint.x - entryPoint.x, 2) + Mathf.Pow(exitPoint.y - entryPoint.y, 2));
 
-            // Создаем платформы вдоль минимального расстояния
             int numPlatforms = Mathf.CeilToInt(minDistance / labelSize.x);
             float dx = (exitPoint.x - entryPoint.x) / numPlatforms;
             float dy = (exitPoint.y - entryPoint.y) / numPlatforms;
@@ -134,27 +136,22 @@ namespace Platformer2D.Generator
         {
             var newPlatforms = new List<Vector3>();
 
-            // Получаем размеры региона с округлением до ближайшего целого числа
             int regionWidth = Mathf.CeilToInt(region.width);
             int regionHeight = Mathf.CeilToInt(region.height);
 
-            // Создаем сетку для отслеживания пустых областей
             bool[,] grid = new bool[regionWidth, regionHeight];
 
-            // Помечаем существующие платформы как пустые области
             foreach (Vector3 platform in existingPlatforms)
             {
                 int x = Mathf.FloorToInt(platform.x - region.x);
                 int y = Mathf.FloorToInt(platform.y - region.y);
 
-                // Проверяем, что координаты находятся внутри региона
                 if (x >= 0 && x < regionWidth && y >= 0 && y < regionHeight)
                 {
                     grid[x, y] = true;
                 }
             }
 
-            // Добавляем все непомеченные области как платформы
             for (int x = 0; x < regionWidth; x++)
             {
                 for (int y = 0; y < regionHeight; y++)
@@ -177,14 +174,12 @@ namespace Platformer2D.Generator
 
             if (targetPlatformCount > 0)
             {
-                // Выбираем случайную стартовую платформу
                 int startIndex = UnityEngine.Random.Range(0, platforms.Count);
                 keptPlatforms.Add(platforms[startIndex]);
                 platforms.RemoveAt(startIndex);
 
                 while (keptPlatforms.Count < targetPlatformCount)
                 {
-                    // Находим ближайшую несохраненную платформу к последней сохраненной
                     Vector3 lastKeptPlatform = keptPlatforms.Last();
                     int nearestIndex = -1;
                     float nearestDistance = float.MaxValue;
@@ -198,8 +193,6 @@ namespace Platformer2D.Generator
                             nearestDistance = distance;
                         }
                     }
-
-                    // Сохраняем ближайшую платформу
                     keptPlatforms.Add(platforms[nearestIndex]);
                     platforms.RemoveAt(nearestIndex);
                 }

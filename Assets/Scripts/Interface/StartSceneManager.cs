@@ -18,16 +18,14 @@ public class StartSceneManager : MonoBehaviour
         {
             SceneManager.UnloadSceneAsync(1);
         }
-        //SceneManager.UnloadSceneAsync("TestLevel");
-        // выбранный уровень сложности
-        int difficulty = DifficultyButton.Instance.GetLevelDifficulty();
-        if (difficulty == 0)
-            return;
-        PlayerPrefs.SetInt("Difficulty", difficulty);
         SceneManager.LoadScene("TestLevel"); //  имя игровой сцены
     }
     public void StartGame()
     {
+        int difficulty = DifficultyButton.Instance.GetLevelDifficulty();
+        if (difficulty == 0)
+            return;
+        PlayerPrefs.SetInt("Difficulty", difficulty);
         PanelManual.SetActive(true);
         Player.SetActive(false);
     }

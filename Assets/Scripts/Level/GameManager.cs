@@ -149,7 +149,7 @@ namespace Platformer2D
                 // Add the door model to the dictionary
                 doorModels[entry.Key] = doorModel;
                  // Print the door model values
- Debug.Log($"Door Index: {doorModel.IndexDoor}, Current Location: {doorModel.CurrentLocation.Item1}, {doorModel.CurrentLocation.Item2}, Next Location: {doorModel.NextLocation.Item1}, {doorModel.NextLocation.Item2}");
+ Debug.Log($"[GameManager] Door Index: {doorModel.IndexDoor}, Current Location: {doorModel.CurrentLocation.Item1}, {doorModel.CurrentLocation.Item2}, Next Location: {doorModel.NextLocation.Item1}, {doorModel.NextLocation.Item2}");
             }
         }
         

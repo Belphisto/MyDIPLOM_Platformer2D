@@ -34,7 +34,7 @@ namespace Platformer2D.Level
         public LocationType crystalType;
 
         // Ссылка на контроллер уровня
-        private LevelController controller;
+        public LevelController controller;
 
         // Вызывается перед первым обновлением кадра
         void Start()

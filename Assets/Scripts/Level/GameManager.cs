@@ -102,6 +102,7 @@ namespace Platformer2D
             levelInstance.model = newModel;
             levelInstance.SetModel();
             levelInstance.gameObject.SetActive(true);
+            levelInstance.controller.SendCurrentPercent();
 
             // Проверяем, инициализирован ли PlayerController.Instance
             if (PlayerController.Instance != null)
@@ -110,7 +111,7 @@ namespace Platformer2D
             }
             else
             {
-                // Если PlayerController.Instance еще не инициализирован, мы можем использовать StartCoroutine, чтобы подождать, пока он не будет готов
+                // Если PlayerController.Instance еще не инициализирован, использовать StartCoroutine, чтобы подождать, пока он не будет готов
                 StartCoroutine(SetCurrentTypeWhenReady(levelInstance.crystalType));
             }
         }

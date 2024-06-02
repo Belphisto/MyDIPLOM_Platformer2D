@@ -38,7 +38,8 @@ namespace Platformer2D.Platform
             else
             {
                 isCorrectActiveSlot = false;
-                CameraManager.Instance.UpadteText("Incorrect Inventory slot selected");
+                CameraManager.Instance.UpadteText("Выбран неподходящий слот инвентаря");
+                CameraManager.Instance.SetActive(true);
             }
         }
 
@@ -51,6 +52,7 @@ namespace Platformer2D.Platform
                     if(activeslot.Count < model.TargetScore)
                     {
                         CameraManager.Instance.UpadteText($"Недостаточно. Нужно: {model.TargetScore} для открытия сундука");
+                        CameraManager.Instance.SetActive(true);
                     }
                     else
                     {
@@ -66,7 +68,8 @@ namespace Platformer2D.Platform
 
         private void OpenChestWithFKey()
         {
-            CameraManager.Instance.UpadteText($"Press F for chest");
+            CameraManager.Instance.UpadteText($"Нажми F для открытия сундука");
+            CameraManager.Instance.SetActive(true);
             if(Input.GetKeyDown(KeyCode.F))
             {
                 model.IsOpen = true;
@@ -76,7 +79,7 @@ namespace Platformer2D.Platform
 
         private void EndGameWithEnterKey()
         {
-            CameraManager.Instance.UpadteText($"Press Enter");
+            CameraManager.Instance.UpadteText($"Нажми Enter, чтобы пройти игру");
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 CameraManager.Instance.SetActive(false);
@@ -95,7 +98,7 @@ namespace Platformer2D.Platform
             if (collision.gameObject.CompareTag("Player"))
             {
                 isPlayerInside = true;
-                CameraManager.Instance.UpadteText($"Need: {model.TargetScore} to open chest");
+                CameraManager.Instance.UpadteText($"Нужно: {model.TargetScore} цветочка");
                 CameraManager.Instance.SetActive(true);
             }
         }
@@ -113,6 +116,8 @@ namespace Platformer2D.Platform
             if (collision.gameObject.CompareTag("Player"))
             {
                 isPlayerInside = false;
+                CameraManager.Instance.SetActive(false);
+                isCorrectActiveSlot = false;
                 CameraManager.Instance.SetActive(false);
             }
         }

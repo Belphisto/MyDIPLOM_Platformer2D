@@ -140,6 +140,11 @@ namespace Platformer2D.Level
             Bus.Instance.SendLevelPercent(model.GetPercentLevel());
         }
 
+        public void SendCurrentPercent()
+        {
+            Bus.Instance.SendLevelPercent(model.GetPercentLevel());
+        }
+
         private void SpawnPlayer()
         {
             // Найти персонажа по тегу

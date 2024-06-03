@@ -32,7 +32,7 @@ namespace Platformer2D.Inventory
             yield return new WaitForSeconds(0.03f);
 
             // Check if this is the first slot (i.e., the 'Q' slot)
-            if (activationKey == KeyCode.Q)
+            if (activationKey == KeyCode.Alpha1)
             {
                 // Activate the slot
                 Activate();

@@ -52,6 +52,11 @@ namespace Platformer2D
             }
         }
 
+        public void EscButton()
+        {
+            panelSettings.SetActive(!panelSettings.activeSelf);
+        }
+
         private void DestroyAllObjects()
         {
             // Получаем активную сцену

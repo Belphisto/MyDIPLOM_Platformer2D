@@ -879,6 +879,34 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2071731924}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EscButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Platformer2D.GameOver, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8642474181675948721, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2245,6 +2273,34 @@ PrefabInstance:
     - target: {fileID: 6049973583218599428, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
       propertyPath: m_Name
       value: Button Load Save
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2071731924}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EscButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Platformer2D.GameOver, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445304257932050501, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8642474181675948721, guid: 91b80ba2ec347b640a660ba66848ca4f, type: 3}
       propertyPath: m_Sprite

@@ -55,6 +55,10 @@ namespace Platformer2D.Player
         {
             if (!model.IsMooving) return;
 
+            // Блокировка управления, если panelSettings активна
+            if (Platformer2D.GameOver.IsInputBlocked)
+                return;
+
             // Управление анимацией и движением персонажа
             // Обработка пользовательского ввода
             if (model.IsGrounded)

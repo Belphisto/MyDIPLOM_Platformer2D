@@ -12,6 +12,7 @@ namespace Platformer2D
     public class GameOver : MonoBehaviour
     {
         public GameObject panelGameWint;
+        public static bool IsInputBlocked { get; private set; }
 
         public GameObject panel;
         public GameObject panelSettings;
@@ -46,15 +47,16 @@ namespace Platformer2D
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                // Переключает активность панели при нажатии клавиши Esc
                 panelSettings.SetActive(!panelSettings.activeSelf);
-                //UnityEngine.Cursor.visible = !UnityEngine.Cursor.visible;
+                // Установить флаг блокировки ввода в зависимости от активности panelSettings
+                IsInputBlocked = panelSettings.activeSelf;
             }
         }
 
         public void EscButton()
         {
             panelSettings.SetActive(!panelSettings.activeSelf);
+            IsInputBlocked = panelSettings.activeSelf;
         }
 
         private void DestroyAllObjects()

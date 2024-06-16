@@ -59,11 +59,6 @@ namespace Platformer2D
             return platforms;
         }
 
-
-
-
-
-
         // Генерация лабиринта
         public void GenerateMaze(int width, int height, float removalProbability)
         {

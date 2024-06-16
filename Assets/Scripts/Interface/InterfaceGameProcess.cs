@@ -92,7 +92,7 @@ namespace Platformer2D
         {
             panelGameWint.gameObject.SetActive(true);
             string roomInfo = Bus.Instance.GetGameResults();
-            textTotalScore.text ="Game win with score: " + count.ToString() + roomInfo ;
+            textTotalScore.text ="Game win with score: " + count.ToString() +  "\n" + roomInfo ;
             UnityEngine.Cursor.visible = true;
         }
 

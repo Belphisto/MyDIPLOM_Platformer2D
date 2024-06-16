@@ -56,7 +56,7 @@ namespace Platformer2D.Generator
             // генерация кристаллов
             var genCrystal = new GeneratorCrystalPosition();
             var countCrystal = GeneratorModel.GetCountCrystal(coefXLoc, _difficulty);
-            var crystalPositions = genCrystal.GenerateCrystalPosition(size.Width, size.Height, countCrystal,3);
+            var crystalPositions = genCrystal.GeneratePoissonDiskSamples(size.Width, size.Height, countCrystal,3);
 
             (List<Vector3>staticplatform, List<Vector3>specialplatform, List<Vector3>borderplatform) = RandomGridOrMazePlatforms(labelSize, size);
 
@@ -96,7 +96,7 @@ namespace Platformer2D.Generator
             // генерация кристаллов
             var genCrystal = new GeneratorCrystalPosition();
             var countCrystal = GeneratorModel.GetCountCrystal(coefXLoc, _difficulty);
-            var crystalPositions = genCrystal.GenerateCrystalPosition(size.Width, size.Height, countCrystal,3);
+            var crystalPositions = genCrystal.GeneratePoissonDiskSamples(size.Width, size.Height, countCrystal,3);
 
             (List<Vector3>staticplatform, List<Vector3>specialplatform, List<Vector3>borderplatform) = RandomGridOrMazePlatforms(labelSize, size);
 

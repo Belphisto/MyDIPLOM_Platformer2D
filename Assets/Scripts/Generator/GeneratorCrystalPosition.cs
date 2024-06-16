@@ -8,66 +8,69 @@ namespace Platformer2D.Generator
     public class GeneratorCrystalPosition
     {
         public List<Vector3> GeneratePoissonDiskSamples(int width, int height, int numSamples, int relaxationSteps = 5)
-        {
-            float radius = 3.0f;
-            // Initialize initial random samples
-            List<Vector3> samples = new List<Vector3>();
-            System.Random rand = new System.Random();
-            for (int i = 0; i < numSamples; i++)
-            {
-                samples.Add(new Vector3((float)rand.NextDouble() * width, (float)rand.NextDouble() * height, 0));
-            }
+{
+    float radius = 3.0f;
+    List<Vector3> samples = new List<Vector3>();
+    System.Random rand = new System.Random();
 
-            // Lloyd's relaxation
-            for (int step = 0; step < relaxationSteps; step++)
+    for (int i = 0; i < numSamples; i++)
+    {
+        samples.Add(new Vector3((float)rand.NextDouble() * width, (float)rand.NextDouble() * height, 0));
+    }
+
+    for (int step = 0; step < relaxationSteps; step++)
+    {
+        List<Vector3> centroids = ComputeCentroids(samples, width, height);
+        for (int i = 0; i < samples.Count; i++)
+        {
+            if (i < centroids.Count)  // Make sure we have a corresponding centroid
             {
-                // Compute centroids of Voronoi cells and move samples towards them
-                List<Vector3> centroids = ComputeCentroids(samples, width, height);
-                for (int i = 0; i < samples.Count; i++)
+                Vector3 centroid = centroids[i];
+                Vector3 direction = centroid - samples[i];
+                if (direction.magnitude > float.Epsilon)  // Avoid normalizing zero vector
                 {
-                    Vector3 centroid = centroids[i];
-                    Vector3 direction = centroid - samples[i];
                     direction.Normalize();
                     samples[i] += direction * radius;
                 }
             }
-
-            return samples;
         }
+    }
 
-        private List<Vector3> ComputeCentroids(List<Vector3> samples, int width, int height)
+    return samples;
+}
+
+private List<Vector3> ComputeCentroids(List<Vector3> samples, int width, int height)
+{
+    List<Vector3> centroids = new List<Vector3>();
+    int cellSize = 10;  // Define cell size explicitly
+    int numCellsX = (int)System.Math.Ceiling((float)width / cellSize);
+    int numCellsY = (int)System.Math.Ceiling((float)height / cellSize);
+    
+    int[,] numPoints = new int[numCellsX, numCellsY];
+    Vector3[,] cumulativePositions = new Vector3[numCellsX, numCellsY];
+
+    foreach (Vector3 sample in samples)
+    {
+        int cellX = System.Math.Clamp((int)(sample.x / cellSize), 0, numCellsX - 1);
+        int cellY = System.Math.Clamp((int)(sample.y / cellSize), 0, numCellsY - 1);
+        
+        numPoints[cellX, cellY]++;
+        cumulativePositions[cellX, cellY] += sample;
+    }
+
+    for (int x = 0; x < numCellsX; x++)
+    {
+        for (int y = 0; y < numCellsY; y++)
         {
-            List<Vector3> centroids = new List<Vector3>();
-
-            // Create a grid to store the number of points and their cumulative positions in each cell
-            int numCellsX = (int)System.Math.Ceiling(width / 10.0f); // Adjust cell size as needed
-            int numCellsY = (int)System.Math.Ceiling(height / 10.0f);
-            int[,] numPoints = new int[numCellsX, numCellsY];
-            Vector3[,] cumulativePositions = new Vector3[numCellsX, numCellsY];
-
-            // Assign each sample to a cell in the grid and update cumulative positions
-            foreach (Vector3 sample in samples)
+            if (numPoints[x, y] > 0)
             {
-                int cellX = (int)(sample.x / width * numCellsX);
-                int cellY = (int)(sample.y / height * numCellsY);
-                numPoints[cellX, cellY]++;
-                cumulativePositions[cellX, cellY] += sample;
+                centroids.Add(cumulativePositions[x, y] / numPoints[x, y]);
             }
-
-            // Compute centroids from cumulative positions
-            for (int x = 0; x < numCellsX; x++)
-            {
-                for (int y = 0; y < numCellsY; y++)
-                {
-                    if (numPoints[x, y] > 0)
-                    {
-                        centroids.Add(cumulativePositions[x, y] / numPoints[x, y]);
-                    }
-                }
-            }
-
-            return centroids;
         }
+    }
+
+    return centroids;
+}
 
         public List<Vector3> GenerateCrystalPosition(int X, int Y, int numSamples, int relaxationSteps)
         {

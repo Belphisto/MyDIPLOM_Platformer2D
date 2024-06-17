@@ -41,6 +41,7 @@ namespace Platformer2D
             GameWinButton.onClick.RemoveListener(OnOkButtonClicked);
             Bus.Instance.PlayerFell -= OnPlayerFell;
             Bus.Instance.GameWin -= GameCompleted;
+            IsInputBlocked =  false;
         }
 
         void Update()
@@ -76,6 +77,7 @@ namespace Platformer2D
 
         private void OnOkButtonClicked()
         {
+            IsInputBlocked =  false;
             SceneManager.LoadScene("StartScene");
         }
 

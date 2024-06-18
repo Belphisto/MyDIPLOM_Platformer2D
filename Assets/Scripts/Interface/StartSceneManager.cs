@@ -36,6 +36,14 @@ public class StartSceneManager : MonoBehaviour
         Application.Quit();
     }
 
+    // Обновление каждый кадр
+    void Update()
+    {
+
+            return;
+
+    }
+
     
 
 }

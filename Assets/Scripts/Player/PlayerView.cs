@@ -75,7 +75,7 @@ namespace Platformer2D.Player
         // Метод на каждом физическом шаге
     //найти нижнюю точку коллайдера персонажа. От нее сделать влево и вправо небольшой отступ и по ним кидать вниз на короткое расстояние два рейкаста  (рейксастить прямоугольник )
     //boxCast - contactfilter (не считал персонажа) - он не должен быть шире размера персонажа
-        void FixedUpdate()
+        /*void FixedUpdate()
         {
             // Находим нижнюю точку коллайдера персонажа и делаем небольшой отступ вверх
             Vector2 bottomPoint = new Vector2(GetComponent<Collider2D>().bounds.min.x, GetComponent<Collider2D>().bounds.min.y) + Vector2.up * 0.1f;
@@ -99,7 +99,28 @@ namespace Platformer2D.Player
             bool isGrounded = (leftHitCount > 0 && leftHit[0].collider != null) || (rightHitCount > 0 && rightHit[0].collider != null);
             //Debug.Log("Is player grounded: " + isGrounded);
             controller.CheckGround(isGrounded);
+        }*/
+        void FixedUpdate()
+        {
+            // Находим центральную нижнюю точку коллайдера персонажа и делаем небольшой отступ вверх
+            Vector2 centerBottomPoint = new Vector2(GetComponent<Collider2D>().bounds.center.x, GetComponent<Collider2D>().bounds.min.y) + Vector2.up * 0.1f;
+
+            // Делаем небольшой отступ влево и вправо
+            Vector2 leftPoint = centerBottomPoint + new Vector2(-0.2f, 0);
+            Vector2 rightPoint = centerBottomPoint + new Vector2(0.2f, 0);
+
+            // Создаем маску слоя, которая не учитывает слой персонажа
+            int layerMask = ~(1 << gameObject.layer);
+
+            // Кидаем вниз на короткое расстояние два рейкаста
+            RaycastHit2D leftHit = Physics2D.Raycast(leftPoint, Vector2.down, 0.2f, layerMask);
+            RaycastHit2D rightHit = Physics2D.Raycast(rightPoint, Vector2.down, 0.2f, layerMask);
+
+            // Проверяем, находится ли персонаж на земле
+            bool isGrounded = leftHit.collider != null || rightHit.collider != null;
+            controller.CheckGround(isGrounded);
         }
+
 
         void OnTriggerEnter2D(Collider2D other)
         {

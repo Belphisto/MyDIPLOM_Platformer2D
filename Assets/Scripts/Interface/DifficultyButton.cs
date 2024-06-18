@@ -20,6 +20,14 @@ public class DifficultyButton : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        // Если панель активна, не обрабатывается ввод с клавиатуры
+        
+            return;
+
+    }
+
     void Start()
     {
         // Добавляем слушателей для каждого тоггла

@@ -1,3 +1,5 @@
+Чтобы поиграть: скачать проект v5.0 и запустить файл Platformer2D_Procedural-WorldGeneration.exe
+
 Windows10
 Unity 2022.3.19f1
 2D-project

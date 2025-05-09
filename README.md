@@ -1,4 +1,4 @@
-Чтобы поиграть: скачать проект v5.0 и запустить файл Platformer2D_Procedural-WorldGeneration.exe
+Чтобы поиграть: [скачать проект](https://github.com/Belphisto/MyDIPLOM_Platformer2D/releases/tag/v5.0) v5.0 и запустить файл Platformer2D_Procedural-WorldGeneration.exe
 
 Windows10
 Unity 2022.3.19f1
